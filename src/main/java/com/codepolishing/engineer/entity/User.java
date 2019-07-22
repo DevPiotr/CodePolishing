@@ -17,7 +17,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
-    private int Id;
+    private int id;
 
     @NotNull
     @Max(value = 11)
@@ -95,6 +95,19 @@ public class User {
             uniqueConstraints = @UniqueConstraint(columnNames = {"id_course_type","id_user"})
     )
     private List<CourseType> courseTypeList;
+
+    @ManyToMany
+    @JoinTable(
+            name = "joining_to_sections",
+            joinColumns = @JoinColumn(name = "id_user"),
+            inverseJoinColumns = @JoinColumn(name = "id_course_section"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"id_course_section","id_user"})
+    )
+    private List<CourseSection> courseSectionList;
+
+    @OneToMany
+    @JoinTable(name = "id_user")
+    private List<Opinion> opinionList;
     //endregion From
 
 

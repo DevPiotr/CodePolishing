@@ -17,7 +17,7 @@ public class JobOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_job_offer")
-    private int Id;
+    private int id;
 
     @NotNull
     @Max(value = 40)

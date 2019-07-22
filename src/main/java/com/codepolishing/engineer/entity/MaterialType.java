@@ -3,27 +3,24 @@ package com.codepolishing.engineer.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Table(name = "user_roles")
+@Table(name = "material_type")
 @Data
-public class UserRole {
+public class MaterialType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_user_role")
+    @Column(name = "id_material_type")
     private int id;
 
     @NotNull
-    @Max(value = 30)
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_user_role")
-    private List<User> users;
-
+    @OneToMany
+    @JoinTable(name = "id_material_type")
+    private List<Material> materialList;
 }

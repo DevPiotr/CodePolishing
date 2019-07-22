@@ -15,7 +15,7 @@ public class CourseType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_course_type")
-    private int Id;
+    private int id;
 
     @NotNull
     @Max(value = 45)

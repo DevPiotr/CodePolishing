@@ -15,7 +15,7 @@ public class Province {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_province")
-    private int Id;
+    private int id;
 
     @NotNull
     @Max(value = 40)
