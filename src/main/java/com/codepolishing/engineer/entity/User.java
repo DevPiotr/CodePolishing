@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -15,7 +16,7 @@ public class User {
     //region Fields From Database
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "iduser")
+    @Column(name = "id_user")
     private int Id;
 
     @NotNull
@@ -49,16 +50,16 @@ public class User {
 
     @NotNull
     @Max(value = 15)
-    @Column(name = "housenumber")
+    @Column(name = "house_number")
     private String houseNumber;
 
     @Max(value = 5)
-    @Column(name = "flatnr")
+    @Column(name = "flat_nr")
     private String flatNr;
 
     @NotNull
     @Max(value = 6)
-    @Column(name = "postcode")
+    @Column(name = "post_code")
     private String postCode;
 
     @NotNull
@@ -67,14 +68,34 @@ public class User {
     private String email;
 
     @Max(value = 12)
-    @Column(name = "phonenumber")
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     @NotNull
-    @Column(name = "birthdate")
+    @Column(name = "birth_date")
     private Date birthDate;
 
-    @Column(name = "CVPath")
+    @Column(name = "cv_path")
     private String CVPath;
+
+    @ManyToMany
+    @JoinTable(
+            name = "personalized_job_offers",
+            joinColumns = @JoinColumn(name = "id_user"),
+            inverseJoinColumns = @JoinColumn(name = "id_job_offer"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"id_job_offer","id_user"})
+    )
+    private List<JobOffer> jobOfferList;
+
+    @ManyToMany
+    @JoinTable(
+            name = "personalized_course_types",
+            joinColumns = @JoinColumn(name = "id_user"),
+            inverseJoinColumns = @JoinColumn(name = "id_course_type"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"id_course_type","id_user"})
+    )
+    private List<CourseType> courseTypeList;
     //endregion From
+
+
 }

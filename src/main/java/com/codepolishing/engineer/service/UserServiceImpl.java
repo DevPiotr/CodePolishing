@@ -1,6 +1,6 @@
 package com.codepolishing.engineer.service;
 
-import com.codepolishing.engineer.dao.UserRepository;
+import com.codepolishing.engineer.repository.UserRepository;
 import com.codepolishing.engineer.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class UserServiceImpl implements  UserService {
 
     @Override
     public void save(User user) {
-        userRepository.save(user);
+            userRepository.save(user);
     }
 
     @Override

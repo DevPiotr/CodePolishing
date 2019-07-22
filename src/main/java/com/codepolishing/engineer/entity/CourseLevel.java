@@ -8,21 +8,21 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Table(name = "province")
+@Table(name = "course_levels")
 @Data
-public class Province {
+public class CourseLevel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_province")
+    @Column(name = "id_course_level")
     private int Id;
 
     @NotNull
-    @Max(value = 40)
+    @Max(value = 30)
     @Column(name = "name")
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_province")
-    private List<User> users;
+    @JoinColumn(name = "id_course_level")
+    private List<Course> courseList;
 }

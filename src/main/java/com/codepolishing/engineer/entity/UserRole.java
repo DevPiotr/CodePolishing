@@ -8,13 +8,13 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Table(name = "userroles")
+@Table(name = "user_roles")
 @Data
 public class UserRole {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "iduserrole")
+    @Column(name = "id_user_role")
     private int Id;
 
     @NotNull
@@ -23,7 +23,7 @@ public class UserRole {
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "idusersrole")
+    @JoinColumn(name = "id_user_role")
     private List<User> users;
 
 }
