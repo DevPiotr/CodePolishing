@@ -12,6 +12,8 @@ import java.util.List;
 @Data
 public class CourseSubsection {
 
+    //region Fields From Database
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_course_subsection")
@@ -35,7 +37,7 @@ public class CourseSubsection {
     private List<Task> taskList;
 
     @OneToMany
-    @JoinTable(name = "id_course_subsection")
+    @JoinColumn(name = "id_course_subsection")
     private List<Opinion> opinionList;
 
     @ManyToMany
@@ -46,4 +48,6 @@ public class CourseSubsection {
             uniqueConstraints = @UniqueConstraint(columnNames = {"id_theory","id_course_subsection"})
     )
     private List<Theory> theoryList;
+
+    //endregion
 }

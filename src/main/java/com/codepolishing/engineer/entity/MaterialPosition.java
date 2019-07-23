@@ -10,6 +10,8 @@ import javax.validation.constraints.NotNull;
 @Data
 public class MaterialPosition {
 
+    //region Fields From Database
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_material_position")
@@ -18,4 +20,6 @@ public class MaterialPosition {
     @NotNull
     @Column(name = "position")
     private int position;
+
+    //endregion
 }

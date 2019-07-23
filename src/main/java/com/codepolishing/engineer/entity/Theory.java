@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 public class Theory {
 
-    //TODO ManyToMany with extraColumns
+    //region Fields From Database
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +32,8 @@ public class Theory {
     private List<CourseSubsection> courseSubsectionList;
 
     @OneToMany
-    @JoinTable(name = "id_theory")
+    @JoinColumn(name = "id_theory")
     private List<MaterialPosition> materialPositionList;
+
+    //endregion
 }

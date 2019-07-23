@@ -13,6 +13,8 @@ import java.util.List;
 @Data
 public class CourseSection {
 
+    //region Fields From Database
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_course_section")
@@ -36,4 +38,6 @@ public class CourseSection {
     @OneToMany
     @JoinColumn(name = "id_course_section")
     private List<CourseSubsection> courseSubsectionList;
+
+    //endregion
 }

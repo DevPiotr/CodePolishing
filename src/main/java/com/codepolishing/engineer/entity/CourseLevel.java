@@ -12,6 +12,8 @@ import java.util.List;
 @Data
 public class CourseLevel {
 
+    //region Fields From Database
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_course_level")
@@ -25,4 +27,6 @@ public class CourseLevel {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_course_level")
     private List<Course> courseList;
+
+    //endregion
 }

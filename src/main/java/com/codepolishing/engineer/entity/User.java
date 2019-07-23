@@ -106,8 +106,9 @@ public class User {
     private List<CourseSection> courseSectionList;
 
     @OneToMany
-    @JoinTable(name = "id_user")
+    @JoinColumn(name = "id_user")
     private List<Opinion> opinionList;
+
     //endregion From
 
 

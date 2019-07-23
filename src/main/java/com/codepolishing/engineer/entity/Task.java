@@ -12,6 +12,8 @@ import java.util.List;
 @Data
 public class Task {
 
+    //region Fields From Database
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_task")
@@ -41,5 +43,7 @@ public class Task {
             uniqueConstraints = @UniqueConstraint(columnNames = {"id_task","id_course_subsection"})
     )
     private List<CourseSubsection> courseSubsectionList;
+
+    //endregion
 
 }

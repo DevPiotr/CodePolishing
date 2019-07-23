@@ -11,6 +11,8 @@ import java.util.List;
 @Data
 public class MaterialType {
 
+    //region Fields From Database
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_material_type")
@@ -21,6 +23,8 @@ public class MaterialType {
     private String name;
 
     @OneToMany
-    @JoinTable(name = "id_material_type")
+    @JoinColumn(name = "id_material_type")
     private List<Material> materialList;
+
+    //endregion
 }

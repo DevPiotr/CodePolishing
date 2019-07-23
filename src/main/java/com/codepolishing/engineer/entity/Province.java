@@ -12,6 +12,8 @@ import java.util.List;
 @Data
 public class Province {
 
+    //region Fields From Database
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_province")
@@ -25,4 +27,6 @@ public class Province {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_province")
     private List<User> users;
+
+    //endregion
 }

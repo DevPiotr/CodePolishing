@@ -11,7 +11,8 @@ import java.sql.Date;
 @Data
 public class Opinion {
 
-    //TODO ManyToMany with extraColumns
+    //region Fields From Database
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_opinion")
@@ -31,4 +32,6 @@ public class Opinion {
 
     @Column(name = "modification_date")
     private Date modificationDate;
+
+    //endregion
 }

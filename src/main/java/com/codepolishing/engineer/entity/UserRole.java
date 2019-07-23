@@ -12,6 +12,8 @@ import java.util.List;
 @Data
 public class UserRole {
 
+    //region Fields From Database
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user_role")
@@ -25,5 +27,7 @@ public class UserRole {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_user_role")
     private List<User> users;
+
+    //endregion
 
 }

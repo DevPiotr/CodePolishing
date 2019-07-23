@@ -12,6 +12,8 @@ import java.util.List;
 @Data
 public class CourseType {
 
+    //region Fields From Database
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_course_type")
@@ -34,4 +36,6 @@ public class CourseType {
             uniqueConstraints = @UniqueConstraint(columnNames = {"id_course_type","id_user"})
     )
     private List<User> userList;
+
+    //endregion
 }

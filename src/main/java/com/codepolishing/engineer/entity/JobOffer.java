@@ -14,6 +14,7 @@ import java.util.List;
 public class JobOffer {
 
     // region Fields From Database
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_job_offer")
