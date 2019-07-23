@@ -31,7 +31,7 @@ public class Material {
     private int height;
 
     @OneToMany
-    @JoinTable(name = "id_material")
+    @JoinTable(name = "id_material_type")
     private List<MaterialPosition> materialPositionList;
 
     //endregion

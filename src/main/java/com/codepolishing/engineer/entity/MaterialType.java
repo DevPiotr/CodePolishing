@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Table(name = "material_type")
+@Table(name = "material_types")
 @Data
 public class MaterialType {
 
@@ -23,7 +23,7 @@ public class MaterialType {
     private String name;
 
     @OneToMany
-    @JoinColumn(name = "id_material_type")
+    @JoinColumn(name = "id_material")
     private List<Material> materialList;
 
     //endregion

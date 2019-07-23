@@ -46,4 +46,9 @@ public class UserController {
         return "hello";
     }
 
+    @RequestMapping("/index.html")
+    public String showIndexPage() {
+        return "index";
+    }
+
 }
