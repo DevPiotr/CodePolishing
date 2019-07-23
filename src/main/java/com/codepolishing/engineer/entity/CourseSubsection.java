@@ -36,7 +36,7 @@ public class CourseSubsection {
     )
     private List<Task> taskList;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_course_subsection")
     private List<Opinion> opinionList;
 

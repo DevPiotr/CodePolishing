@@ -31,7 +31,7 @@ public class Theory {
     )
     private List<CourseSubsection> courseSubsectionList;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_theory")
     private List<MaterialPosition> materialPositionList;
 

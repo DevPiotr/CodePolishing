@@ -35,9 +35,18 @@ public class CourseSection {
     @Column(name = "modification_date")
     private Date modificationDate;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_course_section")
     private List<CourseSubsection> courseSubsectionList;
+
+    @ManyToMany
+    @JoinTable(
+            name = "joining_to_sections",
+            joinColumns = @JoinColumn(name = "id_course_section"),
+            inverseJoinColumns = @JoinColumn(name = "id_user"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"id_course_section","id_user"})
+    )
+    private List<User> joinedUserList;
 
     //endregion
 }

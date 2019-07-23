@@ -37,7 +37,7 @@ public class Course {
     @Column(name = "modification_date")
     private Date modificationDate;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_course")
     private List<CourseSection> courseSectionList;
     //endregion

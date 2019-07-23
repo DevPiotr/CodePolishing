@@ -22,8 +22,8 @@ public class MaterialType {
     @Column(name = "name")
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "id_material")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_material_type")
     private List<Material> materialList;
 
     //endregion
