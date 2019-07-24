@@ -1,6 +1,7 @@
 package com.codepolishing.engineer.entity;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -15,7 +16,7 @@ public class Task {
     //region Fields From Database
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_task")
     private int id;
 
@@ -24,7 +25,7 @@ public class Task {
     private String taskContent;
 
     @NotNull
-    @Max(value = 45)
+    @Length(max = 45)
     @Column(name = "right_answer")
     private String rightAnswer;
 

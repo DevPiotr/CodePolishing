@@ -1,8 +1,10 @@
 package com.codepolishing.engineer.entity;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -14,11 +16,16 @@ public class Material {
     //region Fields From Database
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_material")
     private int id;
 
     @NotNull
+    @Column(name = "id_material_type")
+    private int idMaterialType;
+
+    @NotNull
+    @Length(max = 200)
     @Column(name = "address")
     private String address;
 

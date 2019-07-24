@@ -1,26 +1,38 @@
 package com.codepolishing.engineer.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.sql.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "courses")
 @Data
+@NoArgsConstructor
 public class Course {
 
     //region Fields From Database
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_user")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_course")
     private int id;
 
     @NotNull
-    @Max(value = 100)
+    @Column(name = "id_course_level")
+    private int idCourseLevel;
+
+    @NotNull
+    @Column(name = "id_course_type")
+    private int idCourseType;
+
+    @NotNull
+    @Length(max = 100)
     @Column(name = "name")
     private String name;
 
@@ -37,8 +49,10 @@ public class Course {
     @Column(name = "modification_date")
     private Date modificationDate;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "id_course")
     private List<CourseSection> courseSectionList;
     //endregion
+
+
 }

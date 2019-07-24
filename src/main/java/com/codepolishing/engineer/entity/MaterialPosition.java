@@ -13,9 +13,17 @@ public class MaterialPosition {
     //region Fields From Database
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_material_position")
     private int id;
+
+    @NotNull
+    @Column(name = "id_material")
+    private int idMaterial;
+
+    @NotNull
+    @Column(name = "id_theory")
+    private int idTheory;
 
     @NotNull
     @Column(name = "position")

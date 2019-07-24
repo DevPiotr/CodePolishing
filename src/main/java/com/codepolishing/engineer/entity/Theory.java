@@ -14,7 +14,7 @@ public class Theory {
     //region Fields From Database
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_theory")
     private int id;
 

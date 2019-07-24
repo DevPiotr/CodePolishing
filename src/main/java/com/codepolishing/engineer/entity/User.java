@@ -1,6 +1,7 @@
 package com.codepolishing.engineer.entity;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -15,59 +16,66 @@ public class User {
 
     //region Fields From Database
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_user")
     private int id;
 
     @NotNull
-    @Max(value = 11)
+    @Column(name = "id_user_role")
+    private int idUserRole;
+
+    @NotNull
+    @Column(name = "id_province")
+    private int idProvince;
+
+    @NotNull
     @Column(name = "score")
     private int score;
 
     @NotNull
-    @Max(value = 100)
+    @Length(max = 100)
     @Column(name = "password")
     private String password;
 
     @NotNull
-    @Max(value = 35)
+    @Length(max = 35)
     @Column(name = "name")
     private String name;
 
     @NotNull
-    @Max(value = 50)
+    @Length(max = 50)
     @Column(name = "surname")
     private String surname;
 
     @NotNull
-    @Max(value = 50)
+    @Length(max = 50)
     @Column(name = "city")
     private String city;
 
-    @Max(value = 50)
+    @Length(max = 50)
     @Column(name = "street")
     private String street;
 
     @NotNull
-    @Max(value = 15)
+    @Length(max = 15)
     @Column(name = "house_number")
     private String houseNumber;
 
-    @Max(value = 5)
+    @Length(max = 5)
     @Column(name = "flat_nr")
     private String flatNr;
 
     @NotNull
-    @Max(value = 6)
+    @Length(max = 6)
     @Column(name = "post_code")
     private String postCode;
 
     @NotNull
-    @Max(value = 30)
+    @Length(max = 30)
     @Column(name = "email")
     private String email;
 
-    @Max(value = 12)
+    @Length(max = 12)
     @Column(name = "phone_number")
     private String phoneNumber;
 
