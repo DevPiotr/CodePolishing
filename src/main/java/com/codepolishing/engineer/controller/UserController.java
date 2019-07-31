@@ -64,13 +64,13 @@ public class UserController {
         return "hello";
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/index.html")
     public String showIndexPage() {
-        return "indexx";
+        return "index";
     }
 
-    @RequestMapping("/wzor")
+    @RequestMapping("/tester")
     public String showIndex2Page() {
-        return "index";
+        return "indexx";
     }
 }
