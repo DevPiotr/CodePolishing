@@ -28,9 +28,22 @@ public class UserController {
     @RequestMapping("/test")
     public @ResponseBody String test(){
 
-        User user =  new User();
+        // Przykład użycia buildera z Lombok'a
+        User user = User.builder()
+                .idUserRole(1)
+                .idProvince(1)
+                .score(1)
+                .password("passw")
+                .name("stachu")
+                .surname("motyka")
+                .city("wałbżucy")
+                .houseNumber("10a")
+                .postCode("10-122")
+                .email("faosda@o.pl")
+                .birthDate(new Date(System.currentTimeMillis()))
+                .build();
 
-        user.setIdUserRole(1);
+       /* user.setIdUserRole(1);
         user.setIdProvince(1);
         user.setScore(1);
         user.setPassword("passw");
@@ -40,7 +53,7 @@ public class UserController {
         user.setHouseNumber("10a");
         user.setPostCode("10-122");
         user.setEmail("faosda@o.pl");
-        user.setBirthDate(new Date(System.currentTimeMillis()));
+        user.setBirthDate(new Date(System.currentTimeMillis()));*/
 
         try{
             userRepository.save(user);
@@ -51,9 +64,13 @@ public class UserController {
         return "hello";
     }
 
-    @RequestMapping("/index.html")
+    @RequestMapping("/")
     public String showIndexPage() {
-        return "index";
+        return "indexx";
     }
 
+    @RequestMapping("/wzor")
+    public String showIndex2Page() {
+        return "index";
+    }
 }
