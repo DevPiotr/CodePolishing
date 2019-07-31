@@ -1,28 +1,32 @@
 package com.codepolishing.engineer.controller;
 
-import com.codepolishing.engineer.entity.Course;
 
 import com.codepolishing.engineer.entity.User;
 import com.codepolishing.engineer.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.sql.Date;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 
 @Controller
 public class UserController {
 
     private UserRepository userRepository;
+    private UserRoleRepository userRoleRepository;
+    private ProvinceRepository provinceRepository;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository, UserRoleRepository userRoleRepository, ProvinceRepository provinceRepository) {
         this.userRepository = userRepository;
+        this.userRoleRepository = userRoleRepository;
+        this.provinceRepository = provinceRepository;
     }
 
     @RequestMapping("/test")
@@ -51,9 +55,43 @@ public class UserController {
         return "hello";
     }
 
-    @RequestMapping("/index.html")
+    @RequestMapping("/")
     public String showIndexPage() {
-        return "index";
+        return "index_test";
     }
+
+    @GetMapping("/signUp")
+    public String signUpNewUser(User user){
+        return "sign_up_user";
+    }
+
+    @PostMapping("/moreInfo")
+    public String addMoreUserInfo(User user, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
+        String message = "";
+
+        if(user.getEmail().trim().equals(""))
+            message = "Email jest wymagany";
+
+        if(!user.getPassword().equals(user.getConfirmPassword()))
+            message += "\n Hasło musi się zgadzać";
+
+        if(!message.isEmpty()){
+            redirectAttributes.addFlashAttribute("message",message);
+            redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
+
+            return "redirect:/signUp";
+        }
+        else{
+            model.addAttribute("user",user);
+            model.addAttribute("roles",userRoleRepository.findAll());
+            model.addAttribute("provinces",provinceRepository.findAll());
+            return "get_more_info";
+        }
+
+    }
+
+
+
+
 
 }

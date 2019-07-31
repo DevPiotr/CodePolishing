@@ -1,7 +1,9 @@
 package com.codepolishing.engineer.entity;
 
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -36,6 +38,8 @@ public class User {
     @Length(max = 100)
     @Column(name = "password")
     private String password;
+
+    private String confirmPassword;
 
     @NotNull
     @Length(max = 35)

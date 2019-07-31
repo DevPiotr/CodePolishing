@@ -21,8 +21,8 @@ public class CourseSubsection {
     private int id;
 
     @NotNull
-    @Column(name = "id_course_subsection")
-    private int idCourseSubsection;
+    @Column(name = "id_course_section")
+    private int idCourseSection;
 
     @NotNull
     @Length(max = 40)
