@@ -1,7 +1,5 @@
 package com.codepolishing.engineer.controller;
 
-import com.codepolishing.engineer.entity.Course;
-
 import com.codepolishing.engineer.entity.User;
 import com.codepolishing.engineer.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Date;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 
 @Controller
@@ -28,7 +24,6 @@ public class UserController {
     @RequestMapping("/test")
     public @ResponseBody String test(){
 
-        // Przykład użycia buildera z Lombok'a
         User user = User.builder()
                 .idUserRole(1)
                 .idProvince(1)
@@ -43,18 +38,6 @@ public class UserController {
                 .birthDate(new Date(System.currentTimeMillis()))
                 .build();
 
-       /* user.setIdUserRole(1);
-        user.setIdProvince(1);
-        user.setScore(1);
-        user.setPassword("passw");
-        user.setName("stachu");
-        user.setSurname("motyka");
-        user.setCity("wałbżucy");
-        user.setHouseNumber("10a");
-        user.setPostCode("10-122");
-        user.setEmail("faosda@o.pl");
-        user.setBirthDate(new Date(System.currentTimeMillis()));*/
-
         try{
             userRepository.save(user);
         }catch(DataIntegrityViolationException e) {
@@ -66,11 +49,11 @@ public class UserController {
 
     @RequestMapping("/index.html")
     public String showIndexPage() {
-        return "index";
+        return "maintmp";
     }
 
-    @RequestMapping("/tester")
+    @RequestMapping("/maintmp")
     public String showIndex2Page() {
-        return "indexx";
+        return "index";
     }
 }
