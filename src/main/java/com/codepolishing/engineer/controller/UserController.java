@@ -1,5 +1,6 @@
 package com.codepolishing.engineer.controller;
 
+import com.codepolishing.engineer.entity.Course;
 
 import com.codepolishing.engineer.entity.User;
 import com.codepolishing.engineer.repository.*;
@@ -13,6 +14,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 
 @Controller
@@ -32,19 +35,19 @@ public class UserController {
     @RequestMapping("/test")
     public @ResponseBody String test(){
 
-        User user =  new User();
-
-        user.setIdUserRole(1);
-        user.setIdProvince(1);
-        user.setScore(1);
-        user.setPassword("passw");
-        user.setName("stachu");
-        user.setSurname("motyka");
-        user.setCity("wałbżucy");
-        user.setHouseNumber("10a");
-        user.setPostCode("10-122");
-        user.setEmail("faosda@o.pl");
-        user.setBirthDate(new Date(System.currentTimeMillis()));
+        User user = User.builder()
+                .idUserRole(1)
+                .idProvince(1)
+                .score(1)
+                .password("passw")
+                .name("stachu")
+                .surname("motyka")
+                .city("wałbżucy")
+                .houseNumber("10a")
+                .postCode("10-122")
+                .email("faosda@o.pl")
+                .birthDate(new Date(System.currentTimeMillis()))
+                .build();
 
         try{
             userRepository.save(user);
@@ -55,9 +58,14 @@ public class UserController {
         return "hello";
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/index.html")
     public String showIndexPage() {
-        return "index_test";
+        return "maintmp";
+    }
+
+    @RequestMapping("/maintmp")
+    public String showIndex2Page() {
+        return "index";
     }
 
     @GetMapping("/signUp")
