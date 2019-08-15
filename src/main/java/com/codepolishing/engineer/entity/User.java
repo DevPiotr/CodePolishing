@@ -2,11 +2,10 @@ package com.codepolishing.engineer.entity;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.List;
@@ -14,12 +13,12 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Data
-@Builder
+@NoArgsConstructor
 public class User {
 
     //region Fields From Database
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
     private int id;
 
@@ -123,6 +122,4 @@ public class User {
     private List<Opinion> opinionList;
 
     //endregion From
-
-
 }

@@ -32,7 +32,7 @@ public class UserController {
         this.provinceRepository = provinceRepository;
     }
 
-    @RequestMapping("/test")
+    /*@RequestMapping("/test")
     public @ResponseBody String test(){
 
         User user = User.builder()
@@ -56,7 +56,7 @@ public class UserController {
         }
 
         return "hello";
-    }
+    }*/
 
     @RequestMapping("/index.html")
     public String showIndexPage() {
@@ -68,15 +68,25 @@ public class UserController {
         return "index";
     }
 
+
+
+
+    //Piotr Żukiewicz
+
+    @GetMapping("/Piotr_test")
+    public String piotrTest(){
+        return "index_test";
+    }
+
     @GetMapping("/signUp")
-    public String signUpNewUser(User user){
+    public String signUpNewUser(User user, Model model){
+        model.addAttribute("user",user);
         return "sign_up_user";
     }
 
     @PostMapping("/moreInfo")
-    public String addMoreUserInfo(User user, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
+    public String addMoreUserInfo(@ModelAttribute("user")User user, RedirectAttributes redirectAttributes, Model model) {
         String message = "";
-
         if(user.getEmail().trim().equals(""))
             message = "Email jest wymagany";
 
@@ -94,6 +104,24 @@ public class UserController {
             model.addAttribute("roles",userRoleRepository.findAll());
             model.addAttribute("provinces",provinceRepository.findAll());
             return "get_more_info";
+        }
+
+    }
+
+    @PostMapping("/addUser")
+    public String addUserIntoDatabase(@Valid @ModelAttribute("user") User user, BindingResult result,Model model){
+
+        System.out.println(user);
+        if(result.hasErrors()){
+            System.out.println(result);
+            model.addAttribute("roles",userRoleRepository.findAll());
+            model.addAttribute("provinces",provinceRepository.findAll());
+            return "get_more_info";
+        }
+        else{
+
+            userRepository.save(user);
+            return "index_test";
         }
 
     }
