@@ -45,8 +45,7 @@ public class MateuszController {
     public String validStarterUserInfo(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model)
     {
         if (bindingResult.hasFieldErrors("email") ||
-            bindingResult.hasFieldErrors("password") ||
-            user.getPassword() !=  user.getConfirmPassword())
+            bindingResult.hasFieldErrors("password"))
         {
             System.out.println("mateusz_sign_up: Są błedy");
             return "sign_up_user_test";
@@ -80,8 +79,10 @@ public class MateuszController {
         }else
         {
             System.out.println("mateusz_sign_up2: Nie ma błędów");
-            System.out.println(user);
-            return "mateusz_test";
+
+            userRepository.saveAndFlush(user);
+
+            return "redirect:/mateusz_main_page";
         }
     }
 }

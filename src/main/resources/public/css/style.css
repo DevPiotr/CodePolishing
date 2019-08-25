@@ -616,8 +616,7 @@ h1, h2, h3, h4, h5,
 .intro-section {
   position: relative; }
   .intro-section, .intro-section .container > .row {
-    height: 100vh;
-    min-height: 900px; }
+    min-height: 100vh; }
   .intro-section.single-cover, .intro-section.single-cover .container > .row {
     height: 50vh;
     min-height: 400px; }
@@ -1124,4 +1123,15 @@ h1, h2, h3, h4, h5,
 .comment-list li .comment-body .reply:hover {
           color: #000;
           background: #e3e3e3;
+}
+.form-box{
+  margin-top: 70px;
+  margin-bottom: 70px;
+}
+
+.site-menu-toggle{
+  color: #fff;
+}
+.sticky-wrapper.is-sticky .site-menu-toggle{
+  color: #000;
 }
