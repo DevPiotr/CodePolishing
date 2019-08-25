@@ -58,19 +58,6 @@ public class UserController {
         return "hello";
     }*/
 
-    @RequestMapping("/index.html")
-    public String showIndexPage() {
-        return "maintmp";
-    }
-
-    @RequestMapping("/maintmp")
-    public String showIndex2Page() {
-        return "index";
-    }
-
-
-
-
     //Piotr Żukiewicz
 
     @GetMapping("/Piotr_test")

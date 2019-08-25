@@ -100,7 +100,7 @@ $.widget = function( name, base, prototype ) {
 		}
 	};
 
-	// Extend with the existing constructor to carry over any static properties
+	// Extend with the existing constructor to carry over any public properties
 	$.extend( constructor, existingConstructor, {
 		version: prototype.version,
 

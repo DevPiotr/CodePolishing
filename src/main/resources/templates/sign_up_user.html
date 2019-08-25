@@ -78,18 +78,18 @@
           <div class="row align-items-center">
             <div class="col-12">
               <div class="row justify-content-center">
-                <div data-aos="fade-up" data-aos-delay="500">
-                  <form action="#" th:action="@{/moreInfo}" th:object="${user}" method="post" class="form-box">
+                <div data-aos="fade-up" data-aos-delay="500" class="col-10">
+                  <form action="#" th:action="@{/moreInfo}" th:object="${user}" method="post" class="form-box col-12">
                     <h3 class="h4 text-black mb-4">Sign Up</h3>
                     <div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"/>
                     <div class="form-group">
                       <input th:field="*{email}" class="form-control" placeholder="Email Address"/>
                     </div>
                     <div class="form-group">
-                      <input th:field="*{password}" class="form-control" placeholder="Password"/>
+                      <input th:type="password" th:field="*{password}" class="form-control" placeholder="Password"/>
                     </div>
                     <div class="form-group">
-                      <input th:field="*{confirmPassword}" class="form-control" placeholder="Re-password"/>
+                      <input th:type="password" th:field="*{confirmPassword}" class="form-control" placeholder="Re-password"/>
                     </div>
                     <div class="form-group">
                       <input type="submit" class="btn btn-primary btn-pill" value="Sign up">

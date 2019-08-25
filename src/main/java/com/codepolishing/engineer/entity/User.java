@@ -1,12 +1,12 @@
 package com.codepolishing.engineer.entity;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.sql.Date;
 import java.util.List;
 
@@ -30,28 +30,32 @@ public class User {
     @Column(name = "id_province")
     private int idProvince;
 
-    @NotNull
+    @NotNull(message = "blad")
     @Column(name = "score")
     private int score;
 
     @NotNull
     @Length(max = 100)
     @Column(name = "password")
+    @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$",
+            message = "Hasło musi zawierac conajmniej jedną duża litere, cyfre i mieć minimalną długość 8 znaków" )
+    //@Size(min = 6, message = "Hasło musi posiadać minimum 6 znaków")
     private String password;
+
 
     private String confirmPassword;
 
-    @NotNull
+    @NotNull(message = "Imię: pole wymagane")
     @Length(max = 35)
     @Column(name = "name")
     private String name;
 
-    @NotNull
+    @NotNull(message = "Nazwisko: pole wymagane")
     @Length(max = 50)
     @Column(name = "surname")
     private String surname;
 
-    @NotNull
+    @NotNull(message = "Miasto: pole wymagane")
     @Length(max = 50)
     @Column(name = "city")
     private String city;
@@ -60,7 +64,7 @@ public class User {
     @Column(name = "street")
     private String street;
 
-    @NotNull
+    @NotNull(message = "Numer domu: pole wymagane")
     @Length(max = 15)
     @Column(name = "house_number")
     private String houseNumber;
@@ -72,18 +76,22 @@ public class User {
     @NotNull
     @Length(max = 6)
     @Column(name = "post_code")
+    @Pattern(regexp = "[0-9]{2}\\-[0-9]{3}", message = "Podaj kod pocztowy w formcie NN-NNN")
     private String postCode;
 
     @NotNull
+    @NotBlank(message = "Niepoprawny email")
     @Length(max = 30)
     @Column(name = "email")
+    @Email(message = "Niepoprawny email")
     private String email;
 
-    @Length(max = 12)
+    @Length(max = 12, message = "Telefon: nr. tel. nie może przekraczać 12 znaków")
+    @Length(min = 9, message = "Telefon: nr. tel. nie może być krótszy niż 9 znaków")
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @NotNull
+    @NotNull(message = "Data urodzenia: podaj poprawny format")
     @Column(name = "birth_date")
     private Date birthDate;
 
