@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<div th:replace="fragments/head :: static_head"></div>
+
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
+<div class="site-wrap">
+
+    <div th:replace="fragments/mobileNav :: mobile"></div>
+
+    <div th:replace="fragments/menu :: logout"></div>
+
+    <div layout:fragment="content">
+        !!! Nadpisz fragment content !!!
+    </div>
+
+    <div th:insert="fragments/footer :: footer-basic"></div>
+
+
+</div> <!-- end of: "site-wrap" -->
+    <div th:replace="fragments/script :: script"></div>
+</body>
+</html>
