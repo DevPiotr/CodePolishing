@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/formLayout}">
+
+<div layout:fragment="form">
+    <form action="#" th:action="@{/sign_up2}" th:object="${user}" method="post" class="form-box col-12">
+      <h3 class="h4 text-black mb-4">More Info</h3>
+      <ul class="alert-danger rounded" th:if="${#fields.hasErrors('*')}">
+        <li class="p-1" th:each="err : ${#fields.errors('*')}" th:text="${err}" />
+      </ul>
+      <input th:type="hidden" th:field="*{email}" />
+      <input th:type="hidden" th:field="*{password}" />
+      <div class="form-group">
+        Imię:
+        <input th:field="*{name}" class="form-control" placeholder="Name"/>
+      </div>
+      <div class="form-group">
+        Nazwisko:
+        <input th:field="*{surname}" class="form-control" placeholder="Surname"/>
+      </div>
+      <div class="form-group">
+        Rola:
+        <select th:field="*{idUserRole}">
+          <option th:each="role : ${roles}"
+                  th:value="${role.id}"
+                  th:utext="${role.name}">
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        Prowincja:
+        <select th:field="*{idProvince}">
+          <option th:each="province : ${provinces}"
+                  th:value="${province.id}"
+                  th:utext="${province.name}">
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        Miasto:
+        <input th:field="*{city}" class="form-control" placeholder="City"/>
+      </div>
+      <div class="form-group">
+        Ulica:
+        <input th:field="*{street}" class="form-control" placeholder="Street"/>
+      </div>
+      <div class="form-group">
+        Nr. domu:
+        <input th:field="*{houseNumber}" class="form-control" placeholder="House Number"/>
+      </div>
+      <div class="form-group">
+        Nr. mieszkania:
+        <input th:field="*{flatNr}" class="form-control" placeholder="Flat Nr"/>
+      </div>
+      <div class="form-group">
+        Kod pocztowy:
+        <input th:field="*{postCode}" class="form-control" placeholder="XX-XXX"/>
+      </div>
+      <div class="form-group">
+        Telefon:
+        <input th:field="*{phoneNumber}" class="form-control" placeholder="Phone Number"/>
+      </div>
+      <div class="form-group">
+        Data urodzenia:
+        <input th:type="date" th:field="*{birthDate}" class="form-control" placeholder="YYYY-MM-DD"/>
+      </div>
+      <div class="form-group">
+        <input type="submit" class="btn btn-primary btn-pill" value="Sign up">
+      </div>
+    </form>
+</div>

@@ -79,7 +79,7 @@ public class User {
     @Pattern(regexp = "[0-9]{2}\\-[0-9]{3}", message = "Podaj kod pocztowy w formcie NN-NNN")
     private String postCode;
 
-    @NotNull
+    @NotNull(message = "Niepoprawny email")
     @NotBlank(message = "Niepoprawny email")
     @Length(max = 30)
     @Column(name = "email")
