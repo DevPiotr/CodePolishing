@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -41,6 +42,7 @@ public class MateuszController {
         model.addAttribute("user", user);
         return "sign_up_user_test";
     }
+
     @PostMapping("/mateusz_sign_up")
     public String validStarterUserInfo(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model)
     {
@@ -48,6 +50,7 @@ public class MateuszController {
             bindingResult.hasFieldErrors("password"))
         {
             System.out.println("mateusz_sign_up: Są błedy");
+
             return "sign_up_user_test";
         }else
         {

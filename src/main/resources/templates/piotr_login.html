@@ -79,21 +79,14 @@
                     <div class="col-12">
                         <div class="row justify-content-center">
                             <div data-aos="fade-up" data-aos-delay="500" class="col-10">
-                                <form th:action="@{mateusz_sign_up}" th:object="${user}" method="post" class="form-box col-12">
-                                        <ul class="alert-danger rounded">
-                                            <li class="p-1" th:each="err : ${#fields.errors('email')}" th:text="${err}" />
-                                            <li class="p-1" th:each="err : ${#fields.errors('password')}" th:text="${err}" />
-                                        </ul>
-
-                                        <h3 class="h4 text-black mb-4">Załóż konto</h3>
+                                <form th:action="@{login}" method="post" class="form-box col-12">
+                                        <h3 class="h4 text-black mb-4">Zaloguj się</h3>
+                                    <div th:if="${message}" th:text="${message}" th:class="alert"></div>
                                     <div class="form-group">
-                                        <input th:field="*{email}" class="form-control" placeholder="email"/>
+                                        <input name="email" class="form-control" placeholder="email"/>
                                     </div>
                                     <div class="form-group">
-                                        <input th:field="*{password}" th:type="password" class="form-control" placeholder="hasło"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <input th:type="password" name="confirmPassword" class="form-control" placeholder="potwierdź hasło"/>
+                                        <input name="password" th:type="password" class="form-control" placeholder="hasło"/>
                                     </div>
                                     <div class="form-group">
                                         <input type="submit" class="btn btn-primary btn-pill" value="Dalej">
