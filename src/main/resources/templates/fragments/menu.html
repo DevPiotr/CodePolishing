@@ -3,7 +3,7 @@
 
         <div class="container-fluid">
             <div class="d-flex align-items-center">
-                <div class="site-logo mr-auto w-25"><a th:href="@{/}">CodePolishing</a></div>
+                <div class="site-logo mr-auto w-25"><a th:href="@{/index}">CodePolishing</a></div>
 
                 <div class="mx-auto text-center">
                     <nav class="site-navigation position-relative text-right" role="navigation">
@@ -17,11 +17,22 @@
                 </div>
 
                 <div class="ml-auto w-25">
-                    <nav class="site-navigation position-relative text-right" role="navigation">
-                        <ul class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
-                            <li class="cta"><a href="#contact-section" class="nav-link"><span>Contact Us</span></a></li>
-                        </ul>
-                    </nav>
+                    <div sec:authorize="isFullyAuthenticated()">
+                        <nav class="site-navigation position-relative text-right" role="navigation">
+                            <ul class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
+                                <li>Witaj: <span sec:authentication="name"></span></li>
+                                <li class="cta"><a th:href="@{/logout}" class="nav-link"><span>Wyloguj</span></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div sec:authorize="!isFullyAuthenticated()">
+                        <nav class="site-navigation position-relative text-right" role="navigation">
+                            <ul class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
+                                <li class="cta"><a th:href="@{/sign_up}" class="nav-link"><span>Rejestracja</span></a></li>
+                                <li class="cta"><a th:href="@{/signIn}" class="nav-link"><span>Logowanie</span></a></li>
+                            </ul>
+                        </nav>
+                    </div>
                     <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3"></span></a>
                 </div>
             </div>

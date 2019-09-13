@@ -31,7 +31,7 @@ public class RegistrationController {
         this.provinceRepository = provinceRepository;
     }
 
-    @GetMapping("/")
+    @GetMapping("/index")
     public String showMainPage()
     {
         return "index";
