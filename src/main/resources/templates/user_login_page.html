@@ -5,11 +5,18 @@
       layout:decorate="~{layouts/formLayout}">
 
 <div layout:fragment="form">
-    <form th:action="@{/signIn}" method="POST" class="form-box col-12">
-        <h3 class="h4 text-black mb-4">Zaloguj się</h3>
-        <ul th:if="${loginError}" class="alert-danger rounded">
-            <li class="p-1">Niepoprawny email lub hasło</li>
+    <form th:action="@{/userLogIn}" method="POST" class="form-box col-12">
+        <input type="hidden" th:name="${_csrf.parameterName}"
+                th:value="${_csrf.token}" />
+        <!-- Przy użyciu thymeleaf (zdefiniowany FailUrl) -->
+        <ul class="alert-danger rounded">
+            <li th:if="${loginError}" class="p-2">Niepoprawny email lub hasło</li>
         </ul>
+        <!-- Klasyczny sposób z użyciem parametru logout -->
+        <ul class="alert-success rounded">
+            <li th:if="${(param.logout != null)}" class="p-2">Wylogowano poprawnie</li>
+        </ul>
+        <h3 class="h4 text-black mb-4">Zaloguj się</h3>
         <div class="form-group">
             E-mail:
             <input name="username" type="text" class="form-control" placeholder="e-mail"/>
@@ -18,7 +25,7 @@
             Hasło:
             <input name="password" type="password" class="form-control" placeholder="hasło"/>
         </div>
-        <input type="submit" value="Login" />
+        <input type="submit" value="Login" class="btn btn-primary btn-pill"/>
     </form>
 </div>
 

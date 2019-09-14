@@ -21,7 +21,9 @@
                         <nav class="site-navigation position-relative text-right" role="navigation">
                             <ul class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
                                 <li>Witaj: <span sec:authentication="name"></span></li>
-                                <li class="cta"><a th:href="@{/logout}" class="nav-link"><span>Wyloguj</span></a></li>
+                                <form th:action="@{/logout}" method="post">
+                                        <input type="submit" class="btn btn-primary btn-pill" value="Wyloguj"/>
+                                </form>
                             </ul>
                         </nav>
                     </div>

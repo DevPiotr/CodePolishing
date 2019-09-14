@@ -24,6 +24,6 @@ public class LoginController {
     @RequestMapping("/logout")
     public String userLogoutPage()
     {
-        return "user_login_page";
+        return "index";
     }
 }

@@ -34,8 +34,7 @@ public class EngineerSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/fonts/**",
                 "/scripts/**",
                 "/scss/**",
-                "/js/**",
-                "../templates/**"
+                "/js/**"
         };
 
         http.authorizeRequests()
@@ -45,12 +44,11 @@ public class EngineerSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                     .loginPage("/signIn")
+                    .loginProcessingUrl("/userLogIn")
                     .failureUrl("/signInError")
                     .permitAll()
                 .and()
                 .logout()
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/signIn")
                     .permitAll();
 
 
