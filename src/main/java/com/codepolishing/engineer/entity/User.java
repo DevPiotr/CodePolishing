@@ -42,7 +42,6 @@ public class User {
     //@Size(min = 6, message = "Hasło musi posiadać minimum 6 znaków")
     private String password;
 
-
     private String confirmPassword;
 
     @NotNull(message = "Imię: pole wymagane")

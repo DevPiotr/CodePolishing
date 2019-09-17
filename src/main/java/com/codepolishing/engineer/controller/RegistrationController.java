@@ -82,9 +82,8 @@ public class RegistrationController {
             return "user_sign_up2";
         }else {
             System.out.println("sign_up2: Nie ma błędów");
-
-            userRepository.saveAndFlush(this.user);
-            this.user = null;
+            System.out.println(user.toString());
+            userRepository.save(user);
             return "redirect:/";
         }
 
