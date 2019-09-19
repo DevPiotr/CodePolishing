@@ -20,10 +20,10 @@ public class LoginController {
     @RequestMapping("/")
     public String foo(Model model){
 
-        Object pricipal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if(pricipal instanceof UserDetails){
-            User user = userRepository.findByEmail(((UserDetails) pricipal).getUsername());
+        if(principal instanceof UserDetails){
+            User user = userRepository.findByEmail(((UserDetails) principal).getUsername());
             model.addAttribute("userName",user.getName());
             model.addAttribute("userSurname",user.getSurname());
         }
