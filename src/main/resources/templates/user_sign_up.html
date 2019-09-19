@@ -15,10 +15,10 @@
             <input th:field="*{email}" class="form-control" placeholder="email"/>
         </div>
         <div class="form-group">
-            <input th:field="*{password}" th:type="password" class="form-control" placeholder="hasło"/>
+            <input th:field="*{password}" th:type="password" name="password" class="form-control" placeholder="hasło"/>
         </div>
         <div class="form-group">
-            <input th:type="password" class="form-control" placeholder="potwierdź hasło"/>
+            <input th:field="*{confirmPassword}" th:type="password" name="confirm_password" class="form-control" placeholder="potwierdź hasło"/>
         </div>
         <div class="form-group">
             <input type="submit" class="btn btn-primary btn-pill" value="Dalej">

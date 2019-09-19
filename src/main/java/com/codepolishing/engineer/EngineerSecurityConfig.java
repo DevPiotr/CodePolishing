@@ -38,12 +38,7 @@ public class EngineerSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authoritiesByUsernameQuery(roleQuery)
                 .dataSource(dataSource)
                 .passwordEncoder(new BCryptPasswordEncoder());
-        /*
-        auth.inMemoryAuthentication()
-                .withUser("mateusz").password(passwordEncoder().encode("qwerty")).roles("ADMIN")
-                .and()
-                .withUser("ola").password(passwordEncoder().encode("qwerty")).roles("USER");
-*/
+
     }
 
     @Override

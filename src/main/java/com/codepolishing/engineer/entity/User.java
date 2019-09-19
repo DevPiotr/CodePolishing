@@ -1,5 +1,7 @@
 package com.codepolishing.engineer.entity;
 
+import com.codepolishing.engineer.validAnnotation.FieldMatch;
+import com.codepolishing.engineer.validAnnotation.UniqueEmail;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
@@ -14,6 +16,7 @@ import java.util.List;
 @Table(name = "users")
 @Data
 @NoArgsConstructor
+@FieldMatch(first = "password", second = "confirmPassword", message = "Hasła różnią się")
 public class User {
 
     //region Fields From Database
@@ -39,9 +42,9 @@ public class User {
     @Column(name = "password")
     @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$",
             message = "Hasło musi zawierac conajmniej jedną duża litere, cyfre i mieć minimalną długość 8 znaków" )
-    //@Size(min = 6, message = "Hasło musi posiadać minimum 6 znaków")
     private String password;
 
+    @NotEmpty
     private String confirmPassword;
 
     @NotNull(message = "Imię: pole wymagane")
@@ -78,7 +81,8 @@ public class User {
     @Pattern(regexp = "[0-9]{2}\\-[0-9]{3}", message = "Podaj kod pocztowy w formcie NN-NNN")
     private String postCode;
 
-    @NotNull(message = "Niepoprawny email")
+    @NotNull()
+    @UniqueEmail()
     @NotBlank(message = "Niepoprawny email")
     @Length(max = 30)
     @Column(name = "email")
