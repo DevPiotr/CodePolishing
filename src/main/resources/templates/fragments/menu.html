@@ -20,10 +20,10 @@
                     <div sec:authorize="isFullyAuthenticated()">
                         <nav class="site-navigation position-relative text-right" role="navigation">
                             <ul class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
-                                <div th:if="${userName}" th:text="Witaj + ' ' + ${userName} + ' ' + ${userSurname}"></div>
-                                <!--<li>Witaj: <span sec:authentication="name"></span></li>-->
+                                <!--<div th:if="${userName}" th:text="Witaj + ' ' + ${userName} + ' ' + ${userSurname}"></div>-->
+                                <li>Witaj: <span sec:authentication="name"></span></li>
                                 <form th:action="@{/logout}" method="post">
-                                        <input type="submit" class="btn btn-primary btn-pill" value="Wyloguj"/>
+                                    <input type="submit" class="btn btn-primary btn-pill" value="Wyloguj"/>
                                 </form>
                             </ul>
                         </nav>
@@ -56,5 +56,36 @@
                 </div>
             </div>
         </div>
+    </header>
+</div>
+
+<div th:fragment="courseMenu">
+    <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
+
+        <div class="container-fluid">
+            <div class="d-flex align-items-center">
+                <div class="site-logo mr-auto w-25"><a th:href="@{/}">CodePolishing</a></div>
+
+                <div class="d-inline-block align-items-center w-50">
+                    <div class="site-logo mx-auto text-white font-italic">
+                        Wspaniałe kursy
+                    </div>
+                </div>
+
+                <div class="ml-auto w-25">
+                        <nav class="site-navigation position-relative text-right" role="navigation">
+                            <ul class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
+                                <!--<div th:if="${userName}" th:text="Witaj + ' ' + ${userName} + ' ' + ${userSurname}"></div>-->
+                                <li>Witaj: <span sec:authentication="name"></span></li>
+                                <form th:action="@{/logout}" method="post">
+                                    <input type="submit" class="btn btn-primary btn-pill" value="Wyloguj"/>
+                                </form>
+                            </ul>
+                        </nav>
+                    <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3"></span></a>
+                </div>
+            </div>
+        </div>
+
     </header>
 </div>
