@@ -15,6 +15,9 @@ public class UniqueEmailConstraintValidator implements ConstraintValidator<Uniqu
 
    public boolean isValid(String obj, ConstraintValidatorContext context) {
 
+      if(userRepository == null)
+         return true;
+
       if(obj != null)
       {
          if(userRepository.findByEmail(obj) == null)

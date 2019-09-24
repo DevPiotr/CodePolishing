@@ -3,7 +3,6 @@ package com.codepolishing.engineer.validAnnotation;
 import org.apache.commons.beanutils.BeanUtils;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.lang.reflect.InvocationTargetException;
 
 public class FieldMatchConstraintValidator implements ConstraintValidator<FieldMatch, Object> {
 
@@ -26,9 +25,6 @@ public class FieldMatchConstraintValidator implements ConstraintValidator<FieldM
          final Object secondObj = BeanUtils.getProperty(value, secondFieldName);
 
          valid = firstObj.equals(secondObj);
-         System.out.println(valid);
-         System.out.println((String)firstObj);
-         System.out.println((String)secondObj);
       } catch (Exception e) {
 
       }
