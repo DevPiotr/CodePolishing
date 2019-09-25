@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/courseLayout}" >
+
+<div layout:fragment="content">
+
+    <div class="row">
+        <div th:text="${course.id}"></div>
+        <div th:text="${course.name}"></div>
+        <div th:text="${course.longDescription}"></div>
+
+    </div>
+</div>
+</html>
