@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/courseLayout}" >
+
+<div layout:fragment="content">
+
+    <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-12" th:each="course: ${courses}">
+            <div class="card">
+                <img class="card-img-top" src="" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${course.getName()}"></h5>
+                    <p class="card-text" th:text="${course.getShortDescription()}"></p>
+                    <a th:href="@{/courses/{id}(id=${course.getId()})}" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</html>

@@ -1,5 +1,7 @@
 package com.codepolishing.engineer;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -11,18 +13,32 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
+import javax.sql.DataSource;
+
 @Configuration
 @EnableWebSecurity
 public class EngineerSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private DataSource dataSource;
+
+    @Value("select email,password,enabled from users where email=?")
+    private String usersQuery;
+
+    @Value("select u.email, ur.name from users u join user_roles ur on(u.id_user_role = ur.id_user_role) where u.email = ? ")
+    private String roleQuery;
+
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
+        auth.
+                jdbcAuthentication()
+                .usersByUsernameQuery(usersQuery)
+                .authoritiesByUsernameQuery(roleQuery)
+                .dataSource(dataSource)
+                .passwordEncoder(new BCryptPasswordEncoder());
 
-        auth.inMemoryAuthentication()
-                .withUser("mateusz").password(passwordEncoder().encode("qwerty")).roles("ADMIN")
-                .and()
-                .withUser("ola").password(passwordEncoder().encode("qwerty")).roles("USER");
     }
 
     @Override
@@ -34,8 +50,7 @@ public class EngineerSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/fonts/**",
                 "/scripts/**",
                 "/scss/**",
-                "/js/**",
-                "../templates/**"
+                "/js/**"
         };
 
         http.authorizeRequests()
@@ -45,22 +60,16 @@ public class EngineerSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                     .loginPage("/signIn")
+                    .loginProcessingUrl("/userLogIn")
                     .failureUrl("/signInError")
                     .permitAll()
+                .usernameParameter("email")
+                .passwordParameter("password")
                 .and()
                 .logout()
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/signIn")
                     .permitAll();
 
 
-    }
-
-    @Bean
-    public AuthenticationSuccessHandler successHandler() {
-        SimpleUrlAuthenticationSuccessHandler handler = new SimpleUrlAuthenticationSuccessHandler();
-        handler.setUseReferer(true);
-        return handler;
     }
 
     @Bean

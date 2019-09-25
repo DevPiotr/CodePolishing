@@ -19,8 +19,11 @@
                     <h1 data-aos="fade-up" data-aos-delay="100">Learn From The Expert</h1>
                     <p class="mb-4"  data-aos="fade-up" data-aos-delay="200">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime ipsa nulla sed quis rerum amet natus quas necessitatibus.</p>
 
-                    <div sec:authorize="isFullyAuthenticated()">Tajna treść dla zalogowanych</div>
-                    <div sec:authorize="hasRole('ADMIN')">. Jeśli jesteś adminem to dodatkowo widzisz to :)</div>
+                    <div sec:authorize="isFullyAuthenticated()">
+                      <a th:href="@{courses/}" class="btn btn-primary">Tajny button</a>
+
+                    </div>
+                    <div sec:authorize="hasAuthority('Administrator')">. Jeśli jesteś adminem to dodatkowo widzisz to :)</div>
                   </div>
 
                 </div>

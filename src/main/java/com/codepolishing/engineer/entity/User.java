@@ -1,20 +1,26 @@
 package com.codepolishing.engineer.entity;
 
+import com.codepolishing.engineer.validAnnotation.FieldMatch;
+import com.codepolishing.engineer.validAnnotation.UniqueEmail;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.NumberFormat;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
 @Data
 @NoArgsConstructor
-public class User {
+@FieldMatch(first = "password", second = "confirmPassword", message = "Hasła różnią się")
+public class User implements UserDetails {
 
     //region Fields From Database
     @Id
@@ -39,10 +45,9 @@ public class User {
     @Column(name = "password")
     @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$",
             message = "Hasło musi zawierac conajmniej jedną duża litere, cyfre i mieć minimalną długość 8 znaków" )
-    //@Size(min = 6, message = "Hasło musi posiadać minimum 6 znaków")
     private String password;
 
-
+    @NotEmpty
     private String confirmPassword;
 
     @NotNull(message = "Imię: pole wymagane")
@@ -79,7 +84,8 @@ public class User {
     @Pattern(regexp = "[0-9]{2}\\-[0-9]{3}", message = "Podaj kod pocztowy w formcie NN-NNN")
     private String postCode;
 
-    @NotNull(message = "Niepoprawny email")
+    @NotNull()
+    @UniqueEmail()
     @NotBlank(message = "Niepoprawny email")
     @Length(max = 30)
     @Column(name = "email")
@@ -128,6 +134,36 @@ public class User {
     @OneToMany
     @JoinColumn(name = "id_user")
     private List<Opinion> opinionList;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
 
     //endregion From
 }
