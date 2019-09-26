@@ -6,11 +6,39 @@
 
 <div layout:fragment="content">
 
-    <div class="row">
-        <div th:text="${course.id}"></div>
-        <div th:text="${course.name}"></div>
-        <div th:text="${course.longDescription}"></div>
-
+    <div class="intro-section">
+        <div class="slide-1" th:style="'background:url(' + @{/images/programming_banner.jpg} + ');'" data-stellar-background-ratio="0.8">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-2">
+                                <p><a th:href="@{/courses/}"><- Powrót</a></p>
+                            </div>
+                        </div>
+                        <div class="row font-italic">
+                            <div class="col-1" >
+                                <h1 th:text="'ID:' + ${course.getId()}"></h1>
+                            </div>
+                            <div class="col-11 text-center" >
+                                <h1 th:text="${course.getName()}"></h1>
+                            </div>
+                        </div>
+                        <div class="row single-course-body">
+                            <div class="col-12 text-center" >
+                                <h1 th:text="${course.getLongDescription()}"></h1>
+                            </div>
+                        </div>
+                        <div class="row align-items-right">
+                            <div class="col-10"></div>
+                            <div class="col-2">
+                                <a href="#" class="btn btn-primary">Dołącz</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </html>
