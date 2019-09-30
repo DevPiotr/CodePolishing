@@ -17,16 +17,23 @@
                             </div>
                         </div>
                         <div class="row font-italic">
-                            <div class="col-1" >
-                                <h1 th:text="'ID:' + ${course.getId()}"></h1>
-                            </div>
-                            <div class="col-11 text-center" >
+                            <div class="col-12 text-center" >
                                 <h1 th:text="${course.getName()}"></h1>
                             </div>
                         </div>
                         <div class="row single-course-body">
                             <div class="col-12 text-center" >
-                                <h1 th:text="${course.getLongDescription()}"></h1>
+                                <h2 th:text="${course.getLongDescription()}"></h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <h2>Rodziały</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" th:each="courseSection: ${courseSections}">
+                                <div class="border-bottom" th:text="${courseSection.getName()} + ' - ' + ${courseSection.getShortDescription()}"></div>
                             </div>
                         </div>
                         <div class="row align-items-right">

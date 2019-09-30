@@ -1,8 +1,10 @@
 package com.codepolishing.engineer.controller;
 
 import com.codepolishing.engineer.entity.Course;
+import com.codepolishing.engineer.entity.CourseSection;
 import com.codepolishing.engineer.repository.CourseLevelRepository;
 import com.codepolishing.engineer.repository.CourseRepository;
+import com.codepolishing.engineer.repository.CourseSectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +20,12 @@ public class CourseController {
 
     @Autowired
     CourseRepository courseRepository;
+
     @Autowired
     CourseLevelRepository courseLevelRepository;
+
+    @Autowired
+    CourseSectionRepository courseSectionRepository;
 
     @GetMapping("/")
     public String showCourses(Model model){
@@ -38,7 +44,10 @@ public class CourseController {
 
         Course course = courseRepository.getOne(id);
 
+        List<CourseSection> courseSectionList = courseSectionRepository.findCourseSectionsByIdCourse(id);
+
         model.addAttribute("course",course);
+        model.addAttribute("courseSections",courseSectionList);
 
         return "single_course";
     }
