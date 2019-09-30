@@ -32,7 +32,12 @@
                         <div class="row align-items-right">
                             <div class="col-10"></div>
                             <div class="col-2">
-                                <a href="#" class="btn btn-primary">Dołącz</a>
+                                <div sec:authorize="isFullyAuthenticated()">
+                                    <a href="#" class="btn btn-primary">Dołącz</a>
+                                </div>
+                            <div sec:authorize="!isFullyAuthenticated()">
+                                    <a href="#" class="btn btn-primary">Zaloguj się aby dołączyć</a>
+                                </div>
                             </div>
                         </div>
                     </div>
