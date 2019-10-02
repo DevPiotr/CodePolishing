@@ -2,15 +2,17 @@ package com.codepolishing.engineer.controller;
 
 import com.codepolishing.engineer.entity.Course;
 import com.codepolishing.engineer.entity.CourseSection;
+import com.codepolishing.engineer.entity.User;
 import com.codepolishing.engineer.repository.CourseLevelRepository;
 import com.codepolishing.engineer.repository.CourseRepository;
 import com.codepolishing.engineer.repository.CourseSectionRepository;
+import com.codepolishing.engineer.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +28,9 @@ public class CourseController {
 
     @Autowired
     CourseSectionRepository courseSectionRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @GetMapping("/")
     public String showCourses(Model model){
@@ -51,4 +56,25 @@ public class CourseController {
 
         return "single_course";
     }
+
+    @RequestMapping("/joinCourse")
+    public String joinCourse(@RequestParam("idCourse")int idCourse){
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if(principal instanceof UserDetails){
+            User user = userRepository.findByEmail(((UserDetails) principal).getUsername());
+
+            CourseSection courseSection = courseSectionRepository.findCourseSectionByIdCourseAndSectionPartIs(idCourse,1);
+
+            user.getCourseSectionList().add(courseSection);
+
+            userRepository.save(user);
+
+            //TODO Add new column to joining section defining in which course u are
+        }
+
+        return "redirect:/courses/";
+    }
+
 }

@@ -32,6 +32,10 @@ public class CourseSubsection {
     @Column(name = "description")
     private String description;
 
+    @NotNull
+    @Column(name = "subsection_part")
+    private int subsectionPart;
+
     @ManyToMany
     @JoinTable(
             name = "set_of_tasks",

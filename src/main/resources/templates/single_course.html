@@ -33,18 +33,21 @@
                         </div>
                         <div class="row">
                             <div class="col-12" th:each="courseSection: ${courseSections}">
-                                <div class="border-bottom" th:text="${courseSection.getName()} + ' - ' + ${courseSection.getShortDescription()}"></div>
+                                <div class="border-bottom" th:text="${courseSection.getSectionPart()} + '. ' + ${courseSection.getName()} + ' - ' + ${courseSection.getShortDescription()}"></div>
                             </div>
                         </div>
                         <div class="row align-items-right">
                             <div class="col-10"></div>
                             <div class="col-2">
                                 <div sec:authorize="isFullyAuthenticated()">
-                                    <a href="#" class="btn btn-primary">Dołącz</a>
+                                    <form action="joinCourse" method="get">
+                                        <button class="btn btn-primary" name="idCourse" th:value="${course.getId()}">Dołącz</button>
+                                    </form>
                                 </div>
+                            <!-- TODO Dodaj widok dla niezalogowanych (konfiguracja)
                             <div sec:authorize="!isFullyAuthenticated()">
-                                    <a href="#" class="btn btn-primary">Zaloguj się aby dołączyć</a>
-                                </div>
+                                    <a href="#" disabled="disabled" class="btn btn-primary">Zaloguj się aby dołączyć</a>
+                            </div>-->
                             </div>
                         </div>
                     </div>
