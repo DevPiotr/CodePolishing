@@ -13,8 +13,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.UserDataHandler;
 
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/courses")
@@ -35,11 +36,23 @@ public class CourseController {
     @GetMapping("/")
     public String showCourses(Model model){
 
-        model.addAttribute("basicCourses",courseRepository.findCoursesByIdCourseLevel(1));
-        model.addAttribute("mediumCourses",courseRepository.findCoursesByIdCourseLevel(2));
-        model.addAttribute("hardCourses",courseRepository.findCoursesByIdCourseLevel(3));
+        User user = getLoggedUser();
 
-        model.addAttribute("courseLevelName",courseLevelRepository.findAll());
+        HashMap<String,List<Course>> allCourses = new HashMap<>();
+
+        allCourses.put("basic",courseRepository.findCoursesByIdCourseLevel(1));
+        allCourses.put("medium",courseRepository.findCoursesByIdCourseLevel(2));
+        allCourses.put("hard",courseRepository.findCoursesByIdCourseLevel(3));
+
+        if(user != null) {
+            removeCoursesThatUserJoin(user,allCourses);
+        }
+
+        model.addAttribute("basicCourses",allCourses.get("basic"));
+        model.addAttribute("mediumCourses", allCourses.get("medium"));
+        model.addAttribute("hardCourses", allCourses.get("hard"));
+
+        model.addAttribute("courseLevelName", courseLevelRepository.findAll());
 
         return "courses";
     }
@@ -60,21 +73,46 @@ public class CourseController {
     @RequestMapping("/joinCourse")
     public String joinCourse(@RequestParam("idCourse")int idCourse){
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = getLoggedUser();
 
-        if(principal instanceof UserDetails){
-            User user = userRepository.findByEmail(((UserDetails) principal).getUsername());
-
-            CourseSection courseSection = courseSectionRepository.findCourseSectionByIdCourseAndSectionPartIs(idCourse,1);
+        if(user != null) {
+            CourseSection courseSection = courseSectionRepository.findCourseSectionByIdCourseAndSectionPartIs(idCourse, 1);
 
             user.getCourseSectionList().add(courseSection);
 
             userRepository.save(user);
-
-            //TODO Add new column to joining section defining in which course u are
         }
-
         return "redirect:/courses/";
     }
 
+    private User getLoggedUser(){
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if(principal instanceof UserDetails) {
+            return userRepository.findByEmail(((UserDetails) principal).getUsername());
+        }
+        else
+            return null;
+    }
+
+    private void removeCoursesThatUserJoin(User user,HashMap<String,List<Course>> allCourses){
+
+        List<Course> CoursesJoinedByUser = getCoursesThatUserJoin(user);
+
+        for(List<Course> courses : allCourses.values()){
+            courses.removeAll(CoursesJoinedByUser);
+        }
+
+    }
+
+    private List<Course> getCoursesThatUserJoin(User user){
+        HashSet<Integer> coursesIdSet = new HashSet<>();
+
+        for(CourseSection courseSection : user.getCourseSectionList()){
+            coursesIdSet.add(courseSection.getIdCourse());
+        }
+
+        return courseRepository.findAllById(coursesIdSet);
+    }
 }
