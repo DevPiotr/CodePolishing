@@ -54,7 +54,7 @@ public class EngineerSecurityConfig extends WebSecurityConfigurerAdapter {
         };
 
         http.authorizeRequests()
-                .antMatchers("/", "/index","/sign_up","/sign_up2").permitAll()
+                .antMatchers("/", "/index","/sign_up","/sign_up2","/courses/**").permitAll()
                 .antMatchers(staticResources).permitAll()
                 .anyRequest().authenticated()
                 .and()

@@ -8,7 +8,7 @@
                 <div class="mx-auto text-center">
                     <nav class="site-navigation position-relative text-right" role="navigation">
                         <ul class="site-menu main-menu js-clone-nav mx-auto d-none d-lg-block  m-0 p-0">
-                            <li><a href="#home-section" class="nav-link">Home</a></li>
+                            <li><a th:href="@{/}" class="nav-link">Home</a></li>
                             <li><a th:href="@{courses/}" class="nav-link">Courses</a></li>
                             <li><a href="#programs-section" class="nav-link">Programs</a></li>
                             <li><a href="#teachers-section" class="nav-link">Teachers</a></li>
@@ -69,7 +69,7 @@
                 <div class="mx-auto text-center">
                     <nav class="site-navigation position-relative text-right" role="navigation">
                         <ul class="site-menu main-menu js-clone-nav mx-auto d-none d-lg-block  m-0 p-0">
-                            <li><a href="#home-section" class="nav-link">Home</a></li>
+                            <li><a th:href="@{/}" class="nav-link">Home</a></li>
                             <li><a th:href="@{/courses/}" class="nav-link">Courses</a></li>
                             <li><a href="#programs-section" class="nav-link">Programs</a></li>
                             <li><a href="#teachers-section" class="nav-link">Teachers</a></li>
@@ -78,8 +78,9 @@
                 </div>
 
                 <div class="ml-auto w-25">
+                    <div sec:authorize="isFullyAuthenticated()">
                         <nav class="site-navigation position-relative text-right" role="navigation">
-                            <ul class="site-menu main-menu site-menu js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
+                            <ul class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
                                 <!--<div th:if="${userName}" th:text="Witaj + ' ' + ${userName} + ' ' + ${userSurname}"></div>-->
                                 <li>Witaj: <span sec:authentication="name"></span></li>
                                 <form th:action="@{/logout}" method="post">
@@ -87,6 +88,15 @@
                                 </form>
                             </ul>
                         </nav>
+                    </div>
+                    <div sec:authorize="!isFullyAuthenticated()">
+                        <nav class="site-navigation position-relative text-right" role="navigation">
+                            <ul class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
+                                <li class="cta"><a th:href="@{/sign_up}" class="nav-link"><span>Rejestracja</span></a></li>
+                                <li class="cta"><a th:href="@{/signIn}" class="nav-link"><span>Logowanie</span></a></li>
+                            </ul>
+                        </nav>
+                    </div>
                     <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3"></span></a>
                 </div>
             </div>
