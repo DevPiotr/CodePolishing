@@ -17,19 +17,6 @@ public class LoginController {
     @Autowired
     UserRepository userRepository;
 
-    @RequestMapping("/")
-    public String foo(Model model){
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        if(principal instanceof UserDetails){
-            User user = userRepository.findByEmail(((UserDetails) principal).getUsername());
-            model.addAttribute("userName",user.getName());
-            model.addAttribute("userSurname",user.getSurname());
-        }
-        return "index";
-    }
-
     @RequestMapping("/signIn")
     public String userLoginPage()
     {

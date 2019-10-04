@@ -1,8 +1,103 @@
+<!-- Standardowy szablon menu dla zalogowanych i wylogowanych -->
+<div th:fragment="basic-menu" xmlns:th="http://www.w3.org/1999/html">
+    <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center">
+                <!-- Logo lewe miejsce w pasku menu -->
+                <div class="site-logo mr-auto w-25">
+                    <a th:href="@{/}">CodePolishing</a>
+                </div>
+
+                <!-- Srodkowe miejsce w pasku menu -->
+                <div th:replace="::middle-menu"></div>
+
+                <!-- Prawe miejsce w pasku menu -->
+                <div th:replace="::right-menu"></div>
+            </div>
+        </div>
+    </header>
+</div>
+
+<!-- Sprawdza czy użytkownik jest zalogowany i wyświetla mu odpowiednia treść w pozycji menu-->
+<div th:fragment="middle-menu" class="mx-auto w-50 text-center">
+    <!-- Czy jest zalogowany ?-->
+    <th:block sec:authorize="isFullyAuthenticated()">
+        <!-- Wyświetlam menu dla zalogowanego-->
+        <th:block th:replace="::userIsLoggedMenu"></th:block>
+    </th:block>
+    <th:block sec:authorize="!isFullyAuthenticated()">
+        <!-- Wyświetlam menu dla niezalogowanego-->
+        <th:block th:replace="::userIsNotLoggedMenu"></th:block>
+    </th:block>
+</div>
+
+<!-- Sprawdza czy użytkowik jest zalogowany i wyświetla mu odpowiednia treść proflu-->
+<div th:fragment="right-menu" class="ml-auto w-25">
+    <th:block sec:authorize="isFullyAuthenticated()">
+        <!-- Wyświetlam profil -->
+        <div th:replace="::userIsLoggedProfile"></div>
+    </th:block>
+    <th:block sec:authorize="!isFullyAuthenticated()">
+        <!-- Wyświetlam logownie / rejestracje-->
+        <div th:replace="::userIsNotLoggedProfile"></div>
+    </th:block>
+</div>
+
+
+<th:block th:fragment="userIsLoggedProfile">
+        <nav class="site-navigation position-relative text-center" role="navigation">
+            <ul class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
+                <!--<div th:if="${userName}" th:text="Witaj + ' ' + ${userName} + ' ' + ${userSurname}"></div>-->
+                <li><img class="card-img-top" th:src="@{/images/user_new.png}" style="width: 60px; height: 60px;" alt="Card image cap"></li>
+                <li>Witaj: <span sec:authentication="name"></span></li>
+                <li><form th:action="@{/logout}" method="post">
+                    <input type="submit" class="btn btn-primary btn-pill" value="Wyloguj"/>
+                </form>
+                </li>
+            </ul>
+        </nav>
+        <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3"></span></a>
+</th:block>
+
+<th:block th:fragment="userIsLoggedMenu">
+    <nav class="site-navigation position-relative text-center" role="navigation">
+        <ul class="site-menu main-menu js-clone-nav mx-auto d-none d-lg-block  m-0 p-0">
+            <li><a th:href="@{/}" class="nav-link">Profil</a></li>
+            <li><a th:href="@{/courses/}" class="nav-link">Moje kursy</a></li>
+            <li><a th:href="@{/courses/}" class="nav-link">Kursy</a></li>
+            <li><a href="#programs-section" class="nav-link">Ofery</a></li>
+            <!--<li><a href="#teachers-section" class="nav-link">Teachers</a></li>-->
+        </ul>
+    </nav>
+</th:block>
+
+<th:block th:fragment="userIsNotLoggedProfile">
+        <nav class="site-navigation position-relative text-center" role="navigation">
+            <ul class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
+                <li class="cta"><a th:href="@{/sign_up}" class="nav-link"><span>Rejestracja</span></a></li>
+                <li class="cta"><a th:href="@{/signIn}" class="nav-link"><span>Logowanie</span></a></li>
+            </ul>
+        </nav>
+        <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3"></span></a>
+</th:block>
+
+<th:block th:fragment="userIsNotLoggedMenu">
+        <nav class="site-navigation position-relative text-center" role="navigation">
+            <ul class="site-menu main-menu js-clone-nav mx-auto d-none d-lg-block  m-0 p-0">
+                <li><a th:href="@{/}" class="nav-link">Home</a></li>
+                <li><a th:href="@{/courses/}" class="nav-link">Courses</a></li>
+                <li><a href="#programs-section" class="nav-link">Programs</a></li>
+                <li><a href="#teachers-section" class="nav-link">Teachers</a></li>
+            </ul>
+        </nav>
+</th:block>
+
+
 <div th:fragment="logout">
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
 
         <div class="container-fluid">
-            <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center">
                 <div class="site-logo mr-auto w-25"><a th:href="@{/}">CodePolishing</a></div>
 
                 <div class="mx-auto text-center">
@@ -21,10 +116,13 @@
                         <nav class="site-navigation position-relative text-right" role="navigation">
                             <ul class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
                                 <!--<div th:if="${userName}" th:text="Witaj + ' ' + ${userName} + ' ' + ${userSurname}"></div>-->
+                                <li><img class="card-img-top" src="http://via.placeholder.com/60x60" alt="Card image cap"></li>
                                 <li>Witaj: <span sec:authentication="name"></span></li>
-                                <form th:action="@{/logout}" method="post">
+                                <li><button class="btn btn-secondary btn-pill">Moje konto</button></li>
+                                <li><form th:action="@{/logout}" method="post">
                                     <input type="submit" class="btn btn-primary btn-pill" value="Wyloguj"/>
                                 </form>
+                                </li>
                             </ul>
                         </nav>
                     </div>
@@ -44,7 +142,7 @@
     </header>
 </div>
 
-<div th:fragment="formMenu">
+<div th:fragment="form-menu">
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
         <div class="container-fluid">
             <div class="d-inline-block align-items-center w-25">
@@ -59,6 +157,7 @@
     </header>
 </div>
 
+<!--
 <div th:fragment="courseMenu">
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
 
@@ -81,7 +180,7 @@
                     <div sec:authorize="isFullyAuthenticated()">
                         <nav class="site-navigation position-relative text-right" role="navigation">
                             <ul class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
-                                <!--<div th:if="${userName}" th:text="Witaj + ' ' + ${userName} + ' ' + ${userSurname}"></div>-->
+                                &lt;!&ndash;<div th:if="${userName}" th:text="Witaj + ' ' + ${userName} + ' ' + ${userSurname}"></div>&ndash;&gt;
                                 <li>Witaj: <span sec:authentication="name"></span></li>
                                 <form th:action="@{/logout}" method="post">
                                     <input type="submit" class="btn btn-primary btn-pill" value="Wyloguj"/>
@@ -101,6 +200,5 @@
                 </div>
             </div>
         </div>
-
     </header>
-</div>
+</div>-->
