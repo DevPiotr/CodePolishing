@@ -1,5 +1,8 @@
 <!-- Standardowy szablon menu dla zalogowanych i wylogowanych -->
-<div th:fragment="basic-menu" xmlns:th="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<div th:fragment="basic-menu">
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
         <div class="container-fluid">
             <div class="d-flex align-items-center">
@@ -20,7 +23,7 @@
 
 <!-- Sprawdza czy użytkownik jest zalogowany i wyświetla mu odpowiednia treść w pozycji menu-->
 <div th:fragment="middle-menu" class="mx-auto w-50 text-center">
-    <!-- Czy jest zalogowany ?-->
+    <!-- Czy użytkownik jest zalogowany ?-->
     <th:block sec:authorize="isFullyAuthenticated()">
         <!-- Wyświetlam menu dla zalogowanego-->
         <th:block th:replace="::userIsLoggedMenu"></th:block>
@@ -33,30 +36,71 @@
 
 <!-- Sprawdza czy użytkowik jest zalogowany i wyświetla mu odpowiednia treść proflu-->
 <div th:fragment="right-menu" class="ml-auto w-25">
+    <!-- Czy użytkownik jest zalogowany ?-->
     <th:block sec:authorize="isFullyAuthenticated()">
         <!-- Wyświetlam profil -->
         <div th:replace="::userIsLoggedProfile"></div>
     </th:block>
     <th:block sec:authorize="!isFullyAuthenticated()">
-        <!-- Wyświetlam logownie / rejestracje-->
+        <!-- Wyświetlam logownie / rejestracje -->
         <div th:replace="::userIsNotLoggedProfile"></div>
     </th:block>
 </div>
 
 
 <th:block th:fragment="userIsLoggedProfile">
-        <nav class="site-navigation position-relative text-center" role="navigation">
+    <div class="d-inline-block w-100 p-2">
+        <div class="w-25 float-left">
+            <a href="/user/"><img class="card-img-top user-profile-img" th:src="@{/getUserImage}" alt="Profil's image"></a>
+        </div>
+        <div class="w-25 float-right">
+            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle float-right"><span
+                    class="icon-menu h3"></span></a>
+        </div>
+
+        <div class="w-75 float-left">
+            <div class="w-100 d-none d-xl-block text-center">
+                Witaj: <th:block sec:authentication="name"></th:block>
+            </div>
+            <div class="w-100 float-left">
+                    <nav class="site-navigation text-center" role="navigation">
+                        <ul class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
+                            <!--<div th:if="${userName}" th:text="Witaj + ' ' + ${userName} + ' ' + ${userSurname}"></div>-->
+                            <li class="w-50 float-left">
+                                <form th:action="@{/user}" method="post">
+                                <input type="submit" class="btn btn-primary btn-pill w-75 px-2 ml-1" value="Profil"/>
+                            </form></li>
+                            <li class="w-50 float-left">
+                                <form th:action="@{/logout}" method="post">
+                                    <input type="submit" class="btn btn-secondary btn-pill w-75 px-2 mr-1" value="Wyloguj"/>
+                                </form>
+                            </li>
+                        </ul>
+                    </nav>
+
+            </div>
+        </div>
+    </div>
+
+    <!--<span class="d-none d-xl-block text-center">Witaj: <th:block sec:authentication="name"></th:block></span>
+    <div class="w-25 mx-auto d-inline-block text-center align-content-center">
+        <img class="card-img-top user-profile-img" th:src="@{/images/user_new.png}" alt="Profil's image">
+    </div>
+    <div class="w-50 d-inline-block mx-auto text-center align-content-center">
+        <nav class="site-navigation text-center" role="navigation">
             <ul class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
-                <!--<div th:if="${userName}" th:text="Witaj + ' ' + ${userName} + ' ' + ${userSurname}"></div>-->
-                <li><img class="card-img-top" th:src="@{/images/user_new.png}" style="width: 60px; height: 60px;" alt="Card image cap"></li>
-                <li>Witaj: <span sec:authentication="name"></span></li>
-                <li><form th:action="@{/logout}" method="post">
-                    <input type="submit" class="btn btn-primary btn-pill" value="Wyloguj"/>
-                </form>
+                &lt;!&ndash;<div th:if="${userName}" th:text="Witaj + ' ' + ${userName} + ' ' + ${userSurname}"></div>&ndash;&gt;
+
+                <li>
+                    <form th:action="@{/logout}" method="post">
+                        <input type="submit" class="btn btn-primary btn-pill" value="Wyloguj"/>
+                    </form>
                 </li>
             </ul>
         </nav>
-        <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3"></span></a>
+        <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle float-right"><span
+                class="icon-menu h3"></span></a>
+    </div>-->
 </th:block>
 
 <th:block th:fragment="userIsLoggedMenu">
@@ -156,7 +200,7 @@
         </div>
     </header>
 </div>
-
+</html>
 <!--
 <div th:fragment="courseMenu">
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">

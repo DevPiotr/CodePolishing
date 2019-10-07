@@ -16,8 +16,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 
 
 @Controller
@@ -44,8 +49,7 @@ public class SignUp2Controller {
         return "user_sign_up2";
     }
     @PostMapping("sign_up2")
-    public String validAllUserInfo(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model, HttpServletRequest request)
-    {
+    public String validAllUserInfo(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model, HttpServletRequest request) throws IOException {
         model.addAttribute("roles",userRoleRepository.findAll());
         model.addAttribute("provinces",provinceRepository.findAll());
         if(bindingResult.hasFieldErrors("name") ||
@@ -55,6 +59,15 @@ public class SignUp2Controller {
             model.addAttribute("user",user);
             return "user_sign_up2";
         }else {
+            File file = new File(getClass().getResource("/public/images/users/user_new.png").getPath());
+            BufferedImage bufferedImage = ImageIO.read(file);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage,"png", bos);
+
+            byte[] data = bos.toByteArray();
+
+            user.setImage(data);
+
             userRepository.save(user);
             return "redirect:/";
         }

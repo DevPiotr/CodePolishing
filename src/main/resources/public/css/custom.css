@@ -1,0 +1,12 @@
+/* W tym pliku definiujemy niestandardowe widoki*/
+
+.user-profile-img{
+    width: 100%;
+    height: auto;
+    max-width: 80px;
+    max-height: 80px;
+    border-radius: 50%;
+}
+.content-basic-height    .row{
+    height: 15vh;
+}

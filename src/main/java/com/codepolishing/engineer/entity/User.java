@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -103,6 +104,9 @@ public class User implements UserDetails {
 
     @Column(name = "cv_path")
     private String CVPath;
+
+    @Column(name = "Image")
+    private byte[] image;
 
     @ManyToMany
     @JoinTable(
