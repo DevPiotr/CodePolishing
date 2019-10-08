@@ -67,7 +67,7 @@
                         <ul class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
                             <!--<div th:if="${userName}" th:text="Witaj + ' ' + ${userName} + ' ' + ${userSurname}"></div>-->
                             <li class="w-50 float-left">
-                                <form th:action="@{/user}" method="post">
+                                <form th:action="@{/user}" method="get">
                                 <input type="submit" class="btn btn-primary btn-pill w-75 px-2 ml-1" value="Profil"/>
                             </form></li>
                             <li class="w-50 float-left">
