@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.w3c.dom.UserDataHandler;
 
 import java.util.*;
 
@@ -67,7 +66,7 @@ public class CourseController {
         model.addAttribute("course",course);
         model.addAttribute("courseSections",courseSectionList);
 
-        return "single_course";
+        return "single_course_info";
     }
 
     @RequestMapping("/joinCourse")

@@ -3,7 +3,6 @@ package com.codepolishing.engineer.controller;
 
 import com.codepolishing.engineer.entity.User;
 import com.codepolishing.engineer.repository.UserRepository;
-import javafx.scene.image.Image;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -25,8 +24,13 @@ public class UserController {
     public void getUserImage(HttpServletResponse response, Principal principal) throws IOException {
         User user = userRepository.findByEmail(principal.getName());
         response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-        response.getOutputStream().write(user.getImage());
-        response.getOutputStream().close();
+        if(user.getImage() != null) {
+            response.getOutputStream().write(user.getImage());
+            response.getOutputStream().close();
+        }
+        else{
+            response.getOutputStream().close();
+        }
     }
 
 }

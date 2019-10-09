@@ -4,6 +4,7 @@ import com.codepolishing.engineer.validAnnotation.FieldMatch;
 import com.codepolishing.engineer.validAnnotation.UniqueEmail;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.security.core.GrantedAuthority;
@@ -105,7 +106,7 @@ public class User implements UserDetails {
     @Column(name = "cv_path")
     private String CVPath;
 
-    @Column(name = "Image")
+    @Column(name = "image")
     private byte[] image;
 
     @ManyToMany
@@ -137,6 +138,7 @@ public class User implements UserDetails {
 
     @OneToMany
     @JoinColumn(name = "id_user")
+    @ToString.Exclude
     private List<Opinion> opinionList;
 
     @Override

@@ -24,7 +24,6 @@ public class UserProfileController {
     public String showProfile(Principal principal, Model model){
 
         User user = userRepository.findByEmail(principal.getName());
-        System.out.println(user);
         model.addAttribute("user",user);
 
         return "user_profile";
