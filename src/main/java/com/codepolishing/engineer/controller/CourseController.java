@@ -8,12 +8,11 @@ import com.codepolishing.engineer.repository.CourseRepository;
 import com.codepolishing.engineer.repository.CourseSectionRepository;
 import com.codepolishing.engineer.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.*;
 
 @Controller
@@ -33,9 +32,7 @@ public class CourseController {
     UserRepository userRepository;
 
     @GetMapping("/")
-    public String showCourses(Model model){
-
-        User user = getLoggedUser();
+    public String showCourses(Model model,Principal principal){
 
         HashMap<String,List<Course>> allCourses = new HashMap<>();
 
@@ -43,7 +40,8 @@ public class CourseController {
         allCourses.put("medium",courseRepository.findCoursesByIdCourseLevel(2));
         allCourses.put("hard",courseRepository.findCoursesByIdCourseLevel(3));
 
-        if(user != null) {
+        if(principal != null) {
+            User user = userRepository.findByEmail(principal.getName());
             removeCoursesThatUserJoin(user,allCourses);
         }
 
@@ -70,29 +68,18 @@ public class CourseController {
     }
 
     @RequestMapping("/joinCourse")
-    public String joinCourse(@RequestParam("idCourse")int idCourse){
+    public String joinCourse(@RequestParam("idCourse")int idCourse, Principal principal){
 
-        User user = getLoggedUser();
+        if(principal != null) {
 
-        if(user != null) {
-            CourseSection courseSection = courseSectionRepository.findCourseSectionByIdCourseAndSectionPartIs(idCourse, 1);
+            User user = userRepository.findByEmail(principal.getName());
+            CourseSection courseSection = courseSectionRepository.findCourseSectionByIdCourseAndSectionPart(idCourse, 1);
 
             user.getCourseSectionList().add(courseSection);
 
-            userRepository.save(user);
+            userRepository.saveAndFlush(user);
         }
         return "redirect:/courses/";
-    }
-
-    private User getLoggedUser(){
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        if(principal instanceof UserDetails) {
-            return userRepository.findByEmail(((UserDetails) principal).getUsername());
-        }
-        else
-            return null;
     }
 
     private void removeCoursesThatUserJoin(User user,HashMap<String,List<Course>> allCourses){

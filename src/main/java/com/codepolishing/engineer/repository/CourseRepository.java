@@ -10,6 +10,6 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
 
     List<Course> findCoursesByIdCourseLevel(int idCourseLevel);
 
-    List<Course> findCoursesByCourseSectionList(List<CourseSection> courseSections);
+    List<Course> findCoursesByCourseSectionListInAndIdCourseLevel(List<CourseSection> courseSections, int idCourseLevel);
 
 }

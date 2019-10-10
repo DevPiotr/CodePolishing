@@ -1,8 +1,8 @@
 package com.codepolishing.engineer.controller;
 
-import com.codepolishing.engineer.entity.Course;
 import com.codepolishing.engineer.entity.CourseSection;
 import com.codepolishing.engineer.entity.User;
+import com.codepolishing.engineer.repository.CourseLevelRepository;
 import com.codepolishing.engineer.repository.CourseRepository;
 import com.codepolishing.engineer.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping("/UserCourses")
+@RequestMapping("/userCourses")
 public class UserCourseController {
 
     @Autowired
@@ -23,13 +23,20 @@ public class UserCourseController {
     @Autowired
     CourseRepository courseRepository;
 
+    @Autowired
+    CourseLevelRepository courseLevelRepository;
+
+    @RequestMapping("/")
     public String showUserCourses(Model model, Principal principal){
 
         User user = userRepository.findByEmail(principal.getName());
 
-        List<Course> ListOfCoursesThatUserJoined = courseRepository.findCoursesByCourseSectionList(getOnlyFirstSectionsOfAllCourses(user.getCourseSectionList()));
 
-        model.addAttribute("coursesThatUserJoined",ListOfCoursesThatUserJoined);
+        model.addAttribute("basicCoursesThatUserJoined",courseRepository.findCoursesByCourseSectionListInAndIdCourseLevel(getOnlyFirstSectionsOfAllCourses(user.getCourseSectionList()),1));
+        model.addAttribute("mediumCoursesThatUserJoined",courseRepository.findCoursesByCourseSectionListInAndIdCourseLevel(getOnlyFirstSectionsOfAllCourses(user.getCourseSectionList()),2));
+        model.addAttribute("hardCoursesThatUserJoined",courseRepository.findCoursesByCourseSectionListInAndIdCourseLevel(getOnlyFirstSectionsOfAllCourses(user.getCourseSectionList()),3));
+
+        model.addAttribute("courseLevelName", courseLevelRepository.findAll());
 
         return "user_courses";
     }
@@ -37,6 +44,7 @@ public class UserCourseController {
     private List<CourseSection> getOnlyFirstSectionsOfAllCourses(List<CourseSection> courseSectionList) {
 
         for(CourseSection courseSection: courseSectionList){
+
             if(courseSection.getSectionPart() != 1){
                 courseSectionList.remove(courseSection);
             }
