@@ -32,9 +32,9 @@ public class UserCourseController {
         User user = userRepository.findByEmail(principal.getName());
 
 
-        model.addAttribute("basicCoursesThatUserJoined",courseRepository.findCoursesByCourseSectionListInAndIdCourseLevel(getOnlyFirstSectionsOfAllCourses(user.getCourseSectionList()),1));
-        model.addAttribute("mediumCoursesThatUserJoined",courseRepository.findCoursesByCourseSectionListInAndIdCourseLevel(getOnlyFirstSectionsOfAllCourses(user.getCourseSectionList()),2));
-        model.addAttribute("hardCoursesThatUserJoined",courseRepository.findCoursesByCourseSectionListInAndIdCourseLevel(getOnlyFirstSectionsOfAllCourses(user.getCourseSectionList()),3));
+        model.addAttribute("basicCourses",courseRepository.findCoursesByCourseSectionListInAndIdCourseLevel(getOnlyFirstSectionsOfAllCourses(user.getCourseSectionList()),1));
+        model.addAttribute("mediumCourses",courseRepository.findCoursesByCourseSectionListInAndIdCourseLevel(getOnlyFirstSectionsOfAllCourses(user.getCourseSectionList()),2));
+        model.addAttribute("hardCourses",courseRepository.findCoursesByCourseSectionListInAndIdCourseLevel(getOnlyFirstSectionsOfAllCourses(user.getCourseSectionList()),3));
 
         model.addAttribute("courseLevelName", courseLevelRepository.findAll());
 
