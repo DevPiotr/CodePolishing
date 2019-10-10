@@ -67,6 +67,16 @@ public class CourseController {
         return "single_course_info";
     }
 
+    @RequestMapping("/{id}/sections")
+    public String showFirstPageOfCourseSection(@PathVariable("id")int id, Model model){
+
+        List<CourseSection> courseSectionList = courseSectionRepository.findCourseSectionsByIdCourse(id);
+
+        model.addAttribute("courseSections",courseSectionList);
+
+        return "course_subsection";
+    }
+
     @RequestMapping("/joinCourse")
     public String joinCourse(@RequestParam("idCourse")int idCourse, Principal principal){
 
