@@ -10,3 +10,7 @@
 .content-basic-height    .row{
     height: 15vh;
 }
+
+.col-user-profile{
+    margin-top: 5rem;
+}

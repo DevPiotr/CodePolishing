@@ -1,6 +1,7 @@
 package com.codepolishing.engineer.controller;
 
 import com.codepolishing.engineer.entity.User;
+import com.codepolishing.engineer.repository.ProvinceRepository;
 import com.codepolishing.engineer.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,12 +20,15 @@ public class UserProfileController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ProvinceRepository provinceRepository;
 
     @GetMapping("")
     public String showProfile(Principal principal, Model model){
 
         User user = userRepository.findByEmail(principal.getName());
         model.addAttribute("user",user);
+        model.addAttribute("provinces",provinceRepository.findAll());
 
         return "user_profile";
     }
@@ -32,12 +36,21 @@ public class UserProfileController {
     public String updateProfile(@ModelAttribute("user") User userForm, Principal principal, Model model)
     {
         User user = userRepository.findByEmail(principal.getName());
+
         user.setName(userForm.getName());
         user.setSurname(userForm.getSurname());
         user.setCity(userForm.getCity());
         user.setPhoneNumber(userForm.getPhoneNumber());
+        user.setBirthDate(userForm.getBirthDate());
+        user.setFlatNr(userForm.getFlatNr());
+        user.setPhoneNumber(userForm.getPhoneNumber());
+        user.setStreet(userForm.getStreet());
+        user.setPostCode(userForm.getPostCode());
+        user.setHouseNumber(userForm.getHouseNumber());
+
         userRepository.save(user);
         model.addAttribute("user",user);
+        model.addAttribute("provinces",provinceRepository.findAll());
         return "user_profile";
     }
     @PostMapping("/uploadImage")
