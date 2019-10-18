@@ -9,6 +9,4 @@ import java.util.List;
 public interface CourseSectionRepository extends JpaRepository<CourseSection,Integer> {
     List<CourseSection> findCourseSectionsByIdCourse(int idCourse);
 
-    CourseSection findCourseSectionByIdCourseAndSectionPart(int idCourse, int sectionPart);
-
 }

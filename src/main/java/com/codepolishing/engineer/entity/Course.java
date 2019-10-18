@@ -54,5 +54,14 @@ public class Course {
     private List<CourseSection> courseSectionList;
     //endregion
 
+    @ManyToMany
+    @JoinTable(
+            name = "joining_to_courses",
+            joinColumns = @JoinColumn(name = "id_course"),
+            inverseJoinColumns = @JoinColumn(name = "id_user"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"id_user","id_course"})
+    )
+    private List<User> userList;
+
 
 }

@@ -33,7 +33,10 @@
                             <div class="card-body">
                                 <h5 class="card-title" th:text="${courseSection.getName()}"></h5>
                                 <p class="card-text" th:text="${courseSection.getShortDescription()}"></p>
-                                <a th:href="@{/sections}" class="btn btn-primary">Dalej</a>
+                                <form th:action="@{/courses/joinToSection}" method="get">
+                                    <input type="hidden" name="part" value="0">
+                                    <button class="btn btn-primary" name="idCourseSection" th:value="${courseSection.getId()}">Zacznij</button>
+                                </form>
                             </div>
                         </div>
                     </div>

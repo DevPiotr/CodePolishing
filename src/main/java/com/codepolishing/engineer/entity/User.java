@@ -136,6 +136,15 @@ public class User implements UserDetails {
     )
     private List<CourseSection> courseSectionList;
 
+    @ManyToMany
+    @JoinTable(
+            name = "joining_to_courses",
+            joinColumns = @JoinColumn(name = "id_user"),
+            inverseJoinColumns = @JoinColumn(name = "id_course"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"id_course","id_user"})
+    )
+    private List<Course> courseList;
+
     @OneToMany
     @JoinColumn(name = "id_user")
     @ToString.Exclude

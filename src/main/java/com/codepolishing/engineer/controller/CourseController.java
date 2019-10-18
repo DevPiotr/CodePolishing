@@ -68,13 +68,13 @@ public class CourseController {
     }
 
     @RequestMapping("/{id}/sections")
-    public String showFirstPageOfCourseSection(@PathVariable("id")int id, Model model){
+    public String showCourseSections(@PathVariable("id")int id, Model model){
 
         List<CourseSection> courseSectionList = courseSectionRepository.findCourseSectionsByIdCourse(id);
 
         model.addAttribute("courseSections",courseSectionList);
 
-        return "course_subsection";
+        return "course_sections";
     }
 
     @RequestMapping("/joinCourse")
@@ -83,32 +83,46 @@ public class CourseController {
         if(principal != null) {
 
             User user = userRepository.findByEmail(principal.getName());
-            CourseSection courseSection = courseSectionRepository.findCourseSectionByIdCourseAndSectionPart(idCourse, 1);
 
-            user.getCourseSectionList().add(courseSection);
+            Course courseToJoin = courseRepository.getOne(idCourse);
+
+            user.getCourseList().add(courseToJoin);
 
             userRepository.saveAndFlush(user);
         }
         return "redirect:/courses/";
     }
 
+    @RequestMapping("/joinToSection")
+    public String joinToSection(@RequestParam("idCourseSection")int idCourseSection,Principal principal){
+
+        CourseSection courseSectionToJoin;
+        if(principal != null){
+            User user = userRepository.findByEmail(principal.getName());
+
+            courseSectionToJoin = courseSectionRepository.getOne(idCourseSection);
+
+            if(!user.getCourseSectionList().contains(courseSectionToJoin)) {
+                user.getCourseSectionList().add(courseSectionToJoin);
+
+                userRepository.saveAndFlush(user);
+            }
+
+            //TODO Rozdziel kontunacje i dołączanie
+            return "redirect:/sections/"+idCourseSection+"?idSub="+courseSectionToJoin.getCourseSubsectionList().get(0).getId()+"&part=0";
+        }
+        else{
+            return "redirect:/courses/";
+        }
+    }
+
     private void removeCoursesThatUserJoin(User user,HashMap<String,List<Course>> allCourses){
 
-        List<Course> CoursesJoinedByUser = getCoursesThatUserJoin(user);
+        List<Course> CoursesJoinedByUser = user.getCourseList();
 
         for(List<Course> courses : allCourses.values()){
             courses.removeAll(CoursesJoinedByUser);
         }
 
-    }
-
-    private List<Course> getCoursesThatUserJoin(User user){
-        HashSet<Integer> coursesIdSet = new HashSet<>();
-
-        for(CourseSection courseSection : user.getCourseSectionList()){
-            coursesIdSet.add(courseSection.getIdCourse());
-        }
-
-        return courseRepository.findAllById(coursesIdSet);
     }
 }

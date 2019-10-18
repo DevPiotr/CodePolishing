@@ -31,24 +31,12 @@ public class UserCourseController {
 
         User user = userRepository.findByEmail(principal.getName());
 
-
-        model.addAttribute("basicCourses",courseRepository.findCoursesByCourseSectionListInAndIdCourseLevel(getOnlyFirstSectionsOfAllCourses(user.getCourseSectionList()),1));
-        model.addAttribute("mediumCourses",courseRepository.findCoursesByCourseSectionListInAndIdCourseLevel(getOnlyFirstSectionsOfAllCourses(user.getCourseSectionList()),2));
-        model.addAttribute("hardCourses",courseRepository.findCoursesByCourseSectionListInAndIdCourseLevel(getOnlyFirstSectionsOfAllCourses(user.getCourseSectionList()),3));
+        model.addAttribute("courses",user.getCourseList());
 
         model.addAttribute("courseLevelName", courseLevelRepository.findAll());
 
         return "user_courses";
     }
 
-    private List<CourseSection> getOnlyFirstSectionsOfAllCourses(List<CourseSection> courseSectionList) {
 
-        for(CourseSection courseSection: courseSectionList){
-
-            if(courseSection.getSectionPart() != 1){
-                courseSectionList.remove(courseSection);
-            }
-        }
-        return courseSectionList;
-    }
 }
