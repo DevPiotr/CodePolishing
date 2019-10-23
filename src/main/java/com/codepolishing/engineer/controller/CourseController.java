@@ -90,7 +90,7 @@ public class CourseController {
 
             userRepository.saveAndFlush(user);
         }
-        return "redirect:/courses/";
+        return "redirect:/userCourses/";
     }
 
     @RequestMapping("/joinToSection")
@@ -109,7 +109,7 @@ public class CourseController {
             }
 
             //TODO Rozdziel kontunacje i dołączanie
-            return "redirect:/sections/"+idCourseSection+"?idSub="+courseSectionToJoin.getCourseSubsectionList().get(0).getId()+"&part=0";
+            return "redirect:/sections/"+idCourseSection+"?idSub="+courseSectionToJoin.getCourseSubsectionList().get(0).getId()+"&part=0"+"&contentType=theory";
         }
         else{
             return "redirect:/courses/";
