@@ -13,23 +13,20 @@
                 <div class="row align-items-center">
                     <div class="col-12">
                         <div class="row ">
-                            <div class="col-4 text-center">
+                            <div class="col-3 text-center form-box mx-3">
                                 <div th:each="courseSubsection : ${courseSubsectionList}">
                                     <div class="col-12 my-2" >
                                         <form th:action="@{/sections/{id}(id=${idCourseSection})}" method="get">
                                             <input type="hidden" name="part" value="0">
+                                            <input type="hidden" name="contentType" value="theory">
                                             <button class="btn btn-primary" th:name="idSub" th:value="${courseSubsection.getId()}" th:text="${courseSubsection.getName()}"></button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-8 text-center " th:utext="${theory.getTheoryContent()}"></div>
+
+                            <div class="col-8 text-center form-box" th:utext="${theory.getTheoryContent()}"></div>
                             <div class="col-10">
-                                <form th:action="@{/sections/{id}(id=${idCourseSection})}" method="get">
-                                    <input type="hidden" name="part" value="0">
-                                    <input type="hidden" name="contentType" value="task">
-                                    <button class="btn" th:name="idSub" th:value="${currentSubSectionId}" th:text="ABCD"></button>
-                                </form>
                             </div>
                             <div class="col-2 align-items-center">
                                 <form th:action="@{/sections/{id}(id=${idCourseSection})}" method="get">

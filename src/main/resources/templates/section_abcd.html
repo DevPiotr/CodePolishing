@@ -12,33 +12,45 @@
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-12">
-                        <div class="row ">
-                            <div class="col-4 text-center">
+                        <div class="row">
+                            <div class="col-3 text-center form-box mx-3">
                                 <div th:each="courseSubsection : ${courseSubsectionList}">
                                     <div class="col-12 my-2" >
                                         <form th:action="@{/sections/{id}(id=${idCourseSection})}" method="get">
                                             <input type="hidden" name="part" value="0">
+                                            <input type="hidden" name="contentType" value="theory">
                                             <button class="btn btn-primary" th:name="idSub" th:value="${courseSubsection.getId()}" th:text="${courseSubsection.getName()}"></button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-8 text-center">
-                                <form th:action="@{/sections/{id}(id=${idCourseSection})}" method="get" >
-                                    <div class="col-12 text-center"  th:utext="${task.getTaskContent()}"></div>
-                                    <div class="text-center">
+
+                            <div class="col-8 text-center form-box">
+                                <form th:action="@{/sections/{id}(id=${idCourseSection})}" method="post" >
+                                    <input type="hidden" name="part" th:value="${nextPart}">
+                                    <input type="hidden" name="contentType" value="task">
+                                    <input type="hidden" name="rightAnswer" th:value="${rightAnswers}">
+
+                                    <div class="col-12 text-center border-bottom"  th:utext="${task.getTaskContent()}"></div>
+                                    <div class="align-items-center col-12">
                                         <div class="btn-group btn-group-lg btn-group-vertical btn-group-toggle row my-2" date-toggle="buttons">
                                             <div th:each="answer : ${allAnswers}">
                                                     <label class="btn btn-secondary btn-lg btn-block">
-                                                        <input type="radio" name="chosen" autocomplete="off" th:text="${answer}">
+                                                        <input type="radio" name="chosen" th:value="${answer}" autocomplete="off" th:text="${answer}">
                                                     </label>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-row">
-                                        <input type="hidden" name="part" th:value="${nextPart}">
-                                        <input type="hidden" name="contentType" value="task">
-                                        <button class="btn btn-primary" th:name="idSub" th:value="${currentSubSectionId}" th:text="Dalej"></button>
+                                    <div th:if="${afterCheck}" >
+                                        <div class="col-12 my-4" th:text="${afterCheck}"></div>
+                                        <div class="col-12 my-4">
+                                            <button class="btn btn-primary" th:name="idSub" th:value="${currentSubSectionId}" th:text="Dalej" formmethod="get"></button>
+                                        </div>
+                                    </div>
+                                    <div th:unless="${afterCheck}">
+                                        <div class="col-12 my-4">
+                                            <button class="btn btn-primary" th:name="idSub" th:value="${currentSubSectionId}" th:text="Sprawdz" ></button>
+                                        </div>
                                     </div>
                                 </form>
                             </div>

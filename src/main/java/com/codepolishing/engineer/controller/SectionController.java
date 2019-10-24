@@ -9,9 +9,7 @@ import com.codepolishing.engineer.repository.CourseSubsectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -25,7 +23,7 @@ public class SectionController {
     CourseSubsectionRepository courseSubsectionRepository;
 
 
-    @RequestMapping("/{idCourseSection}")
+    @GetMapping("/{idCourseSection}")
     public String showOneCourseSubsectionContent(@PathVariable("idCourseSection")int idCourseSection,@RequestParam("idSub")int idCourseSubsection,@RequestParam("part")int part,@RequestParam("contentType")String contentType, Model model){
 
         CourseSection courseSection = courseSectionRepository.getOne(idCourseSection);
@@ -34,6 +32,10 @@ public class SectionController {
         model.addAttribute("courseSubsectionList", courseSection.getCourseSubsectionList());
         model.addAttribute("currentSubSectionId",idCourseSubsection);
 
+        if(courseSubsection.getTheoryList().size() <= part){
+            contentType = "task";
+            part = 0;
+        }
 
         switch(contentType){
             case "theory":{
@@ -49,7 +51,7 @@ public class SectionController {
                 String[] allAnswers = task.getAllAnswers().split(";");
 
                 model.addAttribute("allAnswers",allAnswers);
-
+                model.addAttribute("rightAnswers",task.getRightAnswer());
                 model.addAttribute("task",task);
 
                 return "section_abcd";
@@ -58,12 +60,31 @@ public class SectionController {
                 return "index";
             }
         }
-
-
-
-
-
     }
 
+    @PostMapping("/{idCourseSection}")
+    public String showOneCourseSubsectionContent(@PathVariable("idCourseSection")int idCourseSection,@RequestParam("rightAnswer")String rightAnswer,@RequestParam("idSub")int idCourseSubsection,@RequestParam("part")int part,@RequestParam("chosen")String chosen,Model model){
+
+        CourseSection courseSection = courseSectionRepository.getOne(idCourseSection);
+        CourseSubsection courseSubsection = courseSubsectionRepository.getOne(idCourseSubsection);
+        Task task = courseSubsection.getTaskList().get(part-1);
+
+        model.addAttribute("courseSubsectionList", courseSection.getCourseSubsectionList());
+        model.addAttribute("currentSubSectionId",idCourseSubsection);
+        model.addAttribute("nextPart",part);
+
+        String[] allAnswers = task.getAllAnswers().split(";");
+
+        model.addAttribute("allAnswers",allAnswers);
+        model.addAttribute("rightAnswers",task.getRightAnswer());
+        model.addAttribute("task",task);
+
+        if(chosen.equals(rightAnswer)){
+            model.addAttribute("afterCheck","Brawo");
+        }
+
+        return "section_abcd";
+
+    }
 
 }

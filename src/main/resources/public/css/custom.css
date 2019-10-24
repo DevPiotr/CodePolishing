@@ -14,3 +14,25 @@
 .col-user-profile{
     margin-top: 5rem;
 }
+
+/*By Piotr Żukiewicz*/
+.intro-section-course {
+    position: relative; }
+.intro-section-course, .intro-section-course .container > .row {
+    min-height: 50vh; }
+.intro-section-course.single-cover, .intro-section-course.single-cover .container > .row {
+    height: 30vh;
+    min-height: 200px; }
+.intro-section-course h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1.5rem; }
+.intro-section-course p {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.1rem; }
+
+.single-course-body{
+    height: 20vh;
+    min-height: 80px;
+}
