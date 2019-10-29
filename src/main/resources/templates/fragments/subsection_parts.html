@@ -1,0 +1,12 @@
+<div th:fragment="side-menu-buttons">
+
+        <div th:each="courseSubsection : ${courseSubsectionList}">
+            <div class="col-12 my-2" >
+                <form th:action="@{/sections/{id}(id=${idCourseSection})}" method="get">
+                    <input type="hidden" name="part" value="0">
+                    <input type="hidden" name="contentType" value="theory">
+                    <button class="btn btn-primary btn-block" th:name="idSub" th:value="${courseSubsection.getId()}" th:text="${courseSubsection.getName()}"></button>
+                </form>
+            </div>
+        </div>
+</div>

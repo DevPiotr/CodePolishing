@@ -13,19 +13,18 @@
                 <div class="row align-items-center">
                     <div class="col-12">
                         <div class="row">
+
                             <div class="col-3 text-center form-box mx-3 menu-subsection">
                                 <div th:insert="fragments/subsection_parts :: side-menu-buttons"></div>
                             </div>
 
-                            <div class="col-8 text-center form-box content-subsection" th:utext="${theory.getTheoryContent()}"></div>
-                            <div class="col-10">
-                            </div>
-                            <div class="col-2 align-items-center">
-                                <form th:action="@{/sections/{id}(id=${idCourseSection})}" method="get">
-                                    <input type="hidden" name="part" th:value="${nextPart}">
-                                    <input type="hidden" name="contentType" value="theory">
-                                    <button class="btn btn-primary" th:name="idSub" th:value="${currentSubSectionId}" th:text="Dalej"></button>
-                                </form>
+                            <div class="col-8 text-center form-box content-subsection">
+                                <div class="col-12 my-2 text-black">
+                                    <h1>Congratzzz</h1>
+                                </div>
+                                <div class="col-12 my-2">
+                                    Zdobyte punkty: 100
+                                </div>
                             </div>
                         </div>
                     </div>

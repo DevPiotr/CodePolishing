@@ -36,3 +36,11 @@
     height: 20vh;
     min-height: 80px;
 }
+
+.menu-subsection{
+    min-height: 550px;
+}
+.content-subsection{
+    min-height: 550px;
+}
+
