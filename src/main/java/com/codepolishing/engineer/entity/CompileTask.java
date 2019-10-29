@@ -34,6 +34,9 @@ public class CompileTask {
     @Column(name = "points")
     private int points;
 
+    @NotNull
+    @Column(name = "inputs")
+    private String inputs;
     //endregion
 
     @ManyToMany
