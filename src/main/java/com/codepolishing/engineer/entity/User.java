@@ -5,6 +5,7 @@ import com.codepolishing.engineer.validAnnotation.UniqueEmail;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.ManyToAny;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.security.core.GrantedAuthority;
@@ -144,6 +145,15 @@ public class User implements UserDetails {
             uniqueConstraints = @UniqueConstraint(columnNames = {"id_course","id_user"})
     )
     private List<Course> courseList;
+
+    @ManyToMany
+    @JoinTable(
+            name = "finished_subsection",
+            joinColumns = @JoinColumn(name = "id_user"),
+            inverseJoinColumns = @JoinColumn(name = "id_course_subsection"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"id_course_subsection","id_user"})
+    )
+    private List<CourseSubsection> finishedSubsectionList;
 
     @OneToMany
     @JoinColumn(name = "id_user")

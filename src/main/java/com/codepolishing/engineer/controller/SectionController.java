@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -24,7 +25,12 @@ public class SectionController {
 
 
     @GetMapping("/{idCourseSection}")
-    public String showOneCourseSubsectionContent(@PathVariable("idCourseSection")int idCourseSection,@RequestParam("idSub")int idCourseSubsection,@RequestParam("part")int part,@RequestParam("contentType")String contentType, Model model){
+    public String showOneCourseSubsectionContent(@PathVariable("idCourseSection")int idCourseSection,
+                                                 @RequestParam("idSub")int idCourseSubsection,
+                                                 @RequestParam("part")int part,
+                                                 @RequestParam("contentType")String contentType,
+                                                 RedirectAttributes redirectAttributes,
+                                                 Model model){
 
         CourseSection courseSection = courseSectionRepository.getOne(idCourseSection);
         CourseSubsection courseSubsection = courseSubsectionRepository.getOne(idCourseSubsection);
@@ -32,9 +38,14 @@ public class SectionController {
         model.addAttribute("courseSubsectionList", courseSection.getCourseSubsectionList());
         model.addAttribute("currentSubSectionId",idCourseSubsection);
 
-        if(courseSubsection.getTheoryList().size() <= part){
+        if(contentType.equals("theory") && courseSubsection.getTheoryList().size() <= part){
             contentType = "task";
             part = 0;
+        }
+
+        if(contentType.equals("task") && courseSubsection.getTaskList().size() <= part){
+
+            return "congrats_subsection";
         }
 
         switch(contentType){
@@ -63,10 +74,16 @@ public class SectionController {
     }
 
     @PostMapping("/{idCourseSection}")
-    public String showOneCourseSubsectionContent(@PathVariable("idCourseSection")int idCourseSection,@RequestParam("rightAnswer")String rightAnswer,@RequestParam("idSub")int idCourseSubsection,@RequestParam("part")int part,@RequestParam("chosen")String chosen,Model model){
+    public String checkAnswerInCloseTask(@PathVariable("idCourseSection")int idCourseSection,
+                                                 @RequestParam("rightAnswer")String rightAnswer,
+                                                 @RequestParam("idSub")int idCourseSubsection,
+                                                 @RequestParam("part")int part,
+                                                 @RequestParam("chosen")String chosen,
+                                                 Model model){
 
         CourseSection courseSection = courseSectionRepository.getOne(idCourseSection);
         CourseSubsection courseSubsection = courseSubsectionRepository.getOne(idCourseSubsection);
+        // Part is variable that is used to get next task that's why if we want to check current task we have to get part-1
         Task task = courseSubsection.getTaskList().get(part-1);
 
         model.addAttribute("courseSubsectionList", courseSection.getCourseSubsectionList());

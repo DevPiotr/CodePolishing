@@ -1,6 +1,7 @@
 package com.codepolishing.engineer.entity;
 
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -45,10 +46,6 @@ public class CourseSubsection {
     )
     private List<Task> taskList;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_course_subsection")
-    private List<Opinion> opinionList;
-
     @ManyToMany
     @JoinTable(
             name = "set_of_theories",
@@ -57,6 +54,20 @@ public class CourseSubsection {
             uniqueConstraints = @UniqueConstraint(columnNames = {"id_theory","id_course_subsection"})
     )
     private List<Theory> theoryList;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_course_subsection")
+    private List<Opinion> opinionList;
+
+    @ManyToMany
+    @JoinTable(
+            name = "set_of_compile_tasks",
+            joinColumns = @JoinColumn(name = "id_course_subsection"),
+            inverseJoinColumns = @JoinColumn(name = "id_compile_task"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"id_compile_task","id_course_subsection"})
+    )
+    private List<Theory> compileTaskList;
+
 
     //endregion
 }

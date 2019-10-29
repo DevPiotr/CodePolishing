@@ -32,10 +32,6 @@ public class Task {
     @Column(name = "all_answers")
     private String allAnswers;
 
-    @NotNull
-    @Column(name = "task_type")
-    private String taskType;
-
     @ManyToMany
     @JoinTable(
             name = "set_of_tasks",
