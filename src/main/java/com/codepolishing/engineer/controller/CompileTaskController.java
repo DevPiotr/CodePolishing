@@ -34,7 +34,7 @@ public class CompileTaskController {
     @PostMapping("/task")
     public String compileTextAndShowResult(Model model, @RequestParam("sourceCode") String sourceCode) throws IOException {
 
-        String answer = "";
+        /*String answer = "";
         CompileTask compileTask = compileTaskRepository.findById(1);
 
         String currentSourceCode = sourceCode;
@@ -75,6 +75,49 @@ public class CompileTaskController {
         String taskText = "Napisz program, który dodaje dwie liczby";
         model.addAttribute("taskText", taskText);
         model.addAttribute("preSourceCode",currentSourceCode);
+        model.addAttribute("console",answer);
+
+        return "compile_task";*/
+
+        CompileTask compileTask = compileTaskRepository.findById(1);
+        // Wyciągniecie treści zadania z bazy
+        String taskText = compileTask.getTaskContent();
+
+        // Wyciagniecie kodu roboczego z bazy
+        String codeToCompile = compileTask.getCompileCode();
+
+        // Dodanie danych testowych
+        codeToCompile = codeToCompile.replace("String input = \"\";",
+                "String input = \"" + compileTask.getInputs() + "\";");
+
+        // Podmiana kodu domyślnego na kod poprawny
+        codeToCompile = codeToCompile.replace(compileTask.getInitCode(),compileTask.getProperCode());
+
+        // Kompilacja kodu źródłowego poprawnego (wzoru)
+        JavaFileCompiler jfcc = new JavaFileCompiler(codeToCompile,null);
+        jfcc.compileFile();
+        String correctOutput = jfcc.getOutput();
+
+        // Podmiana kodu poprawnego na kod użytkownika
+        codeToCompile = codeToCompile.replace(compileTask.getProperCode(),sourceCode);
+
+        //Kompilacja kodu źródłowego użytkownika
+        JavaFileCompiler jfc = new JavaFileCompiler(codeToCompile,null);
+        jfc.compileFile();
+        String userOutput = jfc.getOutput();
+
+        // Sprawdzenie poprawności rozwiazania
+        String answer;
+        if(correctOutput.equals(userOutput))
+            answer = "OK!";
+        else
+            answer = "ZLE!";
+
+        System.out.println("userOutput: "+userOutput);
+        System.out.println("correctOutput: "+correctOutput);
+
+        model.addAttribute("taskText", taskText);
+        model.addAttribute("preSourceCode",sourceCode);
         model.addAttribute("console",answer);
 
         return "compile_task";

@@ -27,6 +27,10 @@ public class CompileTask {
     private String properCode;
 
     @NotNull
+    @Column(name = "compile_Code")
+    private String compileCode;
+
+    @NotNull
     @Column(name = "task_content")
     private String taskContent;
 
