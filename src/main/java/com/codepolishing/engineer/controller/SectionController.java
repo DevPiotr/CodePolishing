@@ -95,6 +95,7 @@ public class SectionController {
 
         CourseSection courseSection = courseSectionRepository.getOne(idCourseSection);
         CourseSubsection courseSubsection = courseSubsectionRepository.getOne(idCourseSubsection);
+
         // Part is variable that is used to get next task that's why if we want to check current task we have to get part-1
         Task task = courseSubsection.getTaskList().get(part-1);
 
