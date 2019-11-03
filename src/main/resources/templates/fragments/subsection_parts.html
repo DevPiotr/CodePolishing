@@ -5,7 +5,12 @@
                 <form th:action="@{/sections/{id}(id=${idCourseSection})}" method="get">
                     <input type="hidden" name="part" value="0">
                     <input type="hidden" name="contentType" value="theory">
-                    <button class="btn btn-primary btn-block" th:name="idSub" th:value="${courseSubsection.getId()}" th:text="${courseSubsection.getName()}"></button>
+                    <div th:if="${finishedSubSections.contains(courseSubsection)}">
+                        <button class="btn btn-secondary btn-block" th:name="idSub" th:value="${courseSubsection.getId()}" th:text="${courseSubsection.getName()}"></button>
+                    </div>
+                    <div th:unless="${finishedSubSections.contains(courseSubsection)}">
+                        <button class="btn btn-primary btn-block" th:name="idSub" th:value="${courseSubsection.getId()}" th:text="${courseSubsection.getName()}"></button>
+                    </div>
                 </form>
             </div>
         </div>

@@ -30,9 +30,6 @@ public class CourseSubsection {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
-    private String description;
-
     @NotNull
     @Column(name = "subsection_part")
     private int subsectionPart;

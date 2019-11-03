@@ -7,7 +7,7 @@
 <div layout:fragment="content">
 
     <script type="text/javascript">
-        //Piotr Zukiewicz
+        //Function for enable a button in abcd Task
         function enableButton(){
             $("#btnCheck").removeAttr("disabled");
         };
@@ -23,6 +23,7 @@
                             <div class="col-3 text-center form-box mx-3 menu-subsection">
                                 <div th:insert="fragments/subsection_parts :: side-menu-buttons"></div>
                             </div>
+
 
                             <div class="col-8 text-center form-box content-subsection">
                                 <form th:action="@{/sections/{id}(id=${idCourseSection})}" method="post" >

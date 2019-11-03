@@ -39,14 +39,6 @@ public class CompileTask {
     private String inputs;
     //endregion
 
-    @ManyToMany
-    @JoinTable(
-            name = "finished_subsection",
-            joinColumns = @JoinColumn(name = "id_course_subsection"),
-            inverseJoinColumns = @JoinColumn(name = "id_user"),
-            uniqueConstraints = @UniqueConstraint(columnNames = {"id_course_subsection","id_user"})
-    )
-    private List<User> userThatFinishedTaskList;
 
     @ManyToMany
     @JoinTable(
