@@ -19,7 +19,8 @@
 .intro-section-course {
     position: relative; }
 .intro-section-course, .intro-section-course .container > .row {
-    min-height: 50vh; }
+    min-height: 50vh;
+    }
 .intro-section-course.single-cover, .intro-section-course.single-cover .container > .row {
     height: 30vh;
     min-height: 200px; }

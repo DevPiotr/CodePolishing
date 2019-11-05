@@ -63,7 +63,7 @@ public class CourseSubsection {
             inverseJoinColumns = @JoinColumn(name = "id_compile_task"),
             uniqueConstraints = @UniqueConstraint(columnNames = {"id_compile_task","id_course_subsection"})
     )
-    private List<Theory> compileTaskList;
+    private List<CompileTask> compileTaskList;
 
 
     //endregion
