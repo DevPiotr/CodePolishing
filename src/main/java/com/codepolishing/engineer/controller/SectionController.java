@@ -54,9 +54,9 @@ public class SectionController {
                 userRepository.saveAndFlush(user);
             }
 
-            if(!courseSubsection.getCompileTaskList().isEmpty()){
-                //TODO Add to model
-            }
+            System.out.println(courseSubsection.getCompileTaskList().isEmpty());
+            model.addAttribute("compileTaskExist",!courseSubsection.getCompileTaskList().isEmpty());
+
             return "congrats_subsection";
         }
 
@@ -74,7 +74,7 @@ public class SectionController {
                 return "section_abcd";
             }
             default:{
-                return "index.html";
+                return "Zły contentType";
             }
         }
     }
@@ -104,7 +104,7 @@ public class SectionController {
     private void initModelValues(Model model, User user, int idCourseSection, int idCourseSubsection) {
         CourseSection courseSection = courseSectionRepository.getOne(idCourseSection);
 
-        model.addAttribute("courseSubsectionList", courseSection.getCourseSubsectionList());
+        model.addAttribute("courseSubsectionList",courseSection.getCourseSubsectionList());
         model.addAttribute("finishedSubSections",user.getFinishedSubsectionList());
         model.addAttribute("currentSubSectionId",idCourseSubsection);
 

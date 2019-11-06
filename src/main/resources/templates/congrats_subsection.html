@@ -20,10 +20,18 @@
 
                             <div class="col-8 text-center form-box content-subsection">
                                 <div class="col-12 my-2 text-black">
-                                    <h1>Congratzzz</h1>
+                                    <h1>Well done</h1>
                                 </div>
                                 <div class="col-12 my-2">
+                                    <p>Dany podrozdział został skończony</p>
+
                                     <p>Zdobyte punkty: <b>100</b></p>
+                                </div>
+                                <div th:if="${compileTaskExist}">
+                                    <form th:action="@{/sections/{id}/task(id=${idCourseSection})}" method="get" class="form-box mb-2 w-100">
+                                        <input type="hidden" name="part" value="0">
+                                        <button class="btn btn-primary" name="idSub" th:value="${currentSubSectionId}">Zadania otwarte</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

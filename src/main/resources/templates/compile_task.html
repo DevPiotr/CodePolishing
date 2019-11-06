@@ -19,7 +19,7 @@
                                 </div>
                             </div>
                             <div class="col-8">
-                                <form th:action="@{/sections/task}" th:id="taskForm" method="post" class="form-box mb-2 w-100">
+                                <form th:action="@{/sections/{id}/task(id=${idCourseSection})}" th:id="taskForm" method="post" class="form-box mb-2 w-100">
                                     <div class="form-text">
                                         Kompilator wersja Alpha 1.0
                                     </div>
@@ -27,8 +27,11 @@
                                         <textarea rows="10" th:name="sourceCode" th:text="${preSourceCode}" class="form-control" th:form="taskForm"></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <input type="submit" value="Kompiluj" class="btn btn-primary btn-pill">
+
+                                        <input type="hidden" name="part" th:value="${part}">
+                                        <button name="idSub" th:value="${idCourseSubsection}" class="btn btn-primary btn-pill">Kompiluj!</button>
                                     </div>
+
                                 </form>
 
                             </div>

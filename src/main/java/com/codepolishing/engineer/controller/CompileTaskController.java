@@ -1,15 +1,15 @@
 package com.codepolishing.engineer.controller;
 
-import com.codepolishing.engineer.entity.CompileTask;
+import com.codepolishing.engineer.entity.*;
 import com.codepolishing.engineer.model.JavaFileCompiler;
 import com.codepolishing.engineer.repository.CompileTaskRepository;
+import com.codepolishing.engineer.repository.CourseSectionRepository;
+import com.codepolishing.engineer.repository.CourseSubsectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
 import java.io.IOException;
 
 @Controller
@@ -19,10 +19,25 @@ public class CompileTaskController {
     @Autowired
     private CompileTaskRepository compileTaskRepository;
 
-    @GetMapping("/task")
-    public String showCompileTask(Model model)
-    {
-        CompileTask compileTask = compileTaskRepository.findById(1);
+    @Autowired
+    private CourseSectionRepository courseSectionRepository;
+
+    @Autowired
+    private CourseSubsectionRepository courseSubsectionRepository;
+
+    @GetMapping("/{idCourseSection}/task")
+    public String showCompileTask(@PathVariable("idCourseSection")int idCourseSection,
+                                  @RequestParam("idSub")int idCourseSubsection,
+                                  @RequestParam("part")int part,
+                                  Model model) {
+
+
+        initModelValue(idCourseSection, idCourseSubsection, model,part);
+        model.addAttribute("part",part);
+
+        CourseSubsection courseSubsection = courseSubsectionRepository.getOne(idCourseSubsection);
+
+        CompileTask compileTask = courseSubsection.getCompileTaskList().get(part);
 
         String taskText = compileTask.getTaskContent();
         model.addAttribute("taskText", taskText);
@@ -33,8 +48,13 @@ public class CompileTaskController {
 
         return "compile_task";
     }
-    @PostMapping("/task")
-    public String compileTextAndShowResult(Model model, @RequestParam("sourceCode") String sourceCode) throws IOException {
+
+    @PostMapping("/{idCourseSection}/task")
+    public String compileTextAndShowResult(@PathVariable("idCourseSection")int idCourseSection,
+                                           @RequestParam("idSub")int idCourseSubsection,
+                                           @RequestParam("part")int part,
+                                           @RequestParam("sourceCode") String sourceCode,
+                                           Model model) throws IOException {
 
         /*String answer = "";
         CompileTask compileTask = compileTaskRepository.findById(1);
@@ -81,7 +101,15 @@ public class CompileTaskController {
 
         return "compile_task";*/
 
-        CompileTask compileTask = compileTaskRepository.findById(1);
+        initModelValue(idCourseSection,idCourseSubsection,model,part);
+
+        CourseSubsection courseSubsection = courseSubsectionRepository.getOne(idCourseSubsection);
+
+        CompileTask compileTask = courseSubsection.getCompileTaskList().get(part);
+
+        if(courseSubsection.getCompileTaskList().size() >= part){
+            model.addAttribute("nextPart",++part);
+        }
         // Wyciągniecie treści zadania z bazy
         String taskText = compileTask.getTaskContent();
 
@@ -125,5 +153,10 @@ public class CompileTaskController {
         return "compile_task";
     }
 
+    private void initModelValue(int idCourseSection,int idCourseSubsection, Model model,int part) {
+        model.addAttribute("idCourseSection",idCourseSection);
+        model.addAttribute("idCourseSubsection",idCourseSubsection);
+        model.addAttribute("part",part);
+    }
 
 }
