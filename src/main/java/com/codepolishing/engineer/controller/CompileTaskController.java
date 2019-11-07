@@ -12,16 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
-@Controller
-@RequestMapping("/sections")
-public class CompileTaskController {
 
-    @Autowired
-    private CompileTaskRepository compileTaskRepository;
-
-    @Autowired
-    private CourseSectionRepository courseSectionRepository;
-
+    @Controller
+    @RequestMapping("/sections")
+    public class CompileTaskController {
     @Autowired
     private CourseSubsectionRepository courseSubsectionRepository;
 
