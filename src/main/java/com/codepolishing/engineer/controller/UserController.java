@@ -4,9 +4,8 @@ package com.codepolishing.engineer.controller;
 import com.codepolishing.engineer.entity.User;
 import com.codepolishing.engineer.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -22,6 +21,7 @@ public class UserController {
 
     @RequestMapping(value = "/getUserImage", method = RequestMethod.GET)
     public void getUserImage(HttpServletResponse response, Principal principal) throws IOException {
+
         User user = userRepository.findByEmail(principal.getName());
         response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
         if(user.getImage() != null) {

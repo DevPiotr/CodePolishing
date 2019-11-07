@@ -26,6 +26,15 @@ public class UserProfileController {
     @GetMapping("")
     public String showProfile(Principal principal, Model model){
 
+        if(principal != null){
+            User user = userRepository.findByEmail(principal.getName());
+            try {
+                checkIfUserHasHisOwnFolderAndCreateIfNot(user);
+            }catch(IOException ioExp){
+                System.out.println(ioExp.getMessage());
+            }
+        }
+
         User user = userRepository.findByEmail(principal.getName());
         model.addAttribute("user",user);
         model.addAttribute("provinces",provinceRepository.findAll());
@@ -75,6 +84,19 @@ public class UserProfileController {
         userRepository.save(user);
 
         return "redirect:/user";
+    }
+
+    @PostMapping("/uploadImage")
+    public String uploadCV(@RequestParam("CV") File file,Principal principal){
+// TODO addUploadCv
+        return "redirect:/user";
+    }
+    private void checkIfUserHasHisOwnFolderAndCreateIfNot(User user) throws IOException{
+        File userDataDir = new File("userData/" + user.getId());
+        if(!userDataDir.exists()){
+            boolean success = userDataDir.mkdirs();
+            if(!success) throw new IOException("Unable to create user folder");
+        }
     }
 
 }

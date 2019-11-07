@@ -5,24 +5,10 @@
       layout:decorate="~{layouts/courseLayout}" >
 
 <div layout:fragment="content">
+    <div class="top-section-space" th:style="'background:url(' + @{/images/programming_banner.jpg} + ');'" data-stellar-background-ratio="0.1"></div>
+</div>
 
-    <div class="intro-section-course">
-        <div class="slide-1" th:style="'background:url(' + @{/images/programming_banner.jpg} + ');'" data-stellar-background-ratio="0.8">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-12">
-                        <div class="row justify-content-center">
-                            <div data-aos="fade-up" data-aos-delay="500" class="col-10">
-                                <div class="text-center">
-                                    <h1>Tutaj tego nie bedzie</h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div layout:fragment="main-content">
 
         <div class="site-section">
             <div class="container">
