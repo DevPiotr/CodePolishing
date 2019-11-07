@@ -108,7 +108,7 @@ import java.io.IOException;
         // Wyciagniecie kodu roboczego z bazy
         String codeToCompile = compileTask.getCompileCode();
 
-        // Dodanie danych testowych
+        // Dodanie danych testowych do kodu roboczego
         codeToCompile = codeToCompile.replace("String input = \"\";",
                 "String input = \"" + compileTask.getInputs() + "\";");
 
@@ -128,15 +128,12 @@ import java.io.IOException;
         jfc.compileFile();
         String userOutput = jfc.getOutput();
 
-        // Sprawdzenie poprawności rozwiazania
+        // Sprawdzenie poprawności rozwiazania oraz ustawienie odpowiedniego komunkatu na konsoli
         String answer;
         if(correctOutput.equals(userOutput))
             answer = "OK!";
         else
             answer = "ZLE!";
-
-        System.out.println("userOutput: "+userOutput);
-        System.out.println("correctOutput: "+correctOutput);
 
         model.addAttribute("taskText", taskText);
         model.addAttribute("preSourceCode",sourceCode);
