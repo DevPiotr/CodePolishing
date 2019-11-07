@@ -2,8 +2,6 @@ package com.codepolishing.engineer.controller;
 
 import com.codepolishing.engineer.entity.*;
 import com.codepolishing.engineer.model.JavaFileCompiler;
-import com.codepolishing.engineer.repository.CompileTaskRepository;
-import com.codepolishing.engineer.repository.CourseSectionRepository;
 import com.codepolishing.engineer.repository.CourseSubsectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
