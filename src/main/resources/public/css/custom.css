@@ -1,5 +1,6 @@
 /* W tym pliku definiujemy niestandardowe widoki*/
 
+/* Mateusz Żuchnik*/
 .user-profile-img{
     width: 100%;
     height: auto;
@@ -7,12 +8,19 @@
     max-height: 80px;
     border-radius: 50%;
 }
-.content-basic-height    .row{
+.content-basic-height .row{
     height: 15vh;
 }
-
 .col-user-profile{
     margin-top: 5rem;
+}
+.top-section-space{
+    height: 15vh;
+    background-color: #636363;
+    background-position: 0 0;
+}
+.offer-card{
+
 }
 
 /*By Piotr Żukiewicz*/
