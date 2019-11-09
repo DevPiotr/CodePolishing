@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<div th:replace="fragments/head :: static_head"></div>
+<th:block th:replace="fragments/head :: static_head"></th:block>
 <head>
     <title>Kursy</title>
 </head>
@@ -12,22 +12,25 @@
 
 <div class="site-wrap">
 
-    <div th:replace="fragments/mobileNav :: mobile"></div>
+    <th:block th:replace="fragments/mobileNav :: mobile"></th:block>
 
-    <div th:replace="fragments/menu :: basic-menu"></div>
+    <th:block th:replace="fragments/menu :: basic-menu"></th:block>
 
-    <div layout:fragment="content">
+    <!--Top menu-->
+    <th:block layout:fragment="header"></th:block>
 
-    </div>
+    <!--Title-->
+    <th:block layout:fragment="title"></th:block>
 
-    <div layout:fragment="main-content">
+    <!--Main content-->
+    <th:block layout:fragment="main-content"></th:block>
 
-    </div>
-
-    <div th:insert="fragments/footer :: footer-short"></div>
+    <!--Footer-->
+    <th:block th:insert="fragments/footer :: footer-short"></th:block>
 
 
 </div> <!-- end of: "site-wrap" -->
-    <div th:replace="fragments/script :: script"></div>
+<!--Scripts-->
+<th:block th:replace="fragments/script :: script"></th:block>
 </body>
 </html>

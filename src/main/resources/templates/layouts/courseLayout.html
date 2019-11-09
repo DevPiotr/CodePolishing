@@ -10,15 +10,15 @@
 
 <div class="site-wrap">
 
-    <div th:replace="fragments/mobileNav :: mobile"></div>
+    <th:block th:replace="fragments/mobileNav :: mobile"></th:block>
 
-    <div th:replace="fragments/menu :: basic-menu"></div>
+    <th:block th:replace="fragments/menu :: basic-menu"></th:block>
 
-    <div layout:fragment="content">
+    <th:block layout:fragment="main-content">
         !!! Nadpisz fragment content !!!
-    </div>
+    </th:block>
 
-    <div th:insert="fragments/footer :: footer-short"></div>
+    <th:block th:insert="fragments/footer :: footer-short"></th:block>
 
 
 </div>
