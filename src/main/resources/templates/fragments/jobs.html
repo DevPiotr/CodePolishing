@@ -1,18 +1,46 @@
 <th:block th:fragment="offer-card">
 
     <div class="offer-card col-12 py-2">
-    <div class="col-12 border-dark border-bottom my-2 my-4">
-        <h2 class="font-weight-bold">Nazwa firmy</h2>
+    <div class="float-left col-8 m-0">
+        <h2 class="font-weight-bold" th:text="${name}">Nazwa firmy</h2>
     </div>
-    <div class="col-12">
+        <div class="float-right col-3 mt-3 text-right font-italic">
+            <span class="font-weight-bold" th:text="'Dodano '+${date}"></span>
+        </div>
+    <div class="float-left col-12">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Wymagane technologie</h5>
-                <p class="card-text">Opis</p>
-                <a class="btn btn-primary text-white float-right">Czytaj więcej</a>
+                <h5 class="card-title" th:text="${tech}">Wymagane technologie</h5>
+                <p class="card-text" th:text="${description}">Opis</p>
+                <form th:action="@{/jobOffers/{id}(id=${id})}" method="get">
+                    <input type="submit" class="btn btn-primary text-white float-right" value="Czytaj więcej"/>
+                </form>
             </div>
         </div>
     </div>
+    </div>
+
+</th:block>
+
+<th:block th:fragment="job-content">
+    <div class="offer-card col-12 py-2">
+        <div class="float-left col-8 m-0">
+            <h2 class="font-weight-bold" th:text="${name}">Nazwa firmy</h2>
+        </div>
+        <div class="float-right col-3 mt-3 text-right font-italic">
+            <span class="font-weight-bold" th:text="'Dodano '+${date}"></span>
+        </div>
+        <div class="float-left col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${tech}">Wymagane technologie</h5>
+                    <p class="card-text" th:text="${description}">Opis</p>
+                    <form th:action="@{/jobOffers/{id}/send(id=${id})}" method="get">
+                        <input type="submit" class="btn btn-primary text-white float-right" value="Aplikuj"/>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
 </th:block>
