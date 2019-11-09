@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<div th:fragment="basic-menu">
+<th:block th:fragment="basic-menu">
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
         <div class="container-fluid">
             <div class="d-flex align-items-center">
@@ -19,7 +19,7 @@
             </div>
         </div>
     </header>
-</div>
+</th:block>
 
 <!-- Sprawdza czy użytkownik jest zalogowany i wyświetla mu odpowiednia treść w pozycji menu-->
 <div th:fragment="middle-menu" class="mx-auto w-50 text-center">

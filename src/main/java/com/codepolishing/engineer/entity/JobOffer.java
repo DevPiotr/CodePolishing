@@ -30,6 +30,12 @@ public class JobOffer {
     @Column(name = "job_offer_content")
     private String jobOfferContent;
 
+    @Column(name = "technology")
+    private String technology;
+
+    @Column(name = "short_description")
+    private String shortDescription;
+
     @NotNull
     @Column(name = "create_date")
     private Date createDate;
