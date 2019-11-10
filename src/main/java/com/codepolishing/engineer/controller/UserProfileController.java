@@ -3,6 +3,7 @@ package com.codepolishing.engineer.controller;
 import com.codepolishing.engineer.entity.User;
 import com.codepolishing.engineer.repository.ProvinceRepository;
 import com.codepolishing.engineer.repository.UserRepository;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,21 +28,25 @@ public class UserProfileController {
     @GetMapping("")
     public String showProfile(Principal principal, Model model){
 
-        if(principal != null){
-            User user = userRepository.findByEmail(principal.getName());
-            try {
-                checkIfUserHasHisOwnFolderAndCreateIfNot(user);
-            }catch(IOException ioExp){
-                System.out.println(ioExp.getMessage());
-            }
-        }
-
         User user = userRepository.findByEmail(principal.getName());
         model.addAttribute("user",user);
         model.addAttribute("provinces",provinceRepository.findAll());
 
+        File userCVDirectory = new File("userData/" + user.getId() + "/CV");
+
+        try {
+            if (userCVDirectory.list().length > 0) {
+                String[] files = userCVDirectory.list();
+                model.addAttribute("CVName", files[0]);
+            }
+        }catch (NullPointerException nullExp){
+            System.out.println(nullExp.getMessage());
+        }
+
         return "user_profile";
     }
+
+
     @PostMapping("")
     public String updateProfile(@ModelAttribute("user") User userForm, Principal principal, Model model)
     {
@@ -85,6 +90,48 @@ public class UserProfileController {
         userRepository.save(user);
 
         return "redirect:/user";
+    }
+
+    @PostMapping("/uploadCV")
+    public String uploadCV(@RequestPart(name = "CV") MultipartFile file,Principal principal) {
+
+        User user = userRepository.findByEmail(principal.getName());
+
+        String userCVDirectoryPath = "userData/" + user.getId() + "/CV";
+
+        createDirectoryIfNotExist(userCVDirectoryPath);
+
+        removeCVFileIfExist(userCVDirectoryPath);
+
+        try {
+
+            File oFile = new File(userCVDirectoryPath + "/" + file.getOriginalFilename());
+            OutputStream os = new FileOutputStream(oFile);
+            InputStream inputStream = file.getInputStream();
+
+            IOUtils.copy(inputStream, os);
+
+            os.close();
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Wystąpił błąd podczas przesyłania pliku: " + e.getMessage();
+        }
+
+        return "redirect:/user";
+    }
+
+    private void removeCVFileIfExist(String userCVDirectoryPath) {
+        File userCVDirectory = new File(userCVDirectoryPath);
+        String[] filesInCVDirectory = userCVDirectory.list();
+        if(filesInCVDirectory.length > 0) new File(userCVDirectoryPath + "/" + filesInCVDirectory[0]).delete();
+
+    }
+
+
+    private void createDirectoryIfNotExist(String userCVDirectoryPath) {
+        File userCVDirectory = new File(userCVDirectoryPath);
+        userCVDirectory.mkdirs();
     }
 
     @PostMapping("/uploadImage")

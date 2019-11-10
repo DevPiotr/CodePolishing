@@ -4,18 +4,19 @@
       xmlns:layout="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layouts/courseLayout}" >
 
-<div layout:fragment="content">
+<th:block layout:fragment="header">
+    <div class="menu-bg top-section-space" th:style="'background:url(' + @{/images/programming_banner.jpg} + ');'" data-stellar-background-ratio="0.8"></div>
+</th:block>
 
-    <div class="intro-section-course">
-        <div class="slide-1" th:style="'background:url(' + @{/images/programming_banner.jpg} + ');'" data-stellar-background-ratio="0.8">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-12">
-                        <div class="row justify-content-center">
-                            <div data-aos="fade-up" data-aos-delay="500" class="col-10">
-                                <div class="text-center">
-                                    <h1>Tutaj tego nie bedzie</h1>
-                                </div>
+<th:block layout:fragment="title">
+    <div class="site-section-title">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <div class="row justify-content-center">
+                        <div data-aos="fade-left" data-aos-delay="200" class="col-10">
+                            <div class="text-center text-black">
+                                <h1>Rozdziały</h1>
                             </div>
                         </div>
                     </div>
@@ -23,25 +24,26 @@
             </div>
         </div>
     </div>
+</th:block>
 
-        <div class="site-section">
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-lg-3 col-md-6 col-sm-12" th:each="courseSection : ${courseSections}">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title" th:text="${courseSection.getName()}"></h5>
-                                <p class="card-text course-card-text" th:text="${courseSection.getShortDescription()}"></p>
-                                <form th:action="@{/courses/joinToSection}" method="get">
-                                    <button class="btn btn-primary" name="idCourseSection" th:value="${courseSection.getId()}">Zacznij</button>
-                                </form>
-                            </div>
+<div layout:fragment="main-content">
+    <div class="site-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-12" th:each="courseSection : ${courseSections}">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${courseSection.getName()}"></h5>
+                            <p class="card-text course-card-text" th:text="${courseSection.getShortDescription()}"></p>
+                            <form th:action="@{/courses/joinToSection}" method="get">
+                                <button class="btn btn-primary" name="idCourseSection" th:value="${courseSection.getId()}">Zacznij</button>
+                            </form>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
+    </div>
+</div>
 </div>
 </html>

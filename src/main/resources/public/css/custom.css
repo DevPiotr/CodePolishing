@@ -81,3 +81,10 @@
     height: 100px;
 }
 
+.cv-form-text-exist{
+    color: green;
+}
+.cv-form-text-not-exist{
+    color: red;
+}
+

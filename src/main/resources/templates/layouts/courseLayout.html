@@ -14,9 +14,14 @@
 
     <div th:replace="fragments/menu :: basic-menu"></div>
 
-    <div layout:fragment="content">
-        !!! Nadpisz fragment content !!!
-    </div>
+    <!--Top menu-->
+    <th:block layout:fragment="header"></th:block>
+
+    <!--Title-->
+    <th:block layout:fragment="title"></th:block>
+
+    <!--Main content-->
+    <th:block layout:fragment="main-content"></th:block>
 
     <div th:insert="fragments/footer :: footer-short"></div>
 
