@@ -134,17 +134,4 @@ public class UserProfileController {
         userCVDirectory.mkdirs();
     }
 
-    @PostMapping("/uploadImage")
-    public String uploadCV(@RequestParam("CV") File file,Principal principal){
-// TODO addUploadCv
-        return "redirect:/user";
-    }
-    private void checkIfUserHasHisOwnFolderAndCreateIfNot(User user) throws IOException{
-        File userDataDir = new File("userData/" + user.getId());
-        if(!userDataDir.exists()){
-            boolean success = userDataDir.mkdirs();
-            if(!success) throw new IOException("Unable to create user folder");
-        }
-    }
-
 }
