@@ -30,10 +30,8 @@ public class SignUp1Controller {
     public String validStarterUserInfo(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasFieldErrors("email") ||
                 bindingResult.hasFieldErrors("password")) {
-            System.out.println("sign_up: Są błedy");
             return "user_sign_up";
         } else {
-            System.out.println("sign_up: Nie ma błedów");
             //szyfrowanie hasła
             user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
             user.setConfirmPassword(user.getPassword());

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/courseLayout}" >
+
+<th:block layout:fragment="header">
+    <div class="menu-bg top-section-space" th:style="'background:url(' + @{/images/programming_banner.jpg} + ');'" data-stellar-background-ratio="0.8"></div>
+</th:block>
+
+<th:block layout:fragment="title">
+    <div class="site-section-title">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <div class="row justify-content-center">
+                        <div data-aos="fade-left" data-aos-delay="200" class="col-10">
+                            <div class="text-center text-black">
+                                <h1>Nowy Kurs</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+    <th:block layout:fragment="main-content">
+            <form th:action="@{/addCourse}" th:object="${course}" method="post" class="form-box col-6">
+                <div class="form-group">
+                    <input th:field="*{name}" class="form-control" placeholder="name"/>
+                </div>
+                <div class="form-group">
+                    Poziom kursu:
+                    <select th:field="*{idCourseLevel}">
+                        <option th:each="level : ${courseLevels}"
+                                th:value="${level.id}"
+                                th:utext="${level.name}">
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    Typ kursu:
+                    <select th:field="*{idCourseType}">
+                        <option th:each="types : ${courseTypes}"
+                                th:value="${types.id}"
+                                th:utext="${types.name}">
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea th:field="*{shortDescription}" placeholder="shortDescription"/>
+                </div>
+                <div class="form-group">
+                    <textarea th:field="*{longDescription}" placeholder="longDescription"/>
+                </div>
+                <div class="form-group">
+                     <label>Ilość rozdziałów:<input type="number" name="numberOfSections" class="form-control"></label>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-pill" value="Stwórz rozdziały">
+                </div>
+            </form>
+    </th:block>
+</div>
+</html>
