@@ -65,16 +65,38 @@
             <div class="w-100 float-left">
                     <nav class="site-navigation text-center" role="navigation">
                         <ul class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
-                            <!--<div th:if="${userName}" th:text="Witaj + ' ' + ${userName} + ' ' + ${userSurname}"></div>-->
-                            <li class="w-50 float-left">
-                                <form th:action="@{/user}" method="get">
-                                <input type="submit" class="btn btn-primary btn-pill w-75 px-2 ml-1" value="Profil"/>
-                            </form></li>
-                            <li class="w-50 float-left">
-                                <form th:action="@{/logout}" method="post">
-                                    <input type="submit" class="btn btn-secondary btn-pill w-75 px-2 mr-1" value="Wyloguj"/>
-                                </form>
-                            </li>
+
+                                <li class="w-100 float-left nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle btn btn-primary" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+                                        Opcje
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <form th:action="@{/user}" method="get">
+                                            <input type="submit" class="dropdown-item" value="Profil"/>
+                                        </form>
+                                        <a class="dropdown-item" th:href="@{/addCourse}">Dodaj kurs</a>
+                                        <th:block sec:authorize="hasAuthority('Administrator')">
+                                            <a class="dropdown-item" href="#">Statystyki</a>
+                                        </th:block>
+                                        <form th:action="@{/logout}"  method="post">
+                                            <input type="submit" class="dropdown-item" value="Wyloguj"/>
+                                        </form>
+
+                                    </div>
+                                    <!--<nav class="navbar navbar-expand-sm navbar-light bg-light">
+                                        <a class="navbar-brand" href="#">Opcje</a>
+                                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="#navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                            <span class="navbar-toggler-icon"></span>
+                                        </button>
+                                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                            <ul class="navbar-nav mr-auto">
+                                                <li class="nav-item ">
+                                                    <a class="nav-link" href="#">Dodaj Kurs<span class="sr-only">(current)</span></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </nav>-->
+                                </li>
                         </ul>
                     </nav>
 
