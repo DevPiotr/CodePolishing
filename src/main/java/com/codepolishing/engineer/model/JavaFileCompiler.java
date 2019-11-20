@@ -21,6 +21,9 @@ public class JavaFileCompiler {
         File file = new File("Solution.java");
         try {
             file.createNewFile();
+            file.setExecutable(true);
+            file.setWritable(true);
+            file.setReadable(true);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,10 +42,8 @@ public class JavaFileCompiler {
     public void compileFile() throws IOException {
         writeSourceCodeToFile();
 
-        //LINUX GNOME
-        ProcessBuilder pbCreate = new ProcessBuilder("gnome-terminal","-e ","\"javac " + compileFile.getName()+"\"");
-        pbCreate.start();
-        ProcessBuilder pb = new ProcessBuilder("gnome-terminal","-e ","\"java Solution\"");
+        //LINUX
+        ProcessBuilder pb = new ProcessBuilder("bash","-c","javac Solution.java && java Solution");
         //WINDOWS
         //ProcessBuilder pb = new ProcessBuilder("cmd.exe","/c","javac " + compileFile.getName() + " && java Solution " + getArgsToString());
         pb.redirectErrorStream(true);
