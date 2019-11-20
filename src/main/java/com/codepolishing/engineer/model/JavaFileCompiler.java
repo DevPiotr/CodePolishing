@@ -42,10 +42,16 @@ public class JavaFileCompiler {
     public void compileFile() throws IOException {
         writeSourceCodeToFile();
 
-        //LINUX
-        ProcessBuilder pb = new ProcessBuilder("bash","-c","javac Solution.java && java Solution");
-        //WINDOWS
-        //ProcessBuilder pb = new ProcessBuilder("cmd.exe","/c","javac " + compileFile.getName() + " && java Solution " + getArgsToString());
+        String osName = System.getProperty("os.name");
+        ProcessBuilder pb = null;
+
+        if(osName.equals("Linux")) {
+            //LINUX
+            pb = new ProcessBuilder("bash", "-c", "javac Solution.java && java Solution");
+        }else {
+            //WINDOWS
+            pb = new ProcessBuilder("cmd.exe", "/c", "javac " + compileFile.getName() + " && java Solution " + getArgsToString());
+        }
         pb.redirectErrorStream(true);
         Process p = pb.start();
         BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
