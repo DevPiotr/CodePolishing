@@ -27,7 +27,7 @@
 </th:block>
 
     <th:block layout:fragment="main-content">
-            <form th:action="@{/addCourse}" th:object="${course}" method="post" class="form-box col-6">
+            <form th:action="@{/addCourse}" th:object="${course}" method="post" class="form-box col-4 text-center m-auto">
                 <div class="form-group">
                     <input th:field="*{name}" class="form-control" placeholder="name"/>
                 </div>
@@ -50,13 +50,10 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <textarea th:field="*{shortDescription}" placeholder="shortDescription"/>
+                    <textarea th:field="*{shortDescription}" cols="40" placeholder="shortDescription"/>
                 </div>
                 <div class="form-group">
-                    <textarea th:field="*{longDescription}" placeholder="longDescription"/>
-                </div>
-                <div class="form-group">
-                     <label>Ilość rozdziałów:<input type="number" name="numberOfSections" class="form-control"></label>
+                    <textarea th:field="*{longDescription}" cols="40" placeholder="longDescription"/>
                 </div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary btn-pill" value="Stwórz rozdziały">

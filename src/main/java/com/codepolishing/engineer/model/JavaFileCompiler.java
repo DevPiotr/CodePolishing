@@ -39,12 +39,15 @@ public class JavaFileCompiler {
     public void compileFile() throws IOException {
         writeSourceCodeToFile();
 
-        //LINUX GNOME
-        ProcessBuilder pbCreate = new ProcessBuilder("gnome-terminal","-e ","\"javac " + compileFile.getName()+"\"");
-        pbCreate.start();
-        ProcessBuilder pb = new ProcessBuilder("gnome-terminal","-e ","\"java Solution\"");
-        //WINDOWS
-        //ProcessBuilder pb = new ProcessBuilder("cmd.exe","/c","javac " + compileFile.getName() + " && java Solution " + getArgsToString());
+        ProcessBuilder pb;
+
+        if(System.getProperty("os.name").contains("Windows")){
+            pb = new ProcessBuilder("cmd.exe","/c","javac " + compileFile.getName() + " && java Solution " + getArgsToString());
+        }else {
+            ProcessBuilder pbCreate = new ProcessBuilder("gnome-terminal", "-e ", "\"javac " + compileFile.getName() + "\"");
+            pbCreate.start();
+            pb = new ProcessBuilder("gnome-terminal", "-e ", "\"java Solution\"");
+        }
         pb.redirectErrorStream(true);
         Process p = pb.start();
         BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));

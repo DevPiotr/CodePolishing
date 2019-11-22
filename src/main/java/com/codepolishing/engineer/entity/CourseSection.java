@@ -1,6 +1,7 @@
 package com.codepolishing.engineer.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -25,7 +26,7 @@ public class CourseSection {
     @Column(name = "id_course")
     private int idCourse;
 
-    @NotNull
+    @NotNull()
     @Length(max = 30)
     @Column(name = "name")
     private String name;

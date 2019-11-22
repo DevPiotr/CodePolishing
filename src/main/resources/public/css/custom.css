@@ -88,3 +88,10 @@
     color: red;
 }
 
+.new_section_form{
+    min-height: 550px;
+}
+.new_section_form form{
+    width: 100%;
+}
+
