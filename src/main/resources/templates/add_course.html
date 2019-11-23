@@ -28,6 +28,12 @@
 
     <th:block layout:fragment="main-content">
             <form th:action="@{/addCourse}" th:object="${course}" method="post" class="form-box col-4 text-center m-auto">
+
+                <ul class="alert-danger rounded">
+                    <li class="p-1" th:each="err : ${#fields.errors('name')}" th:text="${err}" />
+                    <li class="p-1" th:each="err : ${#fields.errors('shortDescription')}" th:text="${err}" />
+                    <li class="p-1" th:each="err : ${#fields.errors('longDescription')}" th:text="${err}" />
+                </ul>
                 <div class="form-group">
                     <input th:field="*{name}" class="form-control" placeholder="name"/>
                 </div>

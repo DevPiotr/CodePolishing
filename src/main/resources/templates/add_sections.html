@@ -27,7 +27,13 @@
 </th:block>
 
 <th:block layout:fragment="main-content">
-
+    <div class="row align-items-center">
+        <th:block th:if="${errorMessage}">
+            <div class="col-4"></div>
+            <div class="alert-danger rounded col-4 text-center" th:text="${errorMessage}"></div>
+            <div class="col-4"></div>
+        </th:block>
+    </div>
     <div class="row align-items-center text-center">
         <div class="col-3 mx-1 new_section_form">
             <div th:if="${newCourseSections}">

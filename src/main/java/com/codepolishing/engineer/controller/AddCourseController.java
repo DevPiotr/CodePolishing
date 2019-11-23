@@ -85,18 +85,23 @@ public class AddCourseController {
     public String addSectionToList(@Valid @ModelAttribute("courseSection")CourseSection courseSection,
                                       BindingResult bindingResult,
                                       Model model){
-
         if(bindingResult.hasFieldErrors("name") ||
             bindingResult.hasFieldErrors("shortDescription")){
             return "add_sections";
         }
 
+        for(CourseSection cs : newCourseSections){
+            if(cs.getName().equals(courseSection.getName())){
+                model.addAttribute("errorMessage","Rozdział o takiej nazwie już istnieje");
+                initModelAttribute(model);
+                return "add_sections";
+            }
+        }
         courseSection.setCreateDate(new Date(Calendar.getInstance().getTimeInMillis()));
 
         newCourseSections.add(courseSection);
 
-        model.addAttribute("courseName",createdCurse.getName());
-        model.addAttribute("newCourseSections",newCourseSections);
+        initModelAttribute(model);
 
         return "add_sections";
     }
@@ -108,8 +113,9 @@ public class AddCourseController {
         if(!newCourseSections.isEmpty()) {
             newCourseSections.remove(number);
         }
-        model.addAttribute("courseName",createdCurse.getName());
-        model.addAttribute("newCourseSections",newCourseSections);
+
+        initModelAttribute(model);
+
         model.addAttribute("courseSection",courseSection);
 
         return "add_sections";
@@ -134,5 +140,10 @@ public class AddCourseController {
         courseRepository.saveAndFlush(course);
 
         return "index";
+    }
+
+    private void initModelAttribute(Model model){
+        model.addAttribute("courseName",createdCurse.getName());
+        model.addAttribute("newCourseSections",newCourseSections);
     }
 }
