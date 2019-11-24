@@ -116,6 +116,13 @@ public class CourseController {
         }
     }
 
+    @GetMapping("/edit/{id}")
+    public String editCourse(@PathVariable("id")int id,
+                             Model model){
+
+        return "edit_course";
+    }
+
     private void removeCoursesThatUserJoin(User user,HashMap<String,List<Course>> allCourses){
 
         List<Course> CoursesJoinedByUser = user.getCourseList();
