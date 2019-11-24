@@ -139,9 +139,6 @@ import java.io.IOException;
         model.addAttribute("preSourceCode",sourceCode);
         model.addAttribute("console",answer);
 
-        System.out.println(correctOutput);
-
-
         return "compile_task";
     }
 
