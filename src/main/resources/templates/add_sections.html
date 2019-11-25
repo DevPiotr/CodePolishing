@@ -16,7 +16,8 @@
                     <div class="row justify-content-center">
                         <div data-aos="fade-left" data-aos-delay="200" class="col-10">
                             <div class="text-center text-black">
-                            <h1 th:text="*{courseName}"></h1>
+                            <!--<h1 th:text="*{courseName}"></h1>-->
+                                <h1>Stwórz rozdziały</h1>
                             </div>
                         </div>
                     </div>
@@ -27,49 +28,53 @@
 </th:block>
 
 <th:block layout:fragment="main-content">
-    <div class="row align-items-center">
-        <th:block th:if="${errorMessage}">
-            <div class="col-4"></div>
-            <div class="alert-danger rounded col-4 text-center" th:text="${errorMessage}"></div>
-            <div class="col-4"></div>
-        </th:block>
-    </div>
-    <div class="row align-items-center text-center">
-        <div class="col-3 mx-1 new_section_form">
-            <div th:if="${newCourseSections}">
-                <div th:each="newCourseSection,number : ${newCourseSections}">
-                    <div class="row border-dark border-1">
-                        <form th:action="@{/deleteSection}" method="post">
-                            <div class="row">
-                                <div class="col-9 my-2" th:text="${newCourseSection.name}"></div>
-                                <div class="col-1">
-                                    <input type="hidden" name="deleteNumber" th:value="${number.index}">
-                                    <input type="image" name="submit" th:src="@{/images/thrash.jpg}" width="30px" height="30px"/>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+    <div class="">
+            <div class="row col-12">
+                <th:block th:if="${errorMessage}">
+                    <div class="alert-danger rounded col-10 text-center mx-auto my-3" th:text="${errorMessage}"></div>
+                </th:block>
+            </div>
+            <div class="mt-5">
+                <div class="col-6 float-left text-center border-right">
+                    <!--<h3 class="mx-auto text-center col-10 font-weight-bold mb-4">Stwórz rozdział</h3>-->
+                    <form th:action="@{/addSection}" th:object="${courseSection}" method="post" class="">
+                        <div class="form-group">
+                            <h4>Nazwa rozdziału:</h4>
+                            <input type="text" th:field="*{name}" class="form-control col-8 mx-auto" placeholder="Nazwa rodziału">
+                            <br/>
+                            <h4>Krótki opis:</h4>
+                            <input type="text" th:field="*{shortDescription}" class="form-control col-8 mx-auto" placeholder="Opis">
+                        </div>
+                        <input type="submit" class="btn btn-primary btn-pill" value="Dodaj">
+                    </form>
+
+                </div>
+            <div class="float-left col-6">
+                <div class="">
+                    <h3 class="text-center col-10 font-weight-bold mb-4">Stworzone rozdziały</h3>
+                    <th:block th:if="${newCourseSections}">
+                        <th:block th:each="newCourseSection,number : ${newCourseSections}">
+                                <form th:action="@{/deleteSection}" method="post">
+                                    <div class="text-center">
+                                        <div class="col-7 float-left" th:text="${newCourseSection.name}"></div>
+                                        <div class="col-1 float-left">
+                                            <input type="hidden" name="deleteNumber" th:value="${number.index}">
+                                            <input type="image" name="submit" th:src="@{/images/thrash.jpg}" width="40" height="40"/>
+                                        </div>
+                                        <div style="clear: both"></div>
+                                    </div>
+                                </form>
+                        </th:block>
+                    </th:block>
                 </div>
             </div>
         </div>
-        <div class="col-8 new_section_form">
-            <form th:action="@{/addSection}" th:object="${courseSection}" method="post" class="form-box col-4 m-auto">
-                <div class="form-group">
-                    <input type="text" th:field="*{name}" placeholder="name">
-                    <br/>
-                    <input type="text" th:field="*{shortDescription}" placeholder="short">
-                </div>
-                <input type="submit" class="btn btn-primary btn-pill" value="Dodaj">
-            </form>
-
-            <th:block th:if="${newCourseSections}">
-                <form th:action="@{/finish}" method="post" class="form-box col-4 m-auto">
-                    <input type="submit" class="btn btn-primary btn-pill" value="Zakończ">
-                </form>
-            </th:block>
-
-        </div>
     </div>
-
+    <div style="clear: both"></div>
+    <th:block th:if="${newCourseSections}">
+        <form th:action="@{/finish}" method="post" class="form-box col-12 text-center m-auto">
+            <input type="submit" class="btn btn-primary btn-pill" value="Zakończ">
+        </form>
+    </th:block>
 </th:block>
 </html>

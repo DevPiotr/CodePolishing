@@ -27,7 +27,7 @@
 </th:block>
 
     <th:block layout:fragment="main-content">
-            <form th:action="@{/addCourse}" th:object="${course}" method="post" class="form-box col-4 text-center m-auto">
+            <form th:action="@{/addCourse}" th:object="${course}" method="post" class="form-box col-7 m-auto">
 
                 <ul class="alert-danger rounded">
                     <li class="p-1" th:each="err : ${#fields.errors('name')}" th:text="${err}" />
@@ -35,31 +35,39 @@
                     <li class="p-1" th:each="err : ${#fields.errors('longDescription')}" th:text="${err}" />
                 </ul>
                 <div class="form-group">
-                    <input th:field="*{name}" class="form-control" placeholder="name"/>
+                    <h3>Nazwa kursu: </h3>
+                    <input th:field="*{name}" class="form-control" placeholder="Nazwa Kursu"/>
                 </div>
                 <div class="form-group">
-                    Poziom kursu:
-                    <select th:field="*{idCourseLevel}">
-                        <option th:each="level : ${courseLevels}"
-                                th:value="${level.id}"
-                                th:utext="${level.name}">
-                        </option>
-                    </select>
+                    <div class="col-11 mx-auto d-block">
+                            <div class="col-6 text-center float-left">
+                                Poziom kursu:
+                            <select th:field="*{idCourseLevel}">
+                                <option th:each="level : ${courseLevels}"
+                                        th:value="${level.id}"
+                                        th:utext="${level.name}">
+                                </option>
+                            </select>
+                            </div>
+                            <div class="col-6 text-center float-left">
+                                Typ kursu:
+                                <select th:field="*{idCourseType}">
+                                    <option th:each="types : ${courseTypes}"
+                                            th:value="${types.id}"
+                                            th:utext="${types.name}">
+                                    </option>
+                                </select>
+                            </div>
+                    </div>
+                </div>
+                    <div style="clear: both"></div>
+                <div class="form-group mt-2">
+                    <h3>Krótki opis:</h3>
+                    <textarea th:field="*{shortDescription}" rows="3" placeholder="Krótki opis kursu" class="form-control"/>
                 </div>
                 <div class="form-group">
-                    Typ kursu:
-                    <select th:field="*{idCourseType}">
-                        <option th:each="types : ${courseTypes}"
-                                th:value="${types.id}"
-                                th:utext="${types.name}">
-                        </option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <textarea th:field="*{shortDescription}" cols="40" placeholder="shortDescription"/>
-                </div>
-                <div class="form-group">
-                    <textarea th:field="*{longDescription}" cols="40" placeholder="longDescription"/>
+                    <h3>Dłuższy opis:</h3>
+                    <textarea th:field="*{longDescription}" rows="5" placeholder="Dłuższy opis kursu" class="form-control"/>
                 </div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary btn-pill" value="Stwórz rozdziały">

@@ -1,3 +1,5 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <th:block th:fragment="offer-card">
 
     <div class="offer-card col-12 py-2">
@@ -12,9 +14,14 @@
             <div class="card-body">
                 <h5 class="card-title" th:text="${tech}">Wymagane technologie</h5>
                 <p class="card-text" th:text="${description}">Opis</p>
-                <form th:action="@{/jobOffers/{id}(id=${id})}" method="get">
+                <form th:action="@{/jobOffers/{id}/view(id=${id})}" method="get">
                     <input type="submit" class="btn btn-primary text-white float-right" value="Czytaj więcej"/>
                 </form>
+                <th:block sec:authorize="hasAuthority('Administrator')">
+                    <form th:action="@{/jobOffers/{id}/edit(id=${id})}" method="get">
+                        <input type="submit" class="btn btn-secondary text-white float-right mr-3" value="Edytuj"/>
+                    </form>
+                </th:block>
             </div>
         </div>
     </div>
@@ -44,3 +51,30 @@
     </div>
 
 </th:block>
+
+<!--/*@thymesVar id="job" type="com.codepolishing.engineer.entity.JobOffer"*/-->
+<th:block th:fragment="job-edit" >
+    <div class="offer-card col-12 py-2">
+        <form id="jobOfferAddId" th:object="${job}" method="post" th:action="@{/jobOffers/{ref}(ref=${ref})}">
+
+            <input type="hidden" th:field="*{createDate}" />
+            <div class="form-group">
+                <input th:text="*{companyName}" th:field="*{companyName}" type="text" class="form-control" placeholder="Nazwa firmy"/>
+            </div>
+            <div class="form-group">
+                <input th:text="*{technology}" th:field="*{technology}" type="text" class="form-control" placeholder="Wymagane technologie"/>
+            </div>
+            <div class="form-group">
+                <textarea form="jobOfferAddId" rows="3" th:text="*{shortDescription}" th:field="*{shortDescription}" type="text" class="form-control" placeholder="Krótki opis oferty pracy"/>
+            </div>
+            <div class="form-group">
+                <textarea form="jobOfferAddId" rows="8" th:text="*{jobOfferContent}" th:field="*{jobOfferContent}" type="text" class="form-control"  placeholder="Pełny opis oferty pracy"/>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary text-white float-right" th:value="${ref}=='add' ? 'Dodaj' : 'Edytuj'"/>
+            </div>
+
+        </form>
+    </div>
+</th:block>
+</html>
