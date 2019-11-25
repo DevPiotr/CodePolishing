@@ -10,16 +10,7 @@
                     <div class="card">
                         <img class="card-img-top" src="http://via.placeholder.com/640x360" alt="Card image cap">
                         <div class="card-body">
-                           <!-- <th:block sec:authorize="hasAuthority('Administrator')">-->
-                            <a class="" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-                                <img width="30px" height="30px" th:src="@{/images/option.jpg}">
-                            </a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" th:href="@{/edit/{id}(id=${course.getId()})}">Edytuj kurs</a>
-                                    <a class="dropdown-item" th:href="@{/addSection/{id}(id=${course.getId()})}">Dodaj rozdział</a>
-                                    <a class="dropdown-item" th:href="@{/delete/{id}(id=${course.getId()})}">Usuń</a>
-                                </div>
-                            <!--</th:block>-->
+                            <th:block th:insert="fragments/management :: course_management"></th:block>
                             <h5 class="card-title" th:text="${course.getName()}"></h5>
                             <p class="card-text" th:text="${course.getShortDescription()}"></p>
                             <a th:href="@{/courses/{id}(id=${course.getId()})}" class="btn btn-primary">Dowiedz się więcej</a>
@@ -34,6 +25,7 @@
                     <div class="card">
                         <img class="card-img-top" src="http://via.placeholder.com/640x360" alt="Card image cap">
                         <div class="card-body">
+                            <th:block th:insert="fragments/management :: course_management"></th:block>
                             <h5 class="card-title" th:text="${course.getName()}"></h5>
                             <p class="card-text" th:text="${course.getShortDescription()}"></p>
                             <a th:href="@{/courses/{id}(id=${course.getId()})}" class="btn btn-primary">Dowiedz się więcej</a>
@@ -48,6 +40,7 @@
                     <div class="card">
                         <img class="card-img-top" src="http://via.placeholder.com/640x360" alt="Card image cap">
                         <div class="card-body">
+                            <th:block th:insert="fragments/management :: course_management"></th:block>
                             <h5 class="card-title" th:text="${course.getName()}"></h5>
                             <p class="card-text" th:text="${course.getShortDescription()}"></p>
                             <a th:href="@{/courses/{id}(id=${course.getId()})}" class="btn btn-primary">Dowiedz się więcej</a>

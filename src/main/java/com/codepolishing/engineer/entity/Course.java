@@ -50,12 +50,12 @@ public class Course {
     @Column(name = "modification_date")
     private Date modificationDate;
 
-    @OneToMany
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_course")
     private List<CourseSection> courseSectionList;
     //endregion
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "joining_to_courses",
             joinColumns = @JoinColumn(name = "id_course"),
