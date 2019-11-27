@@ -1,9 +1,10 @@
 package com.codepolishing.engineer.controller;
 
 import com.codepolishing.engineer.entity.Course;
-import com.codepolishing.engineer.entity.CourseLevel;
+import com.codepolishing.engineer.entity.CourseSection;
 import com.codepolishing.engineer.repository.CourseLevelRepository;
 import com.codepolishing.engineer.repository.CourseRepository;
+import com.codepolishing.engineer.repository.CourseSectionRepository;
 import com.codepolishing.engineer.repository.CourseTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,7 @@ import java.util.Calendar;
 
 @Controller
 @RequestMapping("/courses")
-public class EditCourse {
+public class EditCourseController {
 
     @Autowired
     CourseRepository courseRepository;
@@ -28,6 +29,11 @@ public class EditCourse {
 
     @Autowired
     CourseTypeRepository courseTypeRepository;
+
+    @Autowired
+    CourseSectionRepository courseSectionRepository;
+
+    Course courseToAddNewSection;
 
     @GetMapping("/edit/{id}")
     public String editCourse(@PathVariable("id")int id,
@@ -75,5 +81,39 @@ public class EditCourse {
         courseRepository.deleteById(courseId);
 
         return "redirect:/courses/";
+    }
+
+    @GetMapping("/addSection/{id}")
+    public String showAddSectionForm(@PathVariable("id")int courseId,
+                                     CourseSection courseSection,
+                                     Model model){
+        courseToAddNewSection = courseRepository.getOne(courseId);
+
+        model.addAttribute("courseSection", courseSection);
+        model.addAttribute("sectionPart", courseToAddNewSection.getCourseSectionList().size() + 1);
+
+        return "add_section_to_existed_course";
+    }
+
+    @PostMapping("/addSection")
+    public String addSectionToCourse(@Valid @ModelAttribute("courseSection")CourseSection courseSection,
+                                     BindingResult bindingResult){
+        if(bindingResult.hasFieldErrors("createDate")){
+            courseSection.setCreateDate(new Date(Calendar.getInstance().getTimeInMillis()));
+        }
+        if (bindingResult.hasErrors() && !bindingResult.hasFieldErrors("createDate")) {
+
+            return "add_section_to_existed_course";
+        }else {
+            courseSection.setIdCourse(courseToAddNewSection.getId());
+            CourseSection courseSectionToAdd = courseSectionRepository.saveAndFlush(courseSection);
+
+            courseToAddNewSection.getCourseSectionList().add(courseSectionToAdd);
+            courseRepository.saveAndFlush(courseToAddNewSection);
+
+
+            return "redirect:/courses/" + courseToAddNewSection.getId();
+        }
+
     }
 }

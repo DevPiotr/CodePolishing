@@ -26,7 +26,7 @@ public class CourseSection {
     @Column(name = "id_course")
     private int idCourse;
 
-    @NotNull()
+    @NotNull
     @Length(max = 30)
     @Column(name = "name")
     private String name;
