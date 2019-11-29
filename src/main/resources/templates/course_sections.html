@@ -33,11 +33,16 @@
                 <div class="col-lg-3 col-md-6 col-sm-12" th:each="courseSection : ${courseSections}">
                     <div class="card">
                         <div class="card-body">
+                            <th:block th:if="${edit}">
+                                <th:block th:insert="fragments/management :: course_section_management"></th:block>
+                            </th:block>
                             <h5 class="card-title" th:text="${courseSection.getName()}"></h5>
                             <p class="card-text course-card-text" th:text="${courseSection.getShortDescription()}"></p>
-                            <form th:action="@{/courses/joinToSection}" method="get">
-                                <button class="btn btn-primary" name="idCourseSection" th:value="${courseSection.getId()}">Zacznij</button>
-                            </form>
+                            <th:block th:unless="${edit}">
+                                <form th:action="@{/courses/joinToSection}" method="get">
+                                    <button class="btn btn-primary" name="idCourseSection" th:value="${courseSection.getId()}">Zacznij</button>
+                                </form>
+                            </th:block>
                         </div>
                     </div>
                 </div>

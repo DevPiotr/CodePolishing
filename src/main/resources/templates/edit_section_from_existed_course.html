@@ -16,7 +16,7 @@
                     <div class="row justify-content-center">
                         <div data-aos="fade-left" data-aos-delay="200" class="col-10">
                             <div class="text-center text-black">
-                                <h1>Dodaj rozdział</h1>
+                                <h1>Edytuj rozdział</h1>
                             </div>
                         </div>
                     </div>
@@ -27,19 +27,21 @@
 </th:block>
 
     <th:block layout:fragment="main-content">
-            <form th:action="@{/courses/addSection}" th:object="${courseSection}" method="post" class="form-box col-7 m-auto">
+            <form th:action="@{/courses/editSections/edit/{id}(id=${courseSection.id})}" th:object="${courseSection}" method="post" class="form-box col-7 m-auto">
+                <input type="hidden" th:field="*{createDate}"  th:value="*{createDate}">
+
                 <div class="form-group">
                     <h3>Nazwa rozdziału: </h3>
-                    <input th:field="*{name}" class="form-control" placeholder="Nazwa Rozdziału"/>
+                    <input th:field="*{name}" th:value="*{name}" class="form-control" placeholder="Nazwa Rozdziału"/>
                 </div>
 
                 <div class="form-group mt-2">
                     <h3>Krótki opis:</h3>
-                    <textarea th:field="*{shortDescription}" rows="3" placeholder="Krótki opis kursu" class="form-control"/>
+                    <textarea th:field="*{shortDescription}" th:value="*{name}" rows="3" placeholder="Krótki opis kursu" class="form-control"/>
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" class="btn btn-primary btn-pill" value="Stwórz rozdział">
+                    <input type="submit" class="btn btn-primary btn-pill" value="Edytuj rozdział">
                 </div>
             </form>
     </th:block>

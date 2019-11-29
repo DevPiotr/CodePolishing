@@ -1,15 +1,4 @@
 <th:block th:fragment="course_management" xmlns:th="http://www.w3.org/1999/html">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js">
-
-    $("[name=delete]").confirm({
-        buttons:{
-            hey: function () {
-                location.href = this.$target.attr('href');
-            }
-        }
-    });
-    </script>
     <th:block sec:authorize="hasAuthority('Administrator')">
         <a class="" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
             <img width="30px" height="30px" th:src="@{/images/option.jpg}">
@@ -17,8 +6,22 @@
         <div class="dropdown-menu">
             <a class="dropdown-item" th:href="@{edit/{id}(id=${course.getId()})}">Edytuj kurs</a>
             <a class="dropdown-item" th:href="@{addSection/{id}(id=${course.getId()})}">Dodaj rozdział</a>
+            <a class="dropdown-item" th:href="@{editSections/{id}(id=${course.getId()})}">Edytuj rodziały</a>
             <a class="dropdown-item" name="delete" th:href="@{delete/{id}(id=${course.getId()})}">Usuń</a>
         </div>
     </th:block>
 </th:block>
 
+<th:block th:fragment="course_section_management" xmlns:th="http://www.w3.org/1999/html">
+    <th:block sec:authorize="hasAuthority('Administrator')">
+        <a class="" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+            <img width="30px" height="30px" th:src="@{/images/option.jpg}">
+        </a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" th:href="@{edit/{id}(id=${courseSection.getId()})}">Edytuj rozdział</a>
+            <a class="dropdown-item" th:href="@{addSubsection/{id}(id=${courseSection.getId()})}">Dodaj podrozdział</a>
+            <a class="dropdown-item" th:href="@{editSections/{id}(id=${courseSection.getId()})}">Edytuj podrodziały</a>
+            <a class="dropdown-item" name="delete" th:href="@{delete/{id}(id=${courseSection.getId()})}">Usuń</a>
+        </div>
+    </th:block>
+</th:block>

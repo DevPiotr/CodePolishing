@@ -16,6 +16,7 @@ import javax.validation.Valid;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 @Controller
 @RequestMapping("/courses")

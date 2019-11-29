@@ -34,8 +34,8 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12" th:each="courseSection: ${courseSections}">
-                                <div class="border-bottom" th:text="${courseSection.getSectionPart()} + '. ' + ${courseSection.getName()} + ' - ' + ${courseSection.getShortDescription()}"></div>
+                            <div class="col-12" th:each="courseSection, sectionPart: ${courseSections}">
+                                <div class="border-bottom" th:text="${sectionPart.index} + 1 + '. ' + ${courseSection.getName()} + ' - ' + ${courseSection.getShortDescription()}"></div>
                             </div>
                         </div>
                         <div class="row align-items-right my-2">

@@ -128,9 +128,7 @@ public class AddCourseController {
 
         Course course = courseRepository.saveAndFlush(createdCurse);
 
-        int part = 1;
         for(CourseSection cs: newCourseSections) {
-            cs.setSectionPart(part++);
             cs.setIdCourse(course.getId());
             courseSectionsWithId.add(courseSectionRepository.saveAndFlush(cs));
         }

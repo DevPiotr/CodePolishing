@@ -35,10 +35,6 @@ public class CourseSection {
     private String shortDescription;
 
     @NotNull
-    @Column(name = "section_part")
-    private int sectionPart;
-
-    @NotNull
     @Column(name = "create_date")
     private Date createDate;
 
