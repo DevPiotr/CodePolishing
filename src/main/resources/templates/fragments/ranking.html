@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<!--/*@thymesVar id="userOne" type="com.codepolishing.engineer.entity.User"*/-->
+<th:block th:fragment="ranking-card">
+
+    <div class="offer-card col-6 py-2 mx-auto" th:object="${userOne}">
+        <div class="float-left col-8 m-0">
+            <h2 class="font-weight-bold" th:text="${number}"></h2>
+        </div>
+        <div class="float-right col-3 mt-3 text-right font-italic">
+            <span class="font-weight-bold" ></span>
+        </div>
+        <div class="float-left col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="*{name + ' ' + surname + ' | wynik: ' + score}"></h5>
+                    <p class="card-text" text="Opis"></p>
+                </div>
+            </div>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+
+</th:block>
+
+
+</html>
