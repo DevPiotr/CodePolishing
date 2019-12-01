@@ -1,38 +1,20 @@
-<!DOCTYPE html>
-<html lang="pl"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.w3.org/1999/xhtml"
-      layout:decorate="~{layouts/layout}">
+      layout:decorate="~{layouts/courseLayout}" >
 
-<div layout:fragment="main-content">
+<th:block layout:fragment="header">
+    <div class="menu-bg top-section-space" th:style="'background:url(' + @{/images/programming_banner.jpg} + ');'" data-stellar-background-ratio="0.8"></div>
+</th:block>
 
-    <div class="intro-section">
-        <div class="slide-1" th:style="'background:url(' + @{/images/programming_banner.jpg} + ');'" data-stellar-background-ratio="0.8">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-12">
-                        <div class="row">
-
-                            <div class="col-3 text-center form-box mx-3 menu-subsection">
-                                <div th:insert="fragments/subsection_parts :: side-menu-buttons"></div>
-                            </div>
-
-                            <div class="col-8 text-center form-box content-subsection">
-                                <div class="col-12 my-2 text-black">
-                                    <h1>Well done</h1>
-                                </div>
-                                <div class="col-12 my-2">
-                                    <p>Dany podrozdział został skończony</p>
-
-                                    <p>Zdobyte punkty: <b>100</b></p>
-                                </div>
-                                <div th:if="${compileTaskExist}">
-                                    <form th:action="@{/sections/{id}/task(id=${idCourseSection})}" method="get" class="form-box mb-2 w-100">
-                                        <input type="hidden" name="part" value="0">
-                                        <button class="btn btn-primary" name="idSub" th:value="${currentSubSectionId}">Zadania kompilacyjne</button>
-                                    </form>
-                                </div>
+<th:block layout:fragment="title">
+    <div class="site-section-title">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <div class="row justify-content-center">
+                        <div data-aos="fade-left" data-aos-delay="200" class="col-10">
+                            <div class="text-center text-black">
+                                <h1>Brawo!</h1>
                             </div>
                         </div>
                     </div>
@@ -40,6 +22,28 @@
             </div>
         </div>
     </div>
-</div>
+</th:block>
 
+<th:block layout:fragment="main-content">
+    <div class="row">
+        <div class="col-3 text-center form-box mx-3 menu-subsection border-right">
+            <div th:insert="fragments/subsection_parts :: side-menu-buttons"></div>
+        </div>
+
+        <div class="col-8 text-center form-box content-subsection">
+            <div class="col-12 my-2">
+                <p>Dany podrozdział został skończony</p>
+
+                <p>Zdobyte punkty: <b>100</b></p>
+            </div>
+            <div th:if="${compileTaskExist}">
+                <form th:action="@{/sections/{id}/task(id=${idCourseSection})}" method="get" class="form-box mb-2 w-100">
+                    <input type="hidden" name="part" value="0">
+                    <button class="btn btn-primary" name="idSub" th:value="${currentSubSectionId}">Zadania kompilacyjne</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</th:block>
+</div>
 </html>

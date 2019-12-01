@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layouts/courseLayout}" >
@@ -14,7 +16,7 @@
                     <div class="row justify-content-center">
                         <div data-aos="fade-left" data-aos-delay="200" class="col-10">
                             <div class="text-center text-black">
-                                <h1>Teoria</h1>
+                                <h1>Dodaj Podrozdział</h1>
                             </div>
                         </div>
                     </div>
@@ -24,23 +26,16 @@
     </div>
 </th:block>
 
-<th:block layout:fragment="main-content">
-    <div class="row">
-        <div class="col-3 text-center form-box mx-3 menu-subsection border-right">
-            <div th:insert="fragments/subsection_parts :: side-menu-buttons"></div>
-        </div>
-
-        <div class="col-8 text-center form-box content-subsection" th:utext="${theory.getTheoryContent()}"></div>
-        <div class="col-10">
-        </div>
-        <div class="col-2 align-items-center">
-            <form th:action="@{/sections/{id}(id=${idCourseSection})}" method="get">
-                <input type="hidden" name="part" th:value="${nextPart}">
-                <input type="hidden" name="contentType" value="theory">
-                <button class="btn btn-primary" th:name="idSub" th:value="${currentSubSectionId}" th:text="Dalej"></button>
+    <th:block layout:fragment="main-content">
+            <form th:action="@{/courses/editSections/addSubsection}"  method="post" class="form-box col-7 m-auto">
+                <div class="form-group">
+                    <h3>Nazwa rozdziału: </h3>
+                    <input name="name" class="form-control" placeholder="Nazwa Podrozdziału"/>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-pill" value="Dalej">
+                </div>
             </form>
-        </div>
-    </div>
-</th:block>
+    </th:block>
 </div>
 </html>

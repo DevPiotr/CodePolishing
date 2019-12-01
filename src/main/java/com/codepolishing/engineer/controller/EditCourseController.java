@@ -91,7 +91,6 @@ public class EditCourseController {
         courseToAddNewSection = courseRepository.getOne(courseId);
 
         model.addAttribute("courseSection", courseSection);
-        model.addAttribute("sectionPart", courseToAddNewSection.getCourseSectionList().size() + 1);
 
         return "add_section_to_existed_course";
     }

@@ -2,12 +2,14 @@ package com.codepolishing.engineer.controller;
 
 import com.codepolishing.engineer.entity.Course;
 import com.codepolishing.engineer.entity.CourseSection;
+import com.codepolishing.engineer.entity.CourseSubsection;
 import com.codepolishing.engineer.repository.CourseSectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.sql.Date;
@@ -21,8 +23,11 @@ public class EditSectionController {
     @Autowired
     CourseSectionRepository courseSectionRepository;
 
+
     //variable used to store id for editing
     int rememberCourseId;
+
+    int rememberCourseSectionId;
 
     @GetMapping("/{id}")
     public String showSectionToEdit(@PathVariable("id")int courseId,
@@ -73,5 +78,18 @@ public class EditSectionController {
         courseSectionRepository.saveAndFlush(courseSectionToSave);
 
         return "redirect:/courses/editSections/" + rememberCourseId;
+    }
+
+    @GetMapping("/addSubsection/{id}")
+    public String showFormToAddSubsection(@PathVariable("id")int courseSectionId){
+        rememberCourseSectionId = courseSectionId;
+
+        return "add_subsection_to_existed_section";
+    }
+
+    @PostMapping("/addSubsection")
+    public String beginCreatingSubsection(@RequestParam("name")String subSectionName){
+
+        return "redirect:/courses/editSections/editSubsection/addContent?sectionId=" + rememberCourseSectionId + "&subSectionName=" + subSectionName;
     }
 }

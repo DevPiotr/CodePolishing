@@ -20,7 +20,7 @@
         <div class="dropdown-menu">
             <a class="dropdown-item" th:href="@{edit/{id}(id=${courseSection.getId()})}">Edytuj rozdział</a>
             <a class="dropdown-item" th:href="@{addSubsection/{id}(id=${courseSection.getId()})}">Dodaj podrozdział</a>
-            <a class="dropdown-item" th:href="@{editSections/{id}(id=${courseSection.getId()})}">Edytuj podrodziały</a>
+            <a class="dropdown-item" th:href="@{editSubsections/{id}(id=${courseSection.getId()})}">Edytuj podrodziały</a>
             <a class="dropdown-item" name="delete" th:href="@{delete/{id}(id=${courseSection.getId()})}">Usuń</a>
         </div>
     </th:block>

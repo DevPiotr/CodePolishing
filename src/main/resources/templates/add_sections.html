@@ -49,11 +49,11 @@
                     </form>
 
                 </div>
-            <div class="float-left col-6">
-                <div class="">
-                    <h3 class="text-center col-10 font-weight-bold mb-4">Stworzone rozdziały</h3>
-                    <th:block th:if="${newCourseSections}">
-                        <th:block th:each="newCourseSection,number : ${newCourseSections}">
+                <div class="float-left col-6">
+                    <div class="">
+                        <h3 class="text-center col-10 font-weight-bold mb-4">Stworzone rozdziały</h3>
+                        <th:block th:if="${newCourseSections}">
+                            <th:block th:each="newCourseSection,number : ${newCourseSections}">
                                 <form th:action="@{/deleteSection}" method="post">
                                     <div class="text-center">
                                         <div class="col-7 float-left" th:text="${newCourseSection.name}"></div>
@@ -64,10 +64,10 @@
                                         <div style="clear: both"></div>
                                     </div>
                                 </form>
+                            </th:block>
                         </th:block>
-                    </th:block>
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
     <div style="clear: both"></div>
