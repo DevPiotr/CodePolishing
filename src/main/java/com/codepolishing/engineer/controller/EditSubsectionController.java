@@ -18,6 +18,7 @@ public class EditSubsectionController {
     int rememberCourseSectionId;
     String rememberSubsectionName;
 
+
     ArrayList<Task> taskList;
     ArrayList<Theory> theoryList;
     ArrayList<CompileTask> compileTaskList;
