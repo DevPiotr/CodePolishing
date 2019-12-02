@@ -4,17 +4,44 @@
 <th:block th:fragment="ranking-card">
 
     <div class="offer-card col-6 py-2 mx-auto" th:object="${userOne}">
-        <div class="float-left col-8 m-0">
-            <h2 class="font-weight-bold" th:text="${number}"></h2>
-        </div>
+       <!-- <div class="float-left col-8 m-0">
+            <h2 class="font-weight-bold""></h2>
+        </div>--><!--
         <div class="float-right col-3 mt-3 text-right font-italic">
             <span class="font-weight-bold" ></span>
+        </div>-->
+        <div class="d-inline-block col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="font-weight-bold d-inline-block col-2" th:text="${number+'.'}"></div>
+                    <div class="font-weight-bold text-center d-inline-block col-3" th:text="*{'wynik: ' + score}"></div>
+                    <div class="d-inline-block col-6 text-center" th:text="*{name + ' ' + surname}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+<!--/*@thymesVar id="user" type="com.codepolishing.engineer.entity.User"*/-->
+<th:block th:fragment="get-users">
+
+    <div class="offer-card col-6 py-2 mx-auto" th:object="${user}">
+        <div class="float-left col-8 m-0">
+            <h3 class="font-weight-bold mt-3" th:text="*{'USER ID: ' + id}"></h3>
+        </div>
+        <div class="float-right col-3 mt-3 text-right font-italic">
+            <span class="font-weight-bold" >
+                <form method="get" th:action="@{users/{id}(id=*{id})}">
+                    <input type="submit" class="btn btn-secondary text-white float-right h-25" value="Edytuj">
+                </form>
+            </span>
         </div>
         <div class="float-left col-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title" th:text="*{name + ' ' + surname + ' | wynik: ' + score}"></h5>
-                    <p class="card-text" text="Opis"></p>
+                    <h6 class="card-title" th:text="*{name + ' ' + surname}"></h6>
+                    <p class="card-text" th:text="*{'Rola: ' + idUserRole}"></p>
                 </div>
             </div>
         </div>
@@ -23,5 +50,110 @@
 
 </th:block>
 
+<!--/*@thymesVar id="provinces" type="com.codepolishing.engineer.entity.Province"*/-->
+<th:block th:fragment="single-user">
+    <div class="site-section" th:object="${user}">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-6">
+
+                            <form th:action="@{/administrator/users/{id}/avatar(id=*{id})}" th:method="delete" class="form-box py-0 my-0">
+                                <img th:src="@{/getUserImage/{id}(id=*{id})}" alt="Zdjęcie profilowe" class="mx-auto w-50 d-block rounded-circle"/>
+                                <div class="form-group mt-3">
+                                    <input type="submit" class="form-control" value="Usuń avatar"></a>
+                                </div>
+                            </form>
+                            <form th:action="@{/administrator/users/{id}/cv(id=*{id})}" th:method="delete" enctype="multipart/form-data" class="form-box py-0 my-0">
+                                <th:block th:if="*{CVPath}">
+                                    <div class="form-group cv-form-text-exist">
+                                        <div text="'Plik CV:'"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Usuń CV" class="form-control">
+                                    </div>
+                                </th:block>
+                                <th:block th:unless="*{CVPath}">
+                                    <div class="form-group cv-form-text-not-exist">
+                                        Plik CV : brak
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" disabled="disabled" value="Usuń CV" class="form-control">
+                                    </div>
+                                </th:block>
+
+                            </form>
+                            <th:block th:if="*{enabled}">
+                                <form th:action="@{/administrator/users/{id}/disable(id=*{id})}" th:method="update" class="form-box py-0 my-0">
+                                    <div class="form-group mt-3">
+                                        <input type="submit" class="form-control alert-danger" value="Zablokuj użytkownika"></a>
+                                    </div>
+                                </form>
+                            </th:block>
+                            <th:block th:unless="*{enabled}">
+                                <form th:action="@{/administrator/users/{id}/enable(id=*{id})}" th:method="update" class="form-box py-0 my-0">
+                                    <div class="form-group mt-3">
+                                        <input type="submit" class="form-control alert-danger" value="Odblokuj użytkownika"></a>
+                                    </div>
+                                </form>
+                            </th:block>
+                        </div>
+                        <div class="col-6">
+                            <form th:action="@{/administrator/users/{id}(id=*{id})}" method="post" class="form-box py-0 my-0">
+                                <div class="form-group">
+                                    Imię: <input th:type="text" th:field="*{name}" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    Nazwisko: <input th:type="text"  th:field="*{surname}" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    Miasto: <input th:type="text" th:field="*{city}" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    Prowincja:
+                                    <select th:field="*{idProvince}">
+
+                                        <option th:each="province : ${provinces}"
+                                                th:value="${province.id}"
+                                                th:utext="${province.name}">
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    Ulica:
+                                    <input th:field="*{street}" class="form-control" placeholder="Street"/>
+                                </div>
+                                <div class="form-group">
+                                    Nr. domu:
+                                    <input th:field="*{houseNumber}" class="form-control" placeholder="House Number"/>
+                                </div>
+                                <div class="form-group">
+                                    Nr. mieszkania:
+                                    <input th:field="*{flatNr}" class="form-control" placeholder="Flat Nr"/>
+                                </div>
+                                <div class="form-group">
+                                    Kod pocztowy:
+                                    <input th:field="*{postCode}" class="form-control" placeholder="XX-XXX"/>
+                                </div>
+                                <div class="form-group">
+                                    Telefon:
+                                    <input th:field="*{phoneNumber}" class="form-control" placeholder="Phone Number"/>
+                                </div>
+                                <div class="form-group">
+                                    Data urodzenia:
+                                    <input th:type="date" th:field="*{birthDate}" class="form-control" placeholder="YYYY-MM-DD"/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Aktualizuj" class="form-control">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
 
 </html>

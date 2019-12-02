@@ -104,19 +104,19 @@ public class UserProfileController {
         removeCVFileIfExist(userCVDirectoryPath);
 
         try {
-
             File oFile = new File(userCVDirectoryPath + "/" + file.getOriginalFilename());
             OutputStream os = new FileOutputStream(oFile);
             InputStream inputStream = file.getInputStream();
-
             IOUtils.copy(inputStream, os);
-
             os.close();
             inputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
             return "Wystąpił błąd podczas przesyłania pliku: " + e.getMessage();
         }
+
+        user.setCVPath(userCVDirectoryPath);
+        userRepository.saveAndFlush(user);
 
         return "redirect:/user";
     }

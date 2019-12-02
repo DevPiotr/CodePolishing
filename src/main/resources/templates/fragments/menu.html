@@ -74,10 +74,11 @@
                                         <form th:action="@{/user}" method="get">
                                             <input type="submit" class="dropdown-item" value="Profil"/>
                                         </form>
-                                        <a class="dropdown-item" th:href="@{/addCourse}">Dodaj kurs</a>
                                         <th:block sec:authorize="hasAuthority('Administrator')">
                                             <a class="dropdown-item" href="#">Statystyki</a>
+                                            <a class="dropdown-item" href="/addCourse">Dodaj kurs</a>
                                             <a class="dropdown-item" href="/jobOffers/add">Dodaj oferte pracy</a>
+                                            <a class="dropdown-item" href="/administrator/users">Zarządzaj użytkownikami</a>
                                         </th:block>
                                             <a class="dropdown-item" href="/users-ranking">Ranking</a>
                                         <form th:action="@{/logout}"  method="post">

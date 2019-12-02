@@ -113,6 +113,9 @@ public class User implements UserDetails {
     @Column(name = "image")
     private byte[] image;
 
+    @Column(name = "enabled")
+    private short enabled;
+
     @ManyToMany
     @JoinTable(
             name = "personalized_job_offers",
