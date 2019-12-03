@@ -16,7 +16,7 @@
                     <div class="row justify-content-center">
                         <div data-aos="fade-left" data-aos-delay="200" class="col-10">
                             <div class="text-center text-black">
-                                <h1>Ranking</h1>
+                                <h1>Lista użytkowników</h1>
                             </div>
                         </div>
                     </div>
@@ -28,8 +28,9 @@
 
 <div layout:fragment="main-content">
 
-    <th:block th:each="user,userNumber : ${allUsers}">
-        <th:block th:insert="fragments/ranking:: ranking-card(userOne = ${user}, number=${userNumber.index+1})"></th:block>
+    <!--/*@thymesVar id="allUsers" type="com.codepolishing.engineer.entity.User"*/-->
+    <th:block th:each="user : ${allUsers}">
+        <th:block th:insert="fragments/ranking:: get-users(user = ${user})"></th:block>
     </th:block>
 </div>
 

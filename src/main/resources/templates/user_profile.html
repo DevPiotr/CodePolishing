@@ -34,7 +34,7 @@
                 <div class="col-12">
                     <div class="row">
                         <div class="col-6">
-                            <form th:action="@{/user/uploadImage}" method="post" enctype="multipart/form-data" class="form-box py-0 my-0">
+                            <form method="post" th:action="@{user/uploadImage}" enctype="multipart/form-data" class="form-box py-0 my-0">
                                 <img th:src="@{/getUserImage}" alt="Zdjęcie profilowe" class="mx-auto w-50 d-block rounded-circle"/>
                                 <div class="form-group">
                                     Zdjęcie do wgrania <input type="file" name="file" class="form-control">
@@ -43,7 +43,7 @@
                                     <input type="submit" value="Aktualizuj zdjęcie" class="form-control">
                                 </div>
                             </form>
-                            <form th:action="@{/user/uploadCV}" method="post" enctype="multipart/form-data" class="form-box py-0 my-0">
+                            <form method="post" th:action="@{user/uploadCV}" enctype="multipart/form-data" class="form-box py-0 my-0">
                                 <th:block th:if="${CVName}">
                                     <div class="form-group cv-form-text-exist">
                                         <div th:text="'Plik CV : ' + ${CVName}"></div>
