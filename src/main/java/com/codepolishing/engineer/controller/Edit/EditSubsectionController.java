@@ -1,8 +1,9 @@
 package com.codepolishing.engineer.controller.Edit;
 
-import com.codepolishing.engineer.entity.CompileTask;
-import com.codepolishing.engineer.entity.Task;
-import com.codepolishing.engineer.entity.Theory;
+import com.codepolishing.engineer.entity.*;
+import com.codepolishing.engineer.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,18 +11,31 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/courses/editSections/editSubsection")
 public class EditSubsectionController {
 
-    int rememberCourseSectionId;
-    String rememberSubsectionName;
+    @Autowired
+    CourseSubsectionRepository courseSubsectionRepository;
+
+    @Autowired
+    TaskRepository taskRepository;
+
+    @Autowired
+    TheoryRepository theoryRepository;
+
+    @Autowired
+    CompileTaskRepository compileTaskRepository;
+
+    private int rememberCourseSectionId;
+    private String rememberSubsectionName;
 
 
-    ArrayList<Task> taskList;
-    ArrayList<Theory> theoryList;
-    ArrayList<CompileTask> compileTaskList;
+    private ArrayList<Task> taskList;
+    private ArrayList<Theory> theoryList;
+    private ArrayList<CompileTask> compileTaskList;
 
     private final String contentView = "subsection_management/add_subsection_content";
     private final String taskView = "subsection_management/add_subsection_task";
@@ -92,11 +106,23 @@ public class EditSubsectionController {
 
     @PostMapping("/addTask/add")
     public String addTaskToList(@Valid @ModelAttribute("task")Task task,
-                                BindingResult bindingResult){
-        if(bindingResult.hasErrors())
+                                BindingResult bindingResult,
+                                @RequestParam("a")String a,
+                                @RequestParam("b")String b,
+                                @RequestParam("c")String c,
+                                @RequestParam("d")String d,
+                                @RequestParam("rightAnswer")String rightAnswer){
+
+        if(bindingResult.hasFieldErrors("taskContent"))
             System.out.println(bindingResult);
-        else
+        else {
+
+            task.setAllAnswers(a + ";" + b + ";" + c + ";" + d);
+            task.setRightAnswer(rightAnswer);
+
             taskList.add(task);
+
+        }
 
         return "redirect:/courses/editSections/editSubsection/addTask";
     }
@@ -112,6 +138,35 @@ public class EditSubsectionController {
     }
 
     //endregion
+
+    @PostMapping("/finish")
+    public String finishCreating(){
+
+
+        CourseSubsection newCourseSubsection = saveCourseSubsectionInDatabase();
+
+        if(!theoryList.isEmpty())
+            newCourseSubsection.setTheoryList(theoryRepository.saveAll(theoryList));
+
+        if(!taskList.isEmpty())
+            newCourseSubsection.setTaskList(taskRepository.saveAll(taskList));
+
+        if(!compileTaskList.isEmpty())
+            newCourseSubsection.setCompileTaskList(compileTaskRepository.saveAll(compileTaskList));
+
+        courseSubsectionRepository.save(newCourseSubsection);
+
+        return "redirect:/courses/";
+    }
+
+    private CourseSubsection saveCourseSubsectionInDatabase() {
+        CourseSubsection courseSubsection = new CourseSubsection();
+
+        courseSubsection.setIdCourseSection(rememberCourseSectionId);
+        courseSubsection.setName(rememberSubsectionName);
+
+        return courseSubsectionRepository.save(courseSubsection);
+    }
 
     private void setListInModel(Model model){
             model.addAttribute("taskList",taskList);

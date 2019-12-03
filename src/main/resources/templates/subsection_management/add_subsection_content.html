@@ -36,7 +36,7 @@
                             <div class="col-7 float-left" th:text="${theory.theoryContent}"></div>
                             <div class="col-1 float-left">
                                 <input type="hidden" name="deleteNumber" th:value="${number.index}">
-                                <input type="image" name="submit" th:src="@{/public/images/thrash.jpg}" width="30" height="30"/>
+                                <input type="image" name="submit" src="/images/thrash.jpg" width="40" height="40"/>
                             </div>
                             <div style="clear: both"></div>
                         </div>
@@ -52,7 +52,7 @@
                             <div class="col-7 float-left" th:text="${task.taskContent}"></div>
                             <div class="col-1 float-left">
                                 <input type="hidden" name="deleteNumber" th:value="${number.index}">
-                                <input type="image" name="submit" th:src="@{/public/images/thrash.jpg}" width="30" height="30"/>
+                                <input type="image" name="submit" src="/images/thrash.jpg" width="40" height="40"/>
                             </div>
                             <div style="clear: both"></div>
                         </div>
@@ -68,7 +68,7 @@
                             <div class="col-7 float-left" th:text="${compileTask.taskContent}"></div>
                             <div class="col-1 float-left">
                                 <input type="hidden" name="deleteNumber" th:value="${number.index}">
-                                <input type="image" name="submit" th:src="@{/public/images/thrash.jpg}" width="30" height="30"/>
+                                <input type="image" name="submit" src="/images/thrash.jpg" width="40" height="40"/>
                             </div>
                             <div style="clear: both"></div>
                         </div>
@@ -77,6 +77,10 @@
             </th:block>
         </div>
         <div style="clear:both"></div>
+
+        <form th:action="@{finish}" method="post" class="m-auto text-center">
+            <input type="submit" class="btn btn-primary" value="Zakończ">
+        </form>
     </div>
 
 </th:block>

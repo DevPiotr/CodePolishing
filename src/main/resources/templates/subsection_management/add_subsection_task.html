@@ -9,6 +9,25 @@
 </th:block>
 
 <th:block layout:fragment="main-content">
+
+    <script type="text/javascript">
+
+        function enableButtonAndStoreValueInField(){
+
+            var selectedRadioId = $('input[name=setRightAnswer]:checked').attr('id');
+
+            var valueFromInput =  $('input[name='+ selectedRadioId +']').val();
+
+            $('input[name=rightAnswer]').val(valueFromInput)
+
+            console.log('id:',selectedRadioId);
+            console.log('value: ',valueFromInput);
+
+            $("#addButton").removeAttr("disabled");
+        };
+
+    </script>
+
     <div class="mt-5 container">
         <div class="row justify-content-center">
             <a th:href="@{addContent}" class="btn btn-primary col-2 mx-2">Dodaj teorię</a>
@@ -18,23 +37,39 @@
     </div>
     <div class="mt-5">
         <div class="col-6 float-left text-center border-right">
-            <form th:action="@{addContent/add}" th:object="${task}" method="post" class="">
+            <form th:action="@{addTask/add}" th:object="${task}" method="post">
+                <input type="hidden" name="rightAnswer">
+
                 <div class="form-group">
                     <h5>Task Content</h5>
-                    <textarea rows="5" type="text" th:field="*{taskContent}" class="form-control col-8 mx-auto" placeholder="Task Content"/>
+                    <textarea rows="5" type="text" th:field="*{taskContent}" class="form-control col-8 mx-auto"/>
                 </div>
-                <div class="form-group">
-                    <input type="text" name="a" placeholder="Answer 1">
-                    <input type="text" name="b" placeholder="Answer 2">
-                    <input type="text" name="c" placeholder="Answer 3">
-                    <input type="text" name="d" placeholder="Answer 4">
+
+                <div class="form-group col-9 float-left mx-1">
+                    <h5 class="col-12 text-center  font-weight-bold">Odpowiedzi</h5>
+                    <div class="form-group">
+                        <input class="col-12 my-1" type="text" name="a" placeholder="Answer 1">
+                        <input class="col-12 my-1" type="text" name="b" placeholder="Answer 2">
+                        <input class="col-12 my-1" type="text" name="c" placeholder="Answer 3">
+                        <input class="col-12 my-1" type="text" name="d" placeholder="Answer 4">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <h5>Task Content</h5>
-                    <textarea rows="5" type="text" th:field="*{taskContent}" class="form-control col-8 mx-auto" placeholder="Task Content"/>
+
+                <div class="form-group float-left col-2">
+                    <h5 class="col-12 text-center  font-weight-bold">Poprawna odpowiedz</h5>
+                    <div class="form-group">
+
+                        <input class="col-12 my-1" type="radio" name="setRightAnswer" id="a" autocomplete="off" onclick="enableButtonAndStoreValueInField()">
+                        <input class="col-12 my-1" type="radio" name="setRightAnswer" id="b" autocomplete="off" onclick="enableButtonAndStoreValueInField()">
+                        <input class="col-12 my-1" type="radio" name="setRightAnswer" id="c" autocomplete="off" onclick="enableButtonAndStoreValueInField()">
+                        <input class="col-12 my-1" type="radio" name="setRightAnswer" id="d" autocomplete="off" onclick="enableButtonAndStoreValueInField()">
+                    </div>
+
                 </div>
-                <input type="submit" class="btn btn-primary btn-pill" value="Dodaj">
+                <div style="clear: both"></div>
+                <input type="submit" id="addButton" class="btn btn-primary btn-pill" disabled value="Dodaj">
             </form>
+
 
         </div>
         <div class="float-left col-6">
@@ -47,7 +82,7 @@
                             <div class="col-7 float-left" th:text="${theory.theoryContent}"></div>
                             <div class="col-1 float-left">
                                 <input type="hidden" name="deleteNumber" th:value="${number.index}">
-                                <input type="image" name="submit" th:src="@{/public/images/thrash.jpg}" width="30" height="30"/>
+                                <input type="image" name="submit" src="/images/thrash.jpg" width="40" height="40"/>
                             </div>
                             <div style="clear: both"></div>
                         </div>
@@ -55,15 +90,15 @@
                 </th:block>
             </th:block>
 
-            <th:block th:if="${theoryList}">
+            <th:block th:if="${taskList}">
                 <h4 class="text-center font-weight-bold">Praktyka</h4>
                 <th:block th:each="task,number : ${taskList}">
-                    <form th:action="@{/deleteSection}" method="post">
+                    <form th:action="@{addTask/delete}" method="post">
                         <div class="text-center">
                             <div class="col-7 float-left" th:text="${task.taskContent}"></div>
                             <div class="col-1 float-left">
                                 <input type="hidden" name="deleteNumber" th:value="${number.index}">
-                                <input type="image" name="submit" th:src="@{/public/images/thrash.jpg}" width="30" height="30"/>
+                                <input type="image" name="submit" src="/images/thrash.jpg" width="40" height="40"/>
                             </div>
                             <div style="clear: both"></div>
                         </div>
@@ -71,15 +106,15 @@
                 </th:block>
             </th:block>
 
-            <th:block th:if="${theoryList}">
+            <th:block th:if="${compileTaskList}">
                 <h4 class="text-center font-weight-bold">Kompilacyjne</h4>
                 <th:block th:each="compileTask,number : ${compileTaskList}">
-                    <form th:action="@{/deleteSection}" method="post">
+                    <form th:action="@{addCompileTask/delete}" method="post">
                         <div class="text-center">
                             <div class="col-7 float-left" th:text="${compileTask.taskContent}"></div>
                             <div class="col-1 float-left">
                                 <input type="hidden" name="deleteNumber" th:value="${number.index}">
-                                <input type="image" name="submit" th:src="@{/public/images/thrash.jpg}" width="30" height="30"/>
+                                <input type="image" name="submit" src="/images/thrash.jpg" width="40" height="40"/>
                             </div>
                             <div style="clear: both"></div>
                         </div>
@@ -88,6 +123,10 @@
             </th:block>
         </div>
         <div style="clear:both"></div>
+
+        <form th:action="@{finish}" method="post" class="m-auto text-center">
+            <input type="submit" class="btn btn-primary" value="Zakończ">
+        </form>
     </div>
 
 </th:block>
