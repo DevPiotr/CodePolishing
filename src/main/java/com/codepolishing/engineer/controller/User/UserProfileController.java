@@ -1,4 +1,4 @@
-package com.codepolishing.engineer.controller;
+package com.codepolishing.engineer.controller.User;
 
 import com.codepolishing.engineer.entity.User;
 import com.codepolishing.engineer.repository.ProvinceRepository;

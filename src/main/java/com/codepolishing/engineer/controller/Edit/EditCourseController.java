@@ -1,4 +1,4 @@
-package com.codepolishing.engineer.controller;
+package com.codepolishing.engineer.controller.Edit;
 
 import com.codepolishing.engineer.entity.Course;
 import com.codepolishing.engineer.entity.CourseSection;
