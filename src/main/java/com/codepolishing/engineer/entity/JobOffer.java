@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
@@ -25,6 +26,10 @@ public class JobOffer {
     @Length(max = 40)
     @Column(name = "company_name")
     private String companyName;
+
+    @Email
+    @Column(name = "employer_email")
+    private String employerEmail;
 
     @NotNull
     @Column(name = "job_offer_content")

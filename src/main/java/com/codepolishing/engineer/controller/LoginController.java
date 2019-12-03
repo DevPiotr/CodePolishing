@@ -20,7 +20,7 @@ public class LoginController {
     @RequestMapping("/signIn")
     public String userLoginPage()
     {
-        return  "user_login_page";
+        return "user_login_page";
     }
 
     @RequestMapping("/signInError")

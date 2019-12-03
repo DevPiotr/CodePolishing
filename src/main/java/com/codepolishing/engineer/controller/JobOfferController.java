@@ -2,8 +2,12 @@ package com.codepolishing.engineer.controller;
 
 import com.codepolishing.engineer.entity.JobOffer;
 import com.codepolishing.engineer.repository.JobOfferRepository;
+import com.codepolishing.engineer.services.EmailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +24,9 @@ public class JobOfferController {
 
     @Autowired
     private JobOfferRepository jobOfferRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET )
     public String showJobOffer(Model model)
@@ -78,6 +85,17 @@ public class JobOfferController {
         jobOfferRepository.save(job);
 
         return "job_offer_edit";
+    }
+    @RequestMapping(value = "/{id}/sendMail", method = RequestMethod.GET)
+    public String sendMailToEmployer(@PathVariable int id)
+    {
+        JobOffer jobInfo = jobOfferRepository.findById(id);
+
+        emailService.sendSimpleMessage(jobInfo.getEmployerEmail(),"Aplikacja | "+jobInfo.getCompanyName()
+                ,"Witaj " + jobInfo.getCompanyName() +"\nW odpowiedzi na \'" +
+                        jobInfo.getShortDescription()+"\' przesyłam moją aplikację");
+
+        return "redirect:/jobOffers/"+id+"/view";
     }
 
 }

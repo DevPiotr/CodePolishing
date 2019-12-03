@@ -42,7 +42,7 @@
                 <div class="card-body">
                     <h5 class="card-title" th:text="${tech}">Wymagane technologie</h5>
                     <p class="card-text" th:text="${description}">Opis</p>
-                    <form th:action="@{/jobOffers/{id}/send(id=${id})}" method="get">
+                    <form th:action="@{/jobOffers/{id}/sendMail(id=${id})}" method="get">
                         <input type="submit" class="btn btn-primary text-white float-right" value="Aplikuj"/>
                     </form>
                 </div>
@@ -57,9 +57,12 @@
     <div class="offer-card col-12 py-2">
         <form id="jobOfferAddId" th:object="${job}" method="post" th:action="@{/jobOffers/{ref}(ref=${ref})}">
 
-            <input type="hidden" th:field="*{createDate}" />
+           <!-- <input type="hidden" th:field="*{createDate}" />-->
             <div class="form-group">
                 <input th:text="*{companyName}" th:field="*{companyName}" type="text" class="form-control" placeholder="Nazwa firmy"/>
+            </div>
+            <div class="form-group">
+                <input th:text="*{employerEmail}" th:field="*{employerEmail}" type="text" class="form-control" placeholder="Email pracodawcy"/>
             </div>
             <div class="form-group">
                 <input th:text="*{technology}" th:field="*{technology}" type="text" class="form-control" placeholder="Wymagane technologie"/>
