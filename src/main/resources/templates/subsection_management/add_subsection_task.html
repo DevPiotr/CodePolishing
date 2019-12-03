@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/courseLayout}" >
+
+<th:block layout:fragment="header">
+    <div class="menu-bg top-section-space" th:style="'background:url(' + @{/images/programming_banner.jpg} + ');'" data-stellar-background-ratio="0.8"></div>
+</th:block>
+
+<th:block layout:fragment="main-content">
+    <div class="mt-5 container">
+        <div class="row justify-content-center">
+            <a th:href="@{addContent}" class="btn btn-primary col-2 mx-2">Dodaj teorię</a>
+            <a th:href="@{addTask}" class="btn btn-primary col-2 mx-2">Dodaj praktykę</a>
+            <a th:href="@{addCompileTask}" class="btn btn-primary col-2 mx-2">Dodaj kompilacyje</a>
+        </div>
+    </div>
+    <div class="mt-5">
+        <div class="col-6 float-left text-center border-right">
+            <form th:action="@{addContent/add}" th:object="${task}" method="post" class="">
+                <div class="form-group">
+                    <h5>Task Content</h5>
+                    <textarea rows="5" type="text" th:field="*{taskContent}" class="form-control col-8 mx-auto" placeholder="Task Content"/>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="a" placeholder="Answer 1">
+                    <input type="text" name="b" placeholder="Answer 2">
+                    <input type="text" name="c" placeholder="Answer 3">
+                    <input type="text" name="d" placeholder="Answer 4">
+                </div>
+                <div class="form-group">
+                    <h5>Task Content</h5>
+                    <textarea rows="5" type="text" th:field="*{taskContent}" class="form-control col-8 mx-auto" placeholder="Task Content"/>
+                </div>
+                <input type="submit" class="btn btn-primary btn-pill" value="Dodaj">
+            </form>
+
+        </div>
+        <div class="float-left col-6">
+            <h3 class="text-center font-weight-bold mb-4">Zawartość</h3>
+            <th:block th:if="${theoryList}">
+                <h4 class="text-center font-weight-bold">Teoria</h4>
+                <th:block th:each="theory,number : ${theoryList}">
+                    <form th:action="@{addContent/delete}" method="post">
+                        <div class="text-center">
+                            <div class="col-7 float-left" th:text="${theory.theoryContent}"></div>
+                            <div class="col-1 float-left">
+                                <input type="hidden" name="deleteNumber" th:value="${number.index}">
+                                <input type="image" name="submit" th:src="@{/public/images/thrash.jpg}" width="30" height="30"/>
+                            </div>
+                            <div style="clear: both"></div>
+                        </div>
+                    </form>
+                </th:block>
+            </th:block>
+
+            <th:block th:if="${theoryList}">
+                <h4 class="text-center font-weight-bold">Praktyka</h4>
+                <th:block th:each="task,number : ${taskList}">
+                    <form th:action="@{/deleteSection}" method="post">
+                        <div class="text-center">
+                            <div class="col-7 float-left" th:text="${task.taskContent}"></div>
+                            <div class="col-1 float-left">
+                                <input type="hidden" name="deleteNumber" th:value="${number.index}">
+                                <input type="image" name="submit" th:src="@{/public/images/thrash.jpg}" width="30" height="30"/>
+                            </div>
+                            <div style="clear: both"></div>
+                        </div>
+                    </form>
+                </th:block>
+            </th:block>
+
+            <th:block th:if="${theoryList}">
+                <h4 class="text-center font-weight-bold">Kompilacyjne</h4>
+                <th:block th:each="compileTask,number : ${compileTaskList}">
+                    <form th:action="@{/deleteSection}" method="post">
+                        <div class="text-center">
+                            <div class="col-7 float-left" th:text="${compileTask.taskContent}"></div>
+                            <div class="col-1 float-left">
+                                <input type="hidden" name="deleteNumber" th:value="${number.index}">
+                                <input type="image" name="submit" th:src="@{/public/images/thrash.jpg}" width="30" height="30"/>
+                            </div>
+                            <div style="clear: both"></div>
+                        </div>
+                    </form>
+                </th:block>
+            </th:block>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+
+</th:block>
+
+</html>
