@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,16 @@ public class EditSubsectionController {
 
     private final String contentView = "subsection_management/add_subsection_content";
     private final String taskView = "subsection_management/add_subsection_task";
+    private final String compileTaskView = "subsection_management/add_subsection_compile_task";
+
+    @PostConstruct
+    private void postConstructor()
+    {
+        taskList = new ArrayList<>();
+        theoryList = new ArrayList<>();
+        compileTaskList = new ArrayList<>();
+    }
+
 
     @GetMapping(value = "/addContent", params = {"sectionId","subSectionName"})
     public String showFormToAddSubsectionContent(@RequestParam("sectionId")int courseSectionId,
@@ -48,10 +59,6 @@ public class EditSubsectionController {
 
         rememberCourseSectionId = courseSectionId;
         rememberSubsectionName = subSectionName;
-
-        taskList = new ArrayList<>();
-        theoryList = new ArrayList<>();
-        compileTaskList = new ArrayList<>();
 
         setListInModel(model);
 
@@ -119,9 +126,7 @@ public class EditSubsectionController {
 
             task.setAllAnswers(a + ";" + b + ";" + c + ";" + d);
             task.setRightAnswer(rightAnswer);
-
             taskList.add(task);
-
         }
 
         return "redirect:/courses/editSections/editSubsection/addTask";
@@ -136,6 +141,33 @@ public class EditSubsectionController {
 
         return "redirect:/courses/editSections/editSubsection/addTask";
     }
+
+    @RequestMapping(value = "/addCompileTask", method = RequestMethod.GET)
+    public String showCompileTaskForm(Model model)
+    {
+
+        CompileTask compileTask = getSimpleCompileTask();
+        setListInModel(model);
+        model.addAttribute("compileTask",compileTask);
+
+        return compileTaskView;
+    }
+    @RequestMapping(value = "/addCompileTask", method = RequestMethod.POST)
+    public String addCompileTaskFromForm(@ModelAttribute CompileTask compileTask)
+    {
+        compileTaskList.add(compileTask);
+
+        return "redirect:/courses/editSections/editSubsection/addCompileTask";
+    }
+    @RequestMapping(value = "/addCompileTask/delete")
+    public String deleteCompileTask(@RequestParam("deleteNumber") int number)
+    {
+        if(!compileTaskList.isEmpty()) {
+            compileTaskList.remove(number);
+        }
+        return "redirect:/courses/editSections/editSubsection/addCompileTask";
+    }
+
 
     //endregion
 
@@ -173,4 +205,11 @@ public class EditSubsectionController {
             model.addAttribute("theoryList",theoryList);
             model.addAttribute("compileTaskList",compileTaskList);
     }
+    private CompileTask getSimpleCompileTask()
+    {
+        CompileTask compileTask = compileTaskRepository.findById(1);
+        compileTask.setId(0);
+        return compileTask;
+    }
+
 }

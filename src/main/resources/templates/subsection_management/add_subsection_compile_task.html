@@ -17,16 +17,43 @@
         </div>
     </div>
     <div class="mt-5">
-        <div class="col-6 float-left text-center border-right">
-            <form th:action="@{addContent/add}" th:object="${theory}" method="post" class="">
-                <div class="form-group">
-                    <textarea rows="20" type="text" th:field="*{theoryContent}" class="form-control col-8 mx-auto" placeholder="Content in HTML"/>
+        <div class="col-6 float-left text-center">
+            <form th:action="@{addCompileTask}" th:object="${compileTask}" method="post" class="">
+                <div class="col-12 w-100 float-left text-center">
+                    <div class="form-group">
+                        Treść zadania:
+                        <textarea rows="3" type="text" th:text="*{taskContent}" th:field="*{taskContent}" class="form-control col-12 mx-auto" placeholder="Treść zadania"/>
+                    </div>
+                    <div class="form-group w-100">
+                        Logika kompilacji zadania:
+                        <textarea rows="20" type="text" th:text="*{compileCode}" th:field="*{compileCode}" class="form-control col-12 mx-1" placeholder="Treść zadania"/>
+                    </div>
+                    <div class="form-group">
+                        Dane wejściowe:
+                        <textarea rows="1" type="text" th:text="*{inputs}" th:field="*{inputs}" class="form-control col-12 mx-auto" placeholder="Treść zadania"/>
+                    </div>
+
                 </div>
+                <div class="col-6 w-100 float-right text-center border-right">
+                    <div class="form-group">
+                        Wzorzec rozwiazania zadania:
+                        <textarea rows="10" type="text" th:text="*{properCode}" th:field="*{properCode}" class="form-control col-12 mx-auto" placeholder="Treść zadania"/>
+                    </div>
+                </div>
+                <div class="col-6 w-100 float-right text-center border-right">
+                    <div class="form-group">
+                        Kod startowy:
+                        <textarea rows="10" type="text" th:text="*{initCode}" th:field="*{initCode}" class="form-control col-12 mx-auto" placeholder="Treść zadania"/>
+                    </div>
+                </div>
+                <div style="clear:both;"></div>
                 <input type="submit" class="btn btn-primary btn-pill" value="Dodaj">
             </form>
-
         </div>
-        <div class="float-left col-6">
+
+
+
+        <div class="col-6 float-left">
             <h3 class="text-center font-weight-bold mb-4">Zawartość</h3>
             <th:block th:if="${theoryList}">
                 <h4 class="text-center font-weight-bold">Teoria</h4>
