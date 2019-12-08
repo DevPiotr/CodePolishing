@@ -79,17 +79,4 @@ public class EditSectionController {
 
         return "redirect:/courses/editSections/" + rememberCourseId;
     }
-
-    @GetMapping("/addSubsection/{id}")
-    public String showFormToAddSubsection(@PathVariable("id")int courseSectionId){
-        rememberCourseSectionId = courseSectionId;
-
-        return "add_subsection_to_existed_section";
-    }
-
-    @PostMapping("/addSubsection")
-    public String beginCreatingSubsection(@RequestParam("name")String subSectionName){
-
-        return "redirect:/courses/editSections/editSubsection/addContent?sectionId=" + rememberCourseSectionId + "&subSectionName=" + subSectionName;
-    }
 }

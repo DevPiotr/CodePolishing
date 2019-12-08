@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/courseLayout}" >
+
+<th:block layout:fragment="header">
+    <div class="menu-bg top-section-space" th:style="'background:url(' + @{/images/programming_banner.jpg} + ');'" data-stellar-background-ratio="0.8"></div>
+</th:block>
+
+<th:block layout:fragment="main-content">
+    <div class="mt-5">
+        <div class="col-6 float-left text-center border-right">
+            <form th:action="@{editContent/edit}" th:object="${theory}" method="post" class="">
+                <input type="hidden" th:field="*{id}" th:value="*{id}">
+                <div class="form-group">
+                    <textarea rows="20" type="text" th:field="*{theoryContent}" th:value="*{theoryContent}" class="form-control col-8 mx-auto" placeholder="Content in HTML"/>
+                </div>
+                <input type="submit" class="btn btn-primary btn-pill" value="Zapisz">
+            </form>
+
+        </div>
+        <div class="float-left col-6">
+            <h3 class="text-center font-weight-bold mb-4">Zawartość</h3>
+            <th:block th:if="${theoryList}">
+                <h4 class="text-center font-weight-bold">Teoria</h4>
+                <th:block th:each="theory,number : ${theoryList}">
+
+                        <div class="text-center">
+                            <div class="col-7 float-left text-center" th:text="${number.index + 1}"></div>
+                            <form class="col-2 float-left" th:action="@{editContent}">
+                                <input type="hidden" name="theoryId" th:value="${theory.id}">
+                                <input type="submit" class="btn" value="edytuj">
+                            </form>
+                            <form class="col-1 float-left" th:action="@{editContent/delete}" method="post">
+                                <input type="hidden" name="deleteNumber" th:value="${number.index}">
+                                <input type="image" name="submit" src="/images/thrash.jpg" width="40" height="40"/>
+                            </form>
+                            <div style="clear: both"></div>
+                        </div>
+                    </form>
+                </th:block>
+            </th:block>
+
+            <th:block th:if="${taskList}">
+                <h4 class="text-center font-weight-bold">Praktyka</h4>
+                <th:block th:each="task,number : ${taskList}">
+                    <form th:action="@{editTask/delete}" method="post">
+                        <div class="text-center">
+                            <div class="col-7 float-left text-center" th:text="${number.index + 1}"></div>
+                            <form class="col-2 mx-1 float-left" th:action="@{editTask}">
+                                <input type="hidden" name="taskId" th:value="${task.id}">
+                                <input type="submit" class="btn" value="edytuj">
+                            </form>
+                            <form class="col-1 float-left" th:action="@{editTask/delete}" method="post">
+                                <input type="hidden" name="deleteNumber" th:value="${number.index}">
+                                <input type="image" name="submit" src="/images/thrash.jpg" width="40" height="40"/>
+                            </form>
+                            <div style="clear: both"></div>
+                        </div>
+                    </form>
+                </th:block>
+            </th:block>
+
+            <th:block th:if="${compileTaskList}">
+                <h4 class="text-center font-weight-bold">Kompilacyjne</h4>
+                <th:block th:each="compileTask,number : ${compileTaskList}">
+                    <form th:action="@{editCompileTask/delete}" method="post">
+                        <div class="text-center">
+                            <div class="col-7 float-left text-center" th:text="${number.index + 1}"></div>
+                            <form class="col-2 float-left" th:action="@{editCompileTask}">
+                                <input type="hidden" name="compileTaskId" th:value="${compileTask.id}">
+                                <input type="submit" class="btn" value="edytuj">
+                            </form>
+                            <form class="col-1 float-left" th:action="@{editCompileTask/delete}" method="post">
+                                <input type="hidden" name="deleteNumber" th:value="${number.index}">
+                                <input type="image" name="submit" src="/images/thrash.jpg" width="40" height="40"/>
+                            </form>
+                            <div style="clear: both"></div>
+                        </div>
+                    </form>
+                </th:block>
+            </th:block>
+        </div>
+        <div style="clear:both"></div>
+
+        <form th:action="@{finish}" method="post" class="m-auto text-center">
+            <input type="submit" class="btn btn-primary" value="Zakończ">
+        </form>
+    </div>
+
+</th:block>
+
+</html>

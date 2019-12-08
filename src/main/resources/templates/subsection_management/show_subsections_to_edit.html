@@ -16,7 +16,7 @@
                     <div class="row justify-content-center">
                         <div data-aos="fade-left" data-aos-delay="200" class="col-10">
                             <div class="text-center text-black">
-                                <h1>Dodaj Podrozdział</h1>
+                                <h1>Podrozdziały</h1>
                             </div>
                         </div>
                     </div>
@@ -26,16 +26,27 @@
     </div>
 </th:block>
 
-    <th:block layout:fragment="main-content">
-            <form th:action="@{/courses/editSections/addSubsection/}"  method="post" class="form-box col-7 m-auto">
-                <div class="form-group">
-                    <h3>Nazwa podrozdziału: </h3>
-                    <input name="name" class="form-control" placeholder="Nazwa Podrozdziału"/>
+<div layout:fragment="main-content">
+    <div class="site-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-12" th:each="subsection : ${courseSubsection}">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <th:block th:insert="fragments/management :: course_subsection_management(
+                            subsectionId = ${subsection.id})">
+
+                            </th:block>
+
+                            <h5 class="card-title" th:text="${subsection.name}"></h5>
+
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-primary btn-pill" value="Dalej">
-                </div>
-            </form>
-    </th:block>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 </html>

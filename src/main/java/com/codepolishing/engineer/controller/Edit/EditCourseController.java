@@ -45,7 +45,6 @@ public class EditCourseController {
         model.addAttribute("courseTypes",courseTypeRepository.findAll());
         model.addAttribute("courseLevels",courseLevelRepository.findAll());
 
-
         return "edit_course";
     }
 

@@ -2,8 +2,8 @@ package com.codepolishing.engineer.controller.Edit;
 
 import com.codepolishing.engineer.entity.*;
 import com.codepolishing.engineer.repository.*;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,89 +30,100 @@ public class EditSubsectionController {
     @Autowired
     CompileTaskRepository compileTaskRepository;
 
-    private int rememberCourseSectionId;
-    private String rememberSubsectionName;
+    @Autowired
+    CourseSectionRepository courseSectionRepository;
+
+    private CourseSubsection editedSubsection;
 
 
-    private ArrayList<Task> taskList;
-    private ArrayList<Theory> theoryList;
-    private ArrayList<CompileTask> compileTaskList;
+    private List<Task> taskList;
+    private List<Theory> theoryList;
+    private List<CompileTask> compileTaskList;
 
-    private final String contentView = "subsection_management/add_subsection_content";
-    private final String taskView = "subsection_management/add_subsection_task";
-    private final String compileTaskView = "subsection_management/add_subsection_compile_task";
+    private final String contentView = "subsection_management/edit_subsection_content";
+    private final String taskView = "subsection_management/edit_subsection_task";
+    private final String compileTaskView = "subsection_management/edit_subsection_compile_task";
+    private final String subsectionListView = "subsection_management/show_subsections_to_edit";
 
-    @PostConstruct
-    private void postConstructor()
-    {
-        taskList = new ArrayList<>();
-        theoryList = new ArrayList<>();
-        compileTaskList = new ArrayList<>();
+    @GetMapping("/{id}")
+    public String showSubsectionToEdit(@PathVariable("id")int courseSectionId,
+                                       Model model){
+
+        CourseSection courseSection = courseSectionRepository.getOne(courseSectionId);
+
+        model.addAttribute("courseSubsection",courseSection.getCourseSubsectionList());
+
+        return subsectionListView;
     }
 
 
-    @GetMapping(value = "/addContent", params = {"sectionId","subSectionName"})
-    public String showFormToAddSubsectionContent(@RequestParam("sectionId")int courseSectionId,
-                                                 @RequestParam("subSectionName")String subSectionName,
-                                                 Theory theory,
-                                                 Model model){
+    @GetMapping("/editContent/{id}")
+    public String prepareForEditing(@PathVariable("id")int subsectionId,
+                                                  Model model){
 
-        rememberCourseSectionId = courseSectionId;
-        rememberSubsectionName = subSectionName;
+        editedSubsection = courseSubsectionRepository.getOne(subsectionId);
 
         setListInModel(model);
 
-        model.addAttribute("theory",theory);
-
-        return contentView;
+        return getPossibleRedirectValue();
     }
 
     //region Content methods
-    @GetMapping("/addContent")
-    public String showFormToAddSubsectionContent(Theory theory,
+    @GetMapping(value = "/editContent", params = {"theoryId"})
+    public String showFormToEditSubsectionContent(@RequestParam("theoryId")int theoryId,
                                                  Model model){
 
         setListInModel(model);
 
-        model.addAttribute("theory",theory);
+        model.addAttribute("theory",theoryRepository.getOne(theoryId));
+
         return contentView;
     }
 
-    @PostMapping("/addContent/add")
-    public String addContentToList(@Valid @ModelAttribute("theory")Theory theory,
+    @PostMapping("/editContent/edit")
+    public String EditContentFromList(@Valid @ModelAttribute("theory")Theory theory,
                                 BindingResult bindingResult){
         if(bindingResult.hasErrors())
             System.out.println(bindingResult);
         else
-            theoryList.add(theory);
+            theoryRepository.save(theory);
 
-        return "redirect:/courses/editSections/editSubsection/addContent";
+        return "redirect:/courses/editSections/editSubsection/editContent?theoryId=" + theory.getId();
     }
 
-    @PostMapping("/addContent/delete")
-    public String deleteContent(@RequestParam("deleteNumber")int number){
+    @PostMapping("/editContent/delete")
+    public String deleteContentFromList(@RequestParam("deleteNumber")int number){
 
-        if(!theoryList.isEmpty()) {
-            theoryList.remove(number);
-        }
+        theoryRepository.delete(theoryList.get(number));
+        theoryList.remove(number);
 
-        return "redirect:/courses/editSections/editSubsection/addContent";
+        return getPossibleRedirectValue();
     }
     //endregion
 
     // region Task methods
-    @GetMapping("/addTask")
-    public String showFormToAddSubsectionTask(Task task,
+    @GetMapping(name = "/editTask", params = {"taskId"})
+    public String showFormToEditSubsectionTask(@RequestParam("taskId")int taskId,
                                               Model model){
 
         setListInModel(model);
 
-        model.addAttribute("task",task);
+        Task task = taskRepository.getOne(taskId);
+
+        String[] answers = task.getAllAnswers().split(";");
+
+        model.addAttribute("a",answers[0]);
+        model.addAttribute("b",answers[1]);
+        model.addAttribute("c",answers[2]);
+        model.addAttribute("d",answers[3]);
+
+
+        model.addAttribute("task",taskRepository.getOne(taskId));
         return taskView;
     }
 
-    @PostMapping("/addTask/add")
-    public String addTaskToList(@Valid @ModelAttribute("task")Task task,
+    @PostMapping("/editTask/edit")
+    public String editTaskToList(@Valid @ModelAttribute("task")Task task,
                                 BindingResult bindingResult,
                                 @RequestParam("a")String a,
                                 @RequestParam("b")String b,
@@ -129,49 +140,55 @@ public class EditSubsectionController {
             taskList.add(task);
         }
 
-        return "redirect:/courses/editSections/editSubsection/addTask";
+        return "redirect:/courses/editSections/editSubsection/editTask?taskId=" + task.getId();
     }
 
-    @PostMapping("/addTask/delete")
-    public String delete(@RequestParam("deleteNumber")int number){
+    @PostMapping("/editTask/delete")
+    public String deleteTaskFromList(@RequestParam("deleteNumber")int number){
 
-        if(!taskList.isEmpty()) {
-            taskList.remove(number);
-        }
+        taskRepository.delete(taskList.get(number));
+        taskList.remove(number);
 
-        return "redirect:/courses/editSections/editSubsection/addTask";
+        return getPossibleRedirectValue();
     }
+    //endregion
 
-    @RequestMapping(value = "/addCompileTask", method = RequestMethod.GET)
-    public String showCompileTaskForm(Model model)
+    //region CompileTask methods
+    @GetMapping(value = "/editCompileTask", params = {"compileTaskId"})
+    public String showCompileTaskForm(@RequestParam("compileTaskId")int compileTaskId,
+                                      Model model)
     {
 
-        CompileTask compileTask = getSimpleCompileTask();
         setListInModel(model);
-        model.addAttribute("compileTask",compileTask);
+        model.addAttribute("compileTask",compileTaskRepository.getOne(compileTaskId));
 
         return compileTaskView;
     }
-    @RequestMapping(value = "/addCompileTask", method = RequestMethod.POST)
-    public String addCompileTaskFromForm(@ModelAttribute CompileTask compileTask)
-    {
-        compileTaskList.add(compileTask);
+    @PostMapping("/editCompileTask/edit")
+    public String editCompileTaskFromForm(@Valid @ModelAttribute CompileTask compileTask,
+                                          BindingResult bindingResult) {
 
-        return "redirect:/courses/editSections/editSubsection/addCompileTask";
+        if(bindingResult.hasErrors())
+            System.out.println(bindingResult);
+        else
+            compileTaskRepository.save(compileTask);
+
+        return "redirect:/courses/editSections/editSubsection/editContent?compileTaskId=" + compileTask.getId();
     }
-    @RequestMapping(value = "/addCompileTask/delete")
+
+    @PostMapping(value = "/editCompileTask/delete")
     public String deleteCompileTask(@RequestParam("deleteNumber") int number)
     {
-        if(!compileTaskList.isEmpty()) {
-            compileTaskList.remove(number);
-        }
-        return "redirect:/courses/editSections/editSubsection/addCompileTask";
-    }
+        compileTaskRepository.delete(compileTaskList.get(number));
+        compileTaskList.remove(number);
 
+        return getPossibleRedirectValue();
+    }
 
     //endregion
 
-    @PostMapping("/finish")
+
+   /* @PostMapping("/finish")
     public String finishCreating(){
 
 
@@ -189,27 +206,39 @@ public class EditSubsectionController {
         courseSubsectionRepository.save(newCourseSubsection);
 
         return "redirect:/courses/";
-    }
-
-    private CourseSubsection saveCourseSubsectionInDatabase() {
-        CourseSubsection courseSubsection = new CourseSubsection();
-
-        courseSubsection.setIdCourseSection(rememberCourseSectionId);
-        courseSubsection.setName(rememberSubsectionName);
-
-        return courseSubsectionRepository.save(courseSubsection);
-    }
+    }*/
 
     private void setListInModel(Model model){
-            model.addAttribute("taskList",taskList);
-            model.addAttribute("theoryList",theoryList);
-            model.addAttribute("compileTaskList",compileTaskList);
+
+        Hibernate.initialize(editedSubsection.getTaskList());
+        Hibernate.initialize(editedSubsection.getTheoryList());
+        Hibernate.initialize(editedSubsection.getCompileTaskList());
+
+        taskList = editedSubsection.getTaskList();
+        theoryList = editedSubsection.getTheoryList();
+        compileTaskList = editedSubsection.getCompileTaskList();
+
+        model.addAttribute("taskList",taskList);
+        model.addAttribute("theoryList",theoryList);
+        model.addAttribute("compileTaskList",compileTaskList);
     }
-    private CompileTask getSimpleCompileTask()
-    {
-        CompileTask compileTask = compileTaskRepository.findById(1);
-        compileTask.setId(0);
-        return compileTask;
+
+    private String getPossibleRedirectValue() {
+        String ret = "";
+
+        if(!theoryList.isEmpty()){
+            ret = "redirect:/courses/editSections/editSubsection/editContent?theoryId=" + theoryList.get(0).getId();
+        }
+        else if(!taskList.isEmpty()){
+            ret = "redirect:/courses/editSections/editSubsection/editTask?taskId=" + taskList.get(0).getId();
+        }else if(!compileTaskList.isEmpty()){
+            ret = "redirect:/courses/editSections/editSubsection/editCompileTask?compileTaskId=" + compileTaskList.get(0).getId();
+        }
+        else{
+            // TODO co zrobić jak nie mam już nic do kasowania?
+        }
+
+        return ret;
     }
 
 }
