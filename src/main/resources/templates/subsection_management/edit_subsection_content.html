@@ -45,10 +45,9 @@
             <th:block th:if="${taskList}">
                 <h4 class="text-center font-weight-bold">Praktyka</h4>
                 <th:block th:each="task,number : ${taskList}">
-                    <form th:action="@{editTask/delete}" method="post">
                         <div class="text-center">
                             <div class="col-7 float-left text-center" th:text="${number.index + 1}"></div>
-                            <form class="col-2 mx-1 float-left" th:action="@{editTask}">
+                            <form class="col-2 float-left" th:action="@{editTask/}">
                                 <input type="hidden" name="taskId" th:value="${task.id}">
                                 <input type="submit" class="btn" value="edytuj">
                             </form>
@@ -58,17 +57,15 @@
                             </form>
                             <div style="clear: both"></div>
                         </div>
-                    </form>
                 </th:block>
             </th:block>
 
             <th:block th:if="${compileTaskList}">
                 <h4 class="text-center font-weight-bold">Kompilacyjne</h4>
                 <th:block th:each="compileTask,number : ${compileTaskList}">
-                    <form th:action="@{editCompileTask/delete}" method="post">
                         <div class="text-center">
                             <div class="col-7 float-left text-center" th:text="${number.index + 1}"></div>
-                            <form class="col-2 float-left" th:action="@{editCompileTask}">
+                            <form class="col-2 float-left" th:action="@{editCompileTask/}">
                                 <input type="hidden" name="compileTaskId" th:value="${compileTask.id}">
                                 <input type="submit" class="btn" value="edytuj">
                             </form>
@@ -78,7 +75,6 @@
                             </form>
                             <div style="clear: both"></div>
                         </div>
-                    </form>
                 </th:block>
             </th:block>
         </div>

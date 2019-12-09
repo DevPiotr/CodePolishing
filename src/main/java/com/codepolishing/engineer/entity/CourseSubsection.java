@@ -13,7 +13,6 @@ import java.util.List;
 @Table(name = "course_subsections")
 @Data
 public class CourseSubsection {
-    //TODO skasować subSectionPart tutaj i w bazie danych
     //region Fields From Database
 
     @Id

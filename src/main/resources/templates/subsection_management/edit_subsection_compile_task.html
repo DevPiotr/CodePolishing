@@ -28,40 +28,39 @@
 
     </script>
     <div class="mt-5">
-        <div class="col-6 float-left text-center border-right">
-            <form th:action="@{/courses/editSections/editSubsection/editTask/edit}" th:object="${task}" method="post">
-                <input type="hidden" name="rightAnswer">
+        <div class="col-6 float-left text-center">
+            <form th:action="@{/courses/editSections/editSubsection/editCompileTask/edit}" th:object="${compileTask}" method="post" class="">
                 <input type="hidden" th:field="*{id}" th:value="*{id}">
-                <div class="form-group">
-                    <h5>Task Content</h5>
-                    <textarea rows="5" type="text" th:field="*{taskContent}" class="form-control col-8 mx-auto"/>
-                </div>
-
-                <div class="form-group col-9 float-left mx-1">
-                    <h5 class="col-12 text-center  font-weight-bold">Odpowiedzi</h5>
+                <div class="col-12 w-100 float-left text-center">
                     <div class="form-group">
-                        <input class="col-12 my-1" type="text" th:value="${a}" name="a" placeholder="Answer 1">
-                        <input class="col-12 my-1" type="text" th:value="${b}" name="b" placeholder="Answer 2">
-                        <input class="col-12 my-1" type="text" th:value="${c}" name="c" placeholder="Answer 3">
-                        <input class="col-12 my-1" type="text" th:value="${d}" name="d" placeholder="Answer 4">
+                        Treść zadania:
+                        <textarea rows="3" type="text" th:text="*{taskContent}" th:field="*{taskContent}" class="form-control col-12 mx-auto" placeholder="Treść zadania"/>
                     </div>
-                </div>
-
-                <div class="form-group float-left col-2">
-                    <h5 class="col-12 text-center  font-weight-bold">Poprawna odpowiedz</h5>
+                    <div class="form-group w-100">
+                        Logika kompilacji zadania:
+                        <textarea rows="20" type="text" th:text="*{compileCode}" th:field="*{compileCode}" class="form-control col-12 mx-1" placeholder="Treść zadania"/>
+                    </div>
                     <div class="form-group">
-                        <input class="col-12 my-1" type="radio" name="setRightAnswer" id="a" autocomplete="off" onclick="enableButtonAndStoreValueInField()">
-                        <input class="col-12 my-1" type="radio" name="setRightAnswer" id="b" autocomplete="off" onclick="enableButtonAndStoreValueInField()">
-                        <input class="col-12 my-1" type="radio" name="setRightAnswer" id="c" autocomplete="off" onclick="enableButtonAndStoreValueInField()">
-                        <input class="col-12 my-1" type="radio" name="setRightAnswer" id="d" autocomplete="off" onclick="enableButtonAndStoreValueInField()">
+                        Dane wejściowe:
+                        <textarea rows="1" type="text" th:text="*{inputs}" th:field="*{inputs}" class="form-control col-12 mx-auto" placeholder="Treść zadania"/>
                     </div>
 
                 </div>
-                <div style="clear: both"></div>
-                <input type="submit" id="addButton" class="btn btn-primary btn-pill" disabled value="Zapisz">
+                <div class="col-6 w-100 float-right text-center border-right">
+                    <div class="form-group">
+                        Wzorzec rozwiazania zadania:
+                        <textarea rows="10" type="text" th:text="*{properCode}" th:field="*{properCode}" class="form-control col-12 mx-auto" placeholder="Treść zadania"/>
+                    </div>
+                </div>
+                <div class="col-6 w-100 float-right text-center border-right">
+                    <div class="form-group">
+                        Kod startowy:
+                        <textarea rows="10" type="text" th:text="*{initCode}" th:field="*{initCode}" class="form-control col-12 mx-auto" placeholder="Treść zadania"/>
+                    </div>
+                </div>
+                <div style="clear:both;"></div>
+                <input type="submit" class="btn btn-primary btn-pill" value="Zapisz">
             </form>
-
-
         </div>
         <div class="float-left col-6">
             <h3 class="text-center font-weight-bold mb-4">Zawartość</h3>

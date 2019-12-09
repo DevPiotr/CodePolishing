@@ -23,7 +23,7 @@
         <div class="dropdown-menu">
             <a class="dropdown-item" th:href="@{edit/{id}(id=${courseSection.getId()})}">Edytuj rozdział</a>
             <a class="dropdown-item" th:href="@{addSubsection/{id}(id=${courseSection.getId()})}">Dodaj podrozdział</a>
-            <a class="dropdown-item" th:href="@{editSubsection/{id}(id=${courseSection.getId()})}">Edytuj podrodziały</a>
+            <a class="dropdown-item" th:href="@{editSubsection/show/{id}(id=${courseSection.getId()})}">Edytuj podrodziały</a>
             <a class="dropdown-item" name="delete" th:href="@{delete/{id}(id=${courseSection.getId()})}">Usuń</a>
         </div>
     </th:block>
@@ -35,8 +35,8 @@
             <img width="30px" height="30px" th:src="@{/images/option.jpg}">
         </a>
         <div class="dropdown-menu">
-            <a class="dropdown-item" th:href="@{editContent/{id}(id=${subsectionId})}">Edytuj</a>
-            <a class="dropdown-item" name="delete" th:href="@{delete/{id}(id=${subsectionId})}">Usuń</a>
+            <a class="dropdown-item" th:href="@{/courses/editSections/editSubsection/editContent/{id}(id=${subsectionId})}">Edytuj</a>
+            <a class="dropdown-item" name="delete" th:href="@{/courses/editSections/editSubsection/delete/{id}(id=${subsectionId})}">Usuń</a>
         </div>
     </th:block>
 </th:block>

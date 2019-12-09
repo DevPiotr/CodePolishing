@@ -6,12 +6,14 @@ import com.codepolishing.engineer.repository.CourseLevelRepository;
 import com.codepolishing.engineer.repository.CourseRepository;
 import com.codepolishing.engineer.repository.CourseSectionRepository;
 import com.codepolishing.engineer.repository.CourseTypeRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -36,10 +38,15 @@ public class EditCourseController {
 
     Course courseToAddNewSection;
 
+    List<CourseSection> rememberList;
+
     @GetMapping("/edit/{id}")
     public String editCourse(@PathVariable("id")int id,
                              Model model){
+
         Course course = courseRepository.getOne(id);
+
+        rememberList = course.getCourseSectionList();
 
         model.addAttribute("course",course);
         model.addAttribute("courseTypes",courseTypeRepository.findAll());
@@ -48,10 +55,9 @@ public class EditCourseController {
         return "edit_course";
     }
 
-    @PostMapping("/edit/{id}")
+    @PostMapping("/edit")
     public String saveEditedCourse(@Valid @ModelAttribute("course")Course course,
                                    BindingResult bindingResult,
-                                   @PathVariable("id")int courseId,
                                    Model model){
         if(bindingResult.hasErrors()){
             System.out.println(bindingResult);
@@ -63,10 +69,7 @@ public class EditCourseController {
         Course editedCourse;
 
         course.setModificationDate(new Date(System.currentTimeMillis()));
-
-        if(course.getCourseSectionList() == null){
-            course.setCourseSectionList(new ArrayList<>());
-        }
+        course.setCourseSectionList(rememberList);
 
         editedCourse = course;
 
@@ -105,11 +108,7 @@ public class EditCourseController {
             return "add_section_to_existed_course";
         }else {
             courseSection.setIdCourse(courseToAddNewSection.getId());
-            CourseSection courseSectionToAdd = courseSectionRepository.saveAndFlush(courseSection);
-
-            courseToAddNewSection.getCourseSectionList().add(courseSectionToAdd);
-            courseRepository.saveAndFlush(courseToAddNewSection);
-
+            courseSectionRepository.save(courseSection);
 
             return "redirect:/courses/" + courseToAddNewSection.getId();
         }

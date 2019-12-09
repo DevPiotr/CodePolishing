@@ -27,11 +27,11 @@
 </th:block>
 
     <th:block layout:fragment="main-content">
-            <form th:action="@{/courses/edit/{id}(id=${course.id})}" th:object="${course}" method="post" class="form-box col-4 text-center m-auto">
+            <form th:action="@{/courses/edit}" th:object="${course}" method="post" class="form-box col-4 text-center m-auto">
 
                 <input type="hidden" th:value="${course.id}" th:field="*{id}">
                 <input type="hidden" th:value="${course.createDate}" th:field="*{createDate}">
-                <input type="hidden" th:value="${course.getCourseSectionList()}" th:field="*{courseSectionList}">
+                <!--<input type="hidden" th:value="${course.getCourseSectionList()}" th:field="*{courseSectionList}">-->
 
                 <ul class="alert-danger rounded">
                     <li class="p-1" th:each="err : ${#fields.errors('name')}" th:text="${err}" />

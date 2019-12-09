@@ -34,7 +34,7 @@ public class EditSubsectionController {
     CourseSectionRepository courseSectionRepository;
 
     private CourseSubsection editedSubsection;
-
+    private int rememberedSectionId;
 
     private List<Task> taskList;
     private List<Theory> theoryList;
@@ -45,10 +45,19 @@ public class EditSubsectionController {
     private final String compileTaskView = "subsection_management/edit_subsection_compile_task";
     private final String subsectionListView = "subsection_management/show_subsections_to_edit";
 
-    @GetMapping("/{id}")
+
+    @GetMapping("/delete/{id}")
+    public String deleteCourseSubsection(@PathVariable("id")int courseSubsectionId){
+
+        courseSubsectionRepository.deleteById(courseSubsectionId);
+
+        return "redirect:/courses/editSections/editSubsection/show/"+ rememberedSectionId;
+    }
+    @GetMapping("/show/{id}")
     public String showSubsectionToEdit(@PathVariable("id")int courseSectionId,
                                        Model model){
 
+        rememberedSectionId = courseSectionId;
         CourseSection courseSection = courseSectionRepository.getOne(courseSectionId);
 
         model.addAttribute("courseSubsection",courseSection.getCourseSubsectionList());
@@ -102,7 +111,7 @@ public class EditSubsectionController {
     //endregion
 
     // region Task methods
-    @GetMapping(name = "/editTask", params = {"taskId"})
+    @GetMapping("/editTask")
     public String showFormToEditSubsectionTask(@RequestParam("taskId")int taskId,
                                               Model model){
 
@@ -137,7 +146,9 @@ public class EditSubsectionController {
 
             task.setAllAnswers(a + ";" + b + ";" + c + ";" + d);
             task.setRightAnswer(rightAnswer);
-            taskList.add(task);
+
+            taskRepository.save(task);
+
         }
 
         return "redirect:/courses/editSections/editSubsection/editTask?taskId=" + task.getId();
@@ -154,7 +165,7 @@ public class EditSubsectionController {
     //endregion
 
     //region CompileTask methods
-    @GetMapping(value = "/editCompileTask", params = {"compileTaskId"})
+    @GetMapping(value = "/editCompileTask")
     public String showCompileTaskForm(@RequestParam("compileTaskId")int compileTaskId,
                                       Model model)
     {
@@ -173,7 +184,7 @@ public class EditSubsectionController {
         else
             compileTaskRepository.save(compileTask);
 
-        return "redirect:/courses/editSections/editSubsection/editContent?compileTaskId=" + compileTask.getId();
+        return "redirect:/courses/editSections/editSubsection/editCompileTask?compileTaskId=" + compileTask.getId();
     }
 
     @PostMapping(value = "/editCompileTask/delete")
@@ -188,25 +199,11 @@ public class EditSubsectionController {
     //endregion
 
 
-   /* @PostMapping("/finish")
+   @PostMapping("/finish")
     public String finishCreating(){
 
-
-        CourseSubsection newCourseSubsection = saveCourseSubsectionInDatabase();
-
-        if(!theoryList.isEmpty())
-            newCourseSubsection.setTheoryList(theoryRepository.saveAll(theoryList));
-
-        if(!taskList.isEmpty())
-            newCourseSubsection.setTaskList(taskRepository.saveAll(taskList));
-
-        if(!compileTaskList.isEmpty())
-            newCourseSubsection.setCompileTaskList(compileTaskRepository.saveAll(compileTaskList));
-
-        courseSubsectionRepository.save(newCourseSubsection);
-
         return "redirect:/courses/";
-    }*/
+    }
 
     private void setListInModel(Model model){
 
