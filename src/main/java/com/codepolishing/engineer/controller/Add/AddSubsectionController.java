@@ -32,7 +32,7 @@ public class AddSubsectionController {
 
     private int rememberCourseSectionId;
     private String rememberSubsectionName;
-
+    private int rememberNumberToEdit;
 
     private ArrayList<Task> taskList;
     private ArrayList<Theory> theoryList;
@@ -109,6 +109,26 @@ public class AddSubsectionController {
         }
 
         return "redirect:/courses/editSections/addSubsection/addContent";
+    }
+    @GetMapping("/addContent/showEdit")
+    public String EditContentFromList(@RequestParam("number")int number,
+                                      Model model){
+        Theory theory = theoryList.get(number);
+
+        setListInModel(model);
+
+        model.addAttribute("theory",theory);
+        model.addAttribute("edit","edit");
+
+        return contentView;
+    }
+
+    @GetMapping("/addContent/edit")
+    public String changeContentInList(@ModelAttribute("theory")Theory theory){
+
+        theoryList.add(rememberNumberToEdit,theory);
+
+        return "edirect:/courses/editSections/addSubsection/addContent";
     }
     //endregion
 

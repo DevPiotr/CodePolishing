@@ -154,7 +154,7 @@ public class EditSubsectionController {
         return "redirect:/courses/editSections/editSubsection/editTask?taskId=" + task.getId();
     }
 
-    @PostMapping("/editTask/delete")
+    @GetMapping("/editTask/delete")
     public String deleteTaskFromList(@RequestParam("deleteNumber")int number){
 
         taskRepository.delete(taskList.get(number));
@@ -187,7 +187,7 @@ public class EditSubsectionController {
         return "redirect:/courses/editSections/editSubsection/editCompileTask?compileTaskId=" + compileTask.getId();
     }
 
-    @PostMapping(value = "/editCompileTask/delete")
+    @GetMapping(value = "/editCompileTask/delete")
     public String deleteCompileTask(@RequestParam("deleteNumber") int number)
     {
         compileTaskRepository.delete(compileTaskList.get(number));

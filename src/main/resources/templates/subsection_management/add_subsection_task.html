@@ -73,54 +73,7 @@
 
         </div>
         <div class="float-left col-6">
-            <h3 class="text-center font-weight-bold mb-4">Zawartość</h3>
-            <th:block th:if="${theoryList}">
-                <h4 class="text-center font-weight-bold">Teoria</h4>
-                <th:block th:each="theory,number : ${theoryList}">
-                    <form th:action="@{addContent/delete}" method="post">
-                        <div class="text-center">
-                            <div class="col-7 float-left" th:text="${theory.theoryContent}"></div>
-                            <div class="col-1 float-left">
-                                <input type="hidden" name="deleteNumber" th:value="${number.index}">
-                                <input type="image" name="submit" src="/images/thrash.jpg" width="40" height="40"/>
-                            </div>
-                            <div style="clear: both"></div>
-                        </div>
-                    </form>
-                </th:block>
-            </th:block>
-
-            <th:block th:if="${taskList}">
-                <h4 class="text-center font-weight-bold">Praktyka</h4>
-                <th:block th:each="task,number : ${taskList}">
-                    <form th:action="@{addTask/delete}" method="post">
-                        <div class="text-center">
-                            <div class="col-7 float-left" th:text="${task.taskContent}"></div>
-                            <div class="col-1 float-left">
-                                <input type="hidden" name="deleteNumber" th:value="${number.index}">
-                                <input type="image" name="submit" src="/images/thrash.jpg" width="40" height="40"/>
-                            </div>
-                            <div style="clear: both"></div>
-                        </div>
-                    </form>
-                </th:block>
-            </th:block>
-
-            <th:block th:if="${compileTaskList}">
-                <h4 class="text-center font-weight-bold">Kompilacyjne</h4>
-                <th:block th:each="compileTask,number : ${compileTaskList}">
-                    <form th:action="@{addCompileTask/delete}" method="post">
-                        <div class="text-center">
-                            <div class="col-7 float-left" th:text="${compileTask.taskContent}"></div>
-                            <div class="col-1 float-left">
-                                <input type="hidden" name="deleteNumber" th:value="${number.index}">
-                                <input type="image" name="submit" src="/images/thrash.jpg" width="40" height="40"/>
-                            </div>
-                            <div style="clear: both"></div>
-                        </div>
-                    </form>
-                </th:block>
-            </th:block>
+            <th:block th:insert="fragments/subsection_management:: content-in-add"></th:block>
         </div>
         <div style="clear:both"></div>
 
